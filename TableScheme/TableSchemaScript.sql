@@ -21,7 +21,8 @@ create table yfts_user
 	balance number not null,
 	authority varchar2(20) not null,
 	enabled number(1),
-	constraint yfts_user_pk primary key (user_id)
+	constraint yfts_user_pk primary key (user_id),
+	constraint yfts_user_unique unique (username,email)
 );
 
 /*
@@ -32,7 +33,8 @@ create table yfts_stock
 	stock_id number(5),
 	symbol varchar2(10) not null,
 	stockname varchar2(50) not null,
-	constraint yfts_stock_pk primary key (stock_id)
+	constraint yfts_stock_pk primary key (stock_id),
+	constraint yfts_stock_unique unique (symbol)
 );
 
 /*
