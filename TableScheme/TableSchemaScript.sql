@@ -40,12 +40,11 @@ For ownership table:
 */
 create table yfts_own
 (
-	own_id number(8),
 	user_id number(8),
 	stock_id number(5),
 	quantity number(10) not null,
 	constraint yfts_own_quantity_ck check (quantity >= 0),
-	constraint yfts_own_pk  primary key (own_id),
+	constraint yfts_own_pk  primary key (user_id,stock_id),
 	constraint yfts_own_uid_fk foreign key (user_id) references yfts_user (user_id),
 	constraint yfts_own_sid_fk foreign key (stock_id) references yfts_stock (stock_id)
 );
