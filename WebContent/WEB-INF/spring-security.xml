@@ -11,11 +11,11 @@
 	<sec:http auto-config="true">
     	<sec:intercept-url pattern="/next*" access="ROLE_USER"/>
     	<sec:form-login 
-        	login-page="/login.html"
-        	default-target-url="/next.html"
+        	login-page="/login"
+        	default-target-url="/next"
         	authentication-failure-url="/login.html?login_error=1" 
         />
-        <sec:logout logout-success-url="/login.html"  delete-cookies="JSESSIONID"/>
+        <sec:logout logout-success-url="/login"  delete-cookies="JSESSIONID"/>
 	</sec:http>
  	
 	<sec:authentication-manager alias="authenticationManager">

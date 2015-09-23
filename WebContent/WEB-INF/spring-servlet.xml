@@ -19,13 +19,18 @@
         <property name="suffix" value=".jsp" />
     </bean>
     
-    <bean id="mainController" class="com.mercury.controllers.MainController">
+    <!-- Controller Injection -->
+    <bean id="loginController" class="com.mercury.controllers.LoginController">
     	<property name="ms" ref="mainService"/>
     	<property name="viewPage" value="next"/>
     </bean>
+    
+    <!-- Service Injection -->
     <bean id="mainService" class="com.mercury.service.MainService">
     	<property name="md" ref="mainDao"/>
     </bean>
+    
+    <!-- Dao Injection -->
     <bean id="mainDao" class="com.mercury.dao.impl.MainDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory"/>
     </bean>
