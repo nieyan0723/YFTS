@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1><font color="green">${userInfo.message}</font></h1>
-<table width="200" border="1">
+<table border="1">
 	<tr>
 		<th>User Name</th>
 		<th>Email</th>

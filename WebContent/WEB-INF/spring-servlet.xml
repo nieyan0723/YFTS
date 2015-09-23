@@ -9,7 +9,8 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <context:component-scan base-package="com.mercury.controllers" />
-         
+	
+	<!-- Spring MVC -->
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass"
@@ -29,11 +30,14 @@
     	<property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"> 
+    <!-- Hibernate Annotation-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
 		<property name="dataSource" ref="dataSource"/>
-		<property name="mappingResources">
+		<property name="annotatedClasses">
 			<list>
-				<value>com/mercury/mappings/User.hbm.xml</value>
+				<value>com.mercury.beans.User</value>
+				<value>com.mercury.beans.Stock</value>
+				<value>com.mercury.beans.OwnershipInfo</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -43,6 +47,8 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- JNDI -->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     	<property name="jndiName" value="java:comp/env/jdbc/myoracle" />
 	</bean>

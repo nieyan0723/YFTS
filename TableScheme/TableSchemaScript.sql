@@ -13,9 +13,9 @@ For user table:
 create table yfts_user
 (
 	user_id number(8),
-	username varchar2(20) not null,
+	username varchar2(20) not null unique,
 	password varchar2(20) not null,
-	email varchar2(50) not null,
+	email varchar2(50) not null unique,
 	firstname varchar2(30),
 	lastname varchar2(30),
 	balance number not null,
@@ -31,7 +31,7 @@ For stock table:
 create table yfts_stock
 (
 	stock_id number(5),
-	symbol varchar2(10) not null,
+	symbol varchar2(10) not null unique,
 	stockname varchar2(50) not null,
 	constraint yfts_stock_pk primary key (stock_id),
 	constraint yfts_stock_unique unique (symbol)
