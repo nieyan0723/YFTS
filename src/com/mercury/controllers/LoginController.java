@@ -1,5 +1,6 @@
 package com.mercury.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,20 +17,14 @@ import com.mercury.service.MainService;
 @SessionAttributes
 @Controller
 public class LoginController {
+	@Autowired
 	private MainService ms;
-	private String viewPage;
 	
 	public MainService getMs() {
 		return ms;
 	}
 	public void setMs(MainService ms) {
 		this.ms = ms;
-	}
-	public String getViewPage() {
-		return viewPage;
-	}
-	public void setViewPage(String viewPage) {
-		this.viewPage = viewPage;
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.GET)

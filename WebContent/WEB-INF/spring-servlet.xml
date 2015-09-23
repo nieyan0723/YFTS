@@ -8,6 +8,8 @@
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<!-- Controllers -->
     <context:component-scan base-package="com.mercury.controllers" />
 	
 	<!-- Spring MVC -->
@@ -19,19 +21,15 @@
         <property name="suffix" value=".jsp" />
     </bean>
     
-    <!-- Controller Injection -->
-    <bean id="loginController" class="com.mercury.controllers.LoginController">
-    	<property name="ms" ref="mainService"/>
-    	<property name="viewPage" value="next"/>
-    </bean>
-    
     <!-- Service Injection -->
-    <bean id="mainService" class="com.mercury.service.MainService">
-    	<property name="md" ref="mainDao"/>
-    </bean>
+    <bean id="mainService" class="com.mercury.service.MainService" />
+    <bean id="stockService" class="com.mercury.service.StockService" />
     
     <!-- Dao Injection -->
     <bean id="mainDao" class="com.mercury.dao.impl.MainDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="stockDao" class="com.mercury.dao.impl.StockDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
