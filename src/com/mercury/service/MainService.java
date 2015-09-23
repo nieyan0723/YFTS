@@ -21,4 +21,10 @@ public class MainService {
 		userInfo.setUsers(md.queryAll());
 		return userInfo;
 	}
+	public UserInfo process2() {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setMessage("Hello , welcome to YFTS!");
+		userInfo.setUsers(md.queryAll());
+		return userInfo;
+	}
 }
