@@ -21,11 +21,6 @@ public class StockDaoImpl implements StockDao {
 	}
 
 	@Override
-	public void update(Stock stock) {
-		template.update(stock);
-	}
-
-	@Override
 	public void delete(Stock stock) {
 		template.delete(stock);
 	}

@@ -27,10 +27,6 @@ public class StockService {
 		sd.delete(stock);
 	}
 	
-	public void updateStock(Stock stock){
-		sd.update(stock);
-	}
-	
 	public Stock loadById(int id){
 		return sd.findBySid(id);
 	}
