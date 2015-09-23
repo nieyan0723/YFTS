@@ -1,5 +1,7 @@
 package com.mercury.dao.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -38,7 +40,14 @@ public class StockDaoImpl implements StockDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Stock> queryAll() {
-		String hql = "from Stock";		
-		return template.find(hql);
+		String hql = "from Stock";
+		List<Stock> list = template.find(hql);
+		Collections.sort(list, new Comparator<Stock>(){
+			@Override
+			public int compare(Stock a, Stock b){
+				return a.getSid() - b.getSid();
+			}
+		});
+		return list;
 	}
 }

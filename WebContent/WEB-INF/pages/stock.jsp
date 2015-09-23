@@ -23,7 +23,7 @@
 				<td>${stock.sid}</td>
 				<td>${stock.symbol}</td>
 				<td>${stock.stockName}</td>
-				<td><button id="delete" name="delete">Delete</button></td>
+				<td><button class="delete" name="delete" value="${stock.sid}">Delete</button></td>
 			</tr>
 		</c:forEach>
 	</table>

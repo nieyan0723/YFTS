@@ -12,6 +12,9 @@
 	<!-- Controllers -->
     <context:component-scan base-package="com.mercury.controllers" />
 	
+	<!-- Services -->
+	<context:component-scan base-package="com.mercury.service" />
+	
 	<!-- Spring MVC -->
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -20,10 +23,6 @@
         <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".jsp" />
     </bean>
-    
-    <!-- Service Injection -->
-    <bean id="mainService" class="com.mercury.service.MainService" />
-    <bean id="stockService" class="com.mercury.service.StockService" />
     
     <!-- Dao Injection -->
     <bean id="mainDao" class="com.mercury.dao.impl.MainDaoImpl">
