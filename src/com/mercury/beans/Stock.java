@@ -19,19 +19,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="YFTS_STOCK")
 public class Stock implements Serializable{
-	private Integer sid;
+	private int sid;
 	private String symbol;
 	private String stockName;
 	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
+	private Set<Transaction> trans = new HashSet<Transaction>();
 	
 	@Id
 	@GeneratedValue(generator="stock_id_gen")
 	@GenericGenerator(name="stock_id_gen", strategy="increment")
 	@Column(name="STOCK_ID")
-	public Integer getSid() {
+	public int getSid() {
 		return sid;
 	}
-	public void setSid(Integer sid) {
+	public void setSid(int sid) {
 		this.sid = sid;
 	}
 	
@@ -63,5 +64,19 @@ public class Stock implements Serializable{
 	}
 	public void removeOwns(OwnershipInfo osi){
 		owns.remove(osi);
+	}
+	
+	@OneToMany(targetEntity=Stock.class,  mappedBy="sid", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	public Set<Transaction> getTrans() {
+		return trans;
+	}
+	public void setTrans(Set<Transaction> trans) {
+		this.trans = trans;
+	}
+	public void addTrans(Transaction tran){
+		trans.add(tran);
+	}
+	public void removeTrans(Transaction tran){
+		trans.remove(tran);
 	}
 }
