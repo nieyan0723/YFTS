@@ -2,10 +2,42 @@
 /*
 If tables exist, drop those tables
 */
-drop table yfts_own;
-drop table yfts_trans;
-drop table yfts_user;
-drop table yfts_stock;
+BEGIN
+	EXECUTE IMMEDIATE 'DROP TABLE yfts_own';
+EXCEPTION
+	WHEN OTHERS THEN
+    	IF SQLCODE != -942 THEN
+        	RAISE;
+    	END IF;
+END;
+/
+BEGIN
+	EXECUTE IMMEDIATE 'DROP TABLE yfts_trans';
+EXCEPTION
+	WHEN OTHERS THEN
+		IF SQLCODE != -942 THEN
+			RAISE;
+		END IF;
+END;
+/
+BEGIN
+	EXECUTE IMMEDIATE 'DROP TABLE yfts_user';
+EXCEPTION
+	WHEN OTHERS THEN
+		IF SQLCODE != -942 THEN
+			RAISE;
+		END IF;
+END;
+/
+BEGIN
+	EXECUTE IMMEDIATE 'DROP TABLE yfts_stock';
+EXCEPTION
+	WHEN OTHERS THEN
+		IF SQLCODE != -942 THEN
+			RAISE;
+		END IF;
+END;
+/
 
 /*
 For user table:
@@ -21,8 +53,7 @@ create table yfts_user
 	balance number not null,
 	authority varchar2(20) not null,
 	enabled number(1),
-	constraint yfts_user_pk primary key (user_id),
-	constraint yfts_user_unique unique (username,email)
+	constraint yfts_user_pk primary key (user_id)
 );
 
 /*
@@ -33,8 +64,7 @@ create table yfts_stock
 	stock_id number(5),
 	symbol varchar2(10) not null unique,
 	stockname varchar2(50) not null,
-	constraint yfts_stock_pk primary key (stock_id),
-	constraint yfts_stock_unique unique (symbol)
+	constraint yfts_stock_pk primary key (stock_id)
 );
 
 /*
