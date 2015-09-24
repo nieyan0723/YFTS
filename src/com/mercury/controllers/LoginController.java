@@ -32,11 +32,11 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/next", method = RequestMethod.GET)
+	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView mainPage() {
 		UserInfo userInfo = ms.process2();
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("next");
+		mav.setViewName("home");
 		mav.addObject("title", "Sample06: Spring Security + Spring 3 MVC ~ Hibernate");
 		mav.addObject("userInfo", userInfo);
 		return mav;
