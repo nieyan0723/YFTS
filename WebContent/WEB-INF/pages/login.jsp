@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS Main Page</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script>
 	$(document).ready(function() {
 		if ("<c:out value='${param.login_error}'/>" != "") {
@@ -85,7 +85,7 @@
 </form>
 <h1><font color="blue">Sign up!</font></h1>
 <!-- SignUp Form -->
-<form name="register-form" action="confirmation.html" method="post" id="loginForm">
+<form name="register-form" action="registervalidation" method="post" id="loginForm">
 	<table>
 		<tr>
 			<td>Username: </td>
