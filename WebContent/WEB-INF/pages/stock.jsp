@@ -95,7 +95,7 @@
 		<tr>
 			<td>Stock Symbol: </td>
 			<td>
-				<input type="text" name="symbol" id="j_symbol"/>
+				<input type="text" name="symbol" id="j_symbol" required/>
 			</td>
 			<td>
 				<div class="error" id="symbol_error">msg</div>
@@ -104,7 +104,7 @@
 		<tr>
 			<td>Stock Name: </td>
 			<td>
-				<input type="text" name="stockName" id="j_stockName"/>
+				<input type="text" name="stockName" id="j_stockName" required/>
 			</td>
 			<td>
 				<div class="error" id="name_error">msg</div>

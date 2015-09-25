@@ -1,5 +1,6 @@
 package com.mercury.beans;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ public class Transaction {
 	private Integer uid;
 	private Integer sid;
 	private int amount;
-	private int price;
+	private BigDecimal price;
 	private Timestamp ts;
 	
 	@Id
@@ -56,10 +57,10 @@ public class Transaction {
 	}
 	
 	@Column(name="PRICE")
-	public int getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 	
