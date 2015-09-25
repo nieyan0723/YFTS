@@ -8,7 +8,7 @@
 		id="WebApp_ID" version="3.0">
 	<display-name>YFTS</display-name>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>login.html</welcome-file>
 	</welcome-file-list>
   	
   	<!-- Spring -->
@@ -21,7 +21,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/</url-pattern>
+         <url-pattern>/</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 
 	<!-- Listener class and params -->
