@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findByUserName(String userName) {
 		// TODO Auto-generated method stub
-		return template.get(User.class, userName);
+		return template.load(User.class, userName);
 	}
 
 	@SuppressWarnings("unchecked")
