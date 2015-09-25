@@ -6,14 +6,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS Main Page</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script>
 	$(document).ready(function() {
 		if ("<c:out value='${param.login_error}'/>" != "") {
 		  	$('#wrongCredentials').show();
 		}
 		$("#signin").on("click", loginValidation);	
+		$("#j_userName").on("blur",function(){
+			$.ajax({
+				url: "registervalidation",
+				type: "post",
+				dataType: "text",
+				data: {userName: $("#j_userName").val()},
+				//async:false,//disable async
+				success: function(response) {
+					if(response=="true"){
+						$("#usernameExist").show();
+					}
+				},
+				error: function (e) {
+			        alert(e);
+			    }
+			});
+		});
 	});
 
 	function loginValidation() {
@@ -85,7 +102,10 @@
 </form>
 <h1><font color="blue">Sign up!</font></h1>
 <!-- SignUp Form -->
-<form name="register-form" action="confirmation.html" method="post" id="loginForm">
+<div class="alert" style="display:none;" id="usernameExist">
+	<p>Username Exist!!</p>
+</div>
+<form name="register-form" method="post" id="loginForm">
 	<table>
 		<tr>
 			<td>Username: </td>
@@ -123,7 +143,7 @@
 			<td></td>
 			<td>
 				<input type="reset" value="Clear"/>
-				<input type="submit" value="Submit2"/>
+				<input type="submit" value="Submit2" id="register"/>
 			</td>
 		</tr>
 	</table>

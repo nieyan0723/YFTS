@@ -1,5 +1,11 @@
 package com.mercury.controllers;
 
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,24 +13,26 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.User;
 import com.mercury.beans.UserInfo;
-import com.mercury.service.MainService;
+import com.mercury.service.UserService;
 
 @SessionAttributes
 @Controller
 public class LoginController {
 	@Autowired
-	private MainService ms;
+	private UserService us;
 	
-	public MainService getMs() {
-		return ms;
+	public UserService getMs() {
+		return us;
 	}
-	public void setMs(MainService ms) {
-		this.ms = ms;
+	public void setMs(UserService us) {
+		this.us = us;
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.GET)
@@ -34,7 +42,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView mainPage() {
-		UserInfo userInfo = ms.process2();
+		UserInfo userInfo = us.process2();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
 		mav.addObject("title", "Sample06: Spring Security + Spring 3 MVC ~ Hibernate");
@@ -45,10 +53,33 @@ public class LoginController {
 	@RequestMapping(value="/confirmation", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
-		UserInfo userInfo = ms.process(user);
+		UserInfo userInfo = us.process(user);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("confirmation");
 		mav.addObject("userInfo", userInfo);
 		return mav;
 	}
+	
+	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
+	@ResponseBody
+	public String isUserExist(@ModelAttribute("user") 
+			User user, BindingResult result){
+		System.out.println(user.getUserName() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		if(us.isUserExist(user)) {
+			System.out.println("name existeddd...........................");
+			return "true";
+		}
+		return "false";
+	}
+	
+//	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
+//	public int isUserExist(@ModelAttribute("user") 
+//	User user, BindingResult result) {
+//		System.out.println(user.getUserName() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//		if(us.isUserExist(user)) {
+//			System.out.println("name existeddd...........................");
+//			return 1;
+//		}
+//		return 0;
+//	}
 }
