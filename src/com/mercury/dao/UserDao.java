@@ -12,4 +12,5 @@ public interface UserDao {
 	public User findByUserName(String userName);
 	public List<User> findByUser(User user);
 	public List<User> queryAll();
+	public User findByEmail(String email);
 }

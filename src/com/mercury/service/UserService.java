@@ -17,14 +17,24 @@ public class UserService {
 	public void setUd(UserDao ud) {
 		this.ud = ud;
 	}
-	public boolean isUserExist(User user) {
-		if(ud.findByUser(user) == null){
+	public boolean isUserExist(String username) {
+		if(ud.findByUserName(username) == null){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean isEmailExist(String email) {
+		if(ud.findByEmail(email) == null){
 			return false;
 		}
 		return true;
 	}
 	
 	public UserInfo process(User user) {
+		user.setAuthority("ROLE_USER");
+		user.setBalance(0);
+		user.setEnabled(0);
 		ud.save(user);
 		UserInfo userInfo = new UserInfo();
 		userInfo.setMessage("Hello " + user.getUserName() + ", welcome to YFTS!");

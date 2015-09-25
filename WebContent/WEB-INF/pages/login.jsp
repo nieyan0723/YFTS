@@ -14,23 +14,48 @@
 		  	$('#wrongCredentials').show();
 		}
 		$("#signin").on("click", loginValidation);	
+		$("#clear2").on("click", function(){
+			$("#usernameExist").hide();
+			$("#emailExist").hide();
+		});	
 		$("#j_userName").on("blur",function(){
-			$.ajax({
-				url: "registervalidation",
-				type: "post",
-				dataType: "text",
-				data: {userName: $("#j_userName").val()},
-				//async:false,//disable async
-				success: function(response) {
-					if(response=="true"){
-						$("#usernameExist").show();
-					}
-				},
-				error: function (e) {
-			        alert(e);
-			    }
-			});
-		});
+			if($("#j_userName").val()){
+				$.ajax({
+					url: "registervalidation",
+					type: "post",
+					dataType: "text",
+					data: {userName: $("#j_userName").val()},
+					//async:false,//disable async
+					success: function(response) {
+						if(response=="true"){
+							$("#usernameExist").show();
+						}
+					},
+					error: function (e) {
+				        alert(e);
+				    }
+				});
+			}
+		});	
+		$("#j_email").on("blur",function(){
+			if($("#j_email").val()&&$("#j_userName").val()){
+				$.ajax({
+					url: "registervalidation",
+					type: "post",
+					dataType: "text",
+					data: {email: $("#j_email").val()},
+					//async:false,//disable async
+					success: function(response) {
+						if(response=="true"){
+							$("#emailExist").show();
+						}
+					},
+					error: function (e) {
+				        alert(e);
+				    }
+				});
+			}
+		});		
 	});
 
 	function loginValidation() {
@@ -105,11 +130,14 @@
 <div class="alert" style="display:none;" id="usernameExist">
 	<p>Username Exist!!</p>
 </div>
-<form name="register-form" method="post" id="loginForm">
+<div class="alert" style="display:none;" id="emailExist">
+	<p>Email Exist!!</p>
+</div>
+<form name="register-form" action="confirmation" method="post" id="loginForm">
 	<table>
 		<tr>
 			<td>Username: </td>
-			<td><input type="text" name="userName" id="j_userName"/></td>
+			<td><input type="text" name="userName" id="j_userName" required/></td>
 		</tr>
 		<tr>
 			<td>Password: </td>
@@ -128,21 +156,9 @@
 			<td><input type="text" name="lastName" id="j_lastName"/></td>
 		</tr>
 		<tr>
-			<td>Balance: </td>
-			<td><input type="number" name="balance" id="j_balance" min="0"/></td>
-		</tr>
-		<tr>
-			<td>Authority: </td>
-			<td><input type="text" name="authority" id="j_autority"/></td>
-		</tr>
-		<tr>
-			<td>Enabled: </td>
-			<td><input type="number" name="enabled" id="j_enabled" min="0" max="1"/></td>
-		</tr>
-		<tr>
 			<td></td>
 			<td>
-				<input type="reset" value="Clear"/>
+				<input type="reset" value="Clear" id="clear2"/>
 				<input type="submit" value="Submit2" id="register"/>
 			</td>
 		</tr>

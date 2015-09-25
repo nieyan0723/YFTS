@@ -2,7 +2,10 @@ package com.mercury.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mercury.beans.User;
@@ -41,10 +44,26 @@ public class UserDaoImpl implements UserDao {
 		return template.get(User.class, uid);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public User findByUserName(String userName) {
+	public User findByUserName(String username) {
 		// TODO Auto-generated method stub
-		return template.load(User.class, userName);
+		List<User> users = template.findByCriteria(
+		        DetachedCriteria.forClass(User.class).add(Restrictions.eq("userName", username)));
+		if(users.size() == 0)
+			return null;
+		return users.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		List<User> users = template.findByCriteria(
+		        DetachedCriteria.forClass(User.class).add(Restrictions.eq("email", email)));
+		if(users.size() == 0)
+			return null;
+		return users.get(0);
 	}
 
 	@SuppressWarnings("unchecked")

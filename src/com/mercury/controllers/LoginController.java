@@ -1,11 +1,9 @@
 package com.mercury.controllers;
 
 
-import java.io.PrintWriter;
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,13 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.User;
 import com.mercury.beans.UserInfo;
+import com.mercury.service.RegisterService;
 import com.mercury.service.UserService;
 
 @SessionAttributes
@@ -27,12 +25,20 @@ import com.mercury.service.UserService;
 public class LoginController {
 	@Autowired
 	private UserService us;
+	@Autowired
+	private RegisterService rs;
 	
-	public UserService getMs() {
+	public UserService getUs() {
 		return us;
 	}
-	public void setMs(UserService us) {
+	public void setUs(UserService us) {
 		this.us = us;
+	}
+	public RegisterService getRs() {
+		return rs;
+	}
+	public void setRs(RegisterService rs) {
+		this.rs = rs;
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.GET)
@@ -49,11 +55,26 @@ public class LoginController {
 		mav.addObject("userInfo", userInfo);
 		return mav;
 	}
-	
+//	
+//	@RequestMapping(value="/confirmation", method=RequestMethod.POST)
+//	public ModelAndView enroll(HttpServletRequest request){
+//		String username = request.getParameter("userName");
+//		String password = request.getParameter("passWord");
+//		String email = request.getParameter("email");
+//		String firstname = request.getParameter("firstname");
+//		String lastname = request.getParameter("lastname");
+//		ModelAndView mav = new ModelAndView();
+//		User user = new User(username, password);
+//		user.setEmail(email);
+//		user.setAuthority("ROLE_USER");
+//		user.setBalance(new BigDecimal(0));
+//		user.setEnable(0);
+//	}
 	@RequestMapping(value="/confirmation", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
 		UserInfo userInfo = us.process(user);
+		rs.sendMail(user.getUserName(), user.getEmail());
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("confirmation");
 		mav.addObject("userInfo", userInfo);
@@ -62,24 +83,33 @@ public class LoginController {
 	
 	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
 	@ResponseBody
-	public String isUserExist(@ModelAttribute("user") 
-			User user, BindingResult result){
-		System.out.println(user.getUserName() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		if(us.isUserExist(user)) {
+	public String isUserExist(HttpServletRequest request){
+		String username = request.getParameter("userName");
+		System.out.println(username);
+		if(us.isUserExist(username)) {
 			System.out.println("name existeddd...........................");
 			return "true";
+		}
+		if(request.getParameter("email")!=null){ 
+			String email = request.getParameter("email");
+			System.out.println(email);
+			if(us.isEmailExist(email)){
+				System.out.println("email existedd...........................");
+				return "true";
+			}
 		}
 		return "false";
 	}
 	
 //	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
-//	public int isUserExist(@ModelAttribute("user") 
-//	User user, BindingResult result) {
+//	@ResponseBody
+//	public String isUserExist(@ModelAttribute("user") 
+//			User user, BindingResult result){
 //		System.out.println(user.getUserName() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 //		if(us.isUserExist(user)) {
 //			System.out.println("name existeddd...........................");
-//			return 1;
+//			return "true";
 //		}
-//		return 0;
+//		return "false";
 //	}
 }
