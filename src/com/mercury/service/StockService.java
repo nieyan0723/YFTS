@@ -1,5 +1,7 @@
 package com.mercury.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class StockService {
 	}	
 	
 	public void addStock(Stock stock){
+		stock.setSymbol(stock.getSymbol().toUpperCase());
 		sd.save(stock);
 	}
 	
@@ -33,11 +36,27 @@ public class StockService {
 		return sd.findBySid(id);
 	}
 	
-	public Stock loadByName(String name){
+	public List<Stock> getByName(String name){
 		return sd.findBySymbol(name);
 	}
 	
 	public List<Stock> getAllStock(){
-		return sd.queryAll();
+		List<Stock> list = sd.queryAll();
+		Collections.sort(list, new Comparator<Stock>(){
+			@Override
+			public int compare(Stock a, Stock b){
+				return a.getSid() - b.getSid();
+			}
+		});
+		return list;
+	}
+	
+	public boolean hasStock(Stock stock){
+		List<Stock> s = getByName(stock.getSymbol().toUpperCase());
+		if (s == null || s.size() == 0){
+			return false;
+		}else{
+			return true;
+		}
 	}
 }
