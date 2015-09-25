@@ -1,10 +1,10 @@
 package com.mercury.dao.impl;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mercury.beans.Stock;
@@ -29,25 +29,19 @@ public class StockDaoImpl implements StockDao {
 
 	@Override
 	public Stock findBySid(int sid) {
-		return template.load(Stock.class, sid);
+		return template.get(Stock.class, sid);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Stock findBySymbol(String symbol) {
-		return template.load(Stock.class, symbol);
+	public List<Stock> findBySymbol(String symbol) {
+		return template.findByCriteria(DetachedCriteria.forClass(Stock.class).add(Restrictions.eq("symbol", symbol)));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Stock> queryAll() {
 		String hql = "from Stock";
-		List<Stock> list = template.find(hql);
-		Collections.sort(list, new Comparator<Stock>(){
-			@Override
-			public int compare(Stock a, Stock b){
-				return a.getSid() - b.getSid();
-			}
-		});
-		return list;
+		return template.find(hql);
 	}
 }

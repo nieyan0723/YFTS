@@ -34,6 +34,9 @@
     <bean id="userDao" class="com.mercury.dao.impl.UserDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean id="transDao" class="com.mercury.dao.impl.TransDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     
     <!-- Hibernate Annotation-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
