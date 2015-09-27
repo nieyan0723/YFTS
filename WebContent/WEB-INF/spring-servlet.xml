@@ -46,6 +46,7 @@
 				<value>com.mercury.beans.User</value>
 				<value>com.mercury.beans.Stock</value>
 				<value>com.mercury.beans.OwnershipInfo</value>
+				<value>com.mercury.beans.Transaction</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

@@ -11,9 +11,12 @@ import com.mercury.beans.Stock;
 import com.mercury.beans.Transaction;
 import com.mercury.beans.User;
 import com.mercury.dao.TransDao;
+import com.mercury.util.CsvUtil;
 
 @Service
 public class TransService {
+	private final String csvName = "\\pending.csv";
+	
 	@Autowired
 	private TransDao td;
 	
@@ -56,6 +59,12 @@ public class TransService {
 		return list;
 	}
 	
+	public List<Transaction> queryAll(){
+		List<Transaction> list = td.queryAll();
+		sortByTid(list);
+		return list;
+	}
+	
 	public void sortByTid(List<Transaction> list){
 		Collections.sort(list, new Comparator<Transaction>(){
 			@Override
@@ -65,13 +74,43 @@ public class TransService {
 		});
 	}
 	
-	public void createPending(Transaction trans){
-		
+	public List<Transaction> getAllPendings(String path){
+		List<Transaction> list = CsvUtil.parseCSV(path + csvName);
+		return list;
 	}
-	public void commitPending(Transaction trans){
-		
+	
+	//Add new pending transaction to csv file
+	public void createPending(Transaction trans, String path){
+		CsvUtil.appendCSV(trans, path + csvName);
 	}
-	public void dropPending(Transaction trans){
-		
+	
+	//Commit pending transaction in csv file, save it to database
+	public void commitPending(int transIndex, String path){
+		List<Transaction> list = getAllPendings(path);
+		td.saveTransaction(list.get(transIndex));
+		dropPending(transIndex, path);
+	}
+	
+	public void commitPendings(List<Integer> transList, String path){
+		List<Transaction> list = getAllPendings(path);
+		for (Integer i: transList){
+			td.saveTransaction(list.get(i));
+		}
+		dropPendings(transList, path);
+	}
+	
+	//Delete pending transaction from csv file
+	public void dropPending(int transIndex, String path){
+		List<Transaction> list = getAllPendings(path);
+		list.remove(transIndex);
+		CsvUtil.rewriteCSV(list, path + csvName);
+	}
+	
+	public void dropPendings(List<Integer> transList, String path){
+		List<Transaction> list = getAllPendings(path);
+		for (Integer i: transList){
+			list.remove(i);
+		}
+		CsvUtil.rewriteCSV(list, path + csvName);
 	}
 }

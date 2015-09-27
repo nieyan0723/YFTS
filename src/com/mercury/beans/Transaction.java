@@ -2,6 +2,8 @@ package com.mercury.beans;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,19 @@ public class Transaction {
 	private BigDecimal price;
 	private Timestamp ts;
 	
+	public Transaction(){}	
+		
+	public Transaction(Integer uid, Integer sid, int amount,
+			BigDecimal price, Timestamp ts) {
+		this.uid = uid;
+		this.sid = sid;
+		this.amount = amount;
+		this.price = price;
+		this.ts = ts;
+	}
+
+
+
 	@Id
 	@GeneratedValue(generator="trans_id_gen")
 	@GenericGenerator(name="trans_id_gen", strategy="increment")
@@ -70,5 +85,23 @@ public class Transaction {
 	}
 	public void setTs(Timestamp ts) {
 		this.ts = ts;
+	}
+	
+	@Override
+	public String toString(){
+		return uid.toString()+","+sid.toString()
+				+","+Integer.toString(amount)+","+price.toString()+","
+				+ts.toString();
+	}
+	
+	public List<String> toList(){
+		List<String> transRecord = new ArrayList<String>();
+		transRecord.add(Integer.toString(tid));
+		transRecord.add(uid.toString());
+		transRecord.add(uid.toString());
+		transRecord.add(Integer.toString(amount));
+		transRecord.add(price.toString());
+		transRecord.add(ts.toString());
+		return transRecord;
 	}
 }

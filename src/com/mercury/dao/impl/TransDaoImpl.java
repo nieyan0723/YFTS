@@ -44,7 +44,7 @@ public class TransDaoImpl implements TransDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Transaction> queryAll() {
-		String hql = "from OwnershipInfo";
+		String hql = "from Transaction";
 		return template.find(hql);
 	}
 }
