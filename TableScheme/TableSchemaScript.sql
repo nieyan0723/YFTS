@@ -56,6 +56,7 @@ create table yfts_user
 	constraint yfts_user_pk primary key (user_id)
 );
 
+
 /*
 For stock table:
 */
@@ -66,6 +67,7 @@ create table yfts_stock
 	stockname varchar2(50) not null,
 	constraint yfts_stock_pk primary key (stock_id)
 );
+
 
 /*
 For ownership table:
@@ -92,9 +94,14 @@ create table yfts_trans
 	amount number(12) not null,
 	price number(5,2) not null,
 	trans_time date,
-	constraint yfts_trans_amount_ck check (amount >= 0),
 	constraint yfts_trans_price_ck check (price >= 0),
 	constraint yfts_trans_pk primary key (trans_id),
 	constraint yfts_trans_uid_fk foreign key (user_id) references yfts_user (user_id),
 	constraint yfts_trans_sid_fk foreign key (stock_id) references yfts_stock (stock_id)
 );
+
+insert into yfts_user values(1,'user','123456','123@123.com','user','user',900,'ROLE_USER',1);
+insert into yfts_user values(2,'admin','123456','234@123.com','admin','admin',900,'ROLE_ADMIN',1);
+
+insert into yfts_stock values(1,'BOA','Bank of America');
+insert into yfts_stock values(2,'GOOG','Google');
