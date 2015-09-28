@@ -1,10 +1,24 @@
 package com.mercury.controllers;
 
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.Principal;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,9 +38,14 @@ import com.mercury.service.UserService;
 @Controller
 public class LoginController {
 	@Autowired
+	@Qualifier("jdbcUserService")  // <-- this references the bean id
+	public UserDetailsManager userDetailsManager;
+	@Autowired
 	private UserService us;
 	@Autowired
 	private RegisterService rs;
+	@Autowired 
+	private UserDetailsService userDetailsSvc;
 	
 	public UserService getUs() {
 		return us;
@@ -46,30 +65,39 @@ public class LoginController {
 		return "login";
 	}
 	
+	@RequestMapping(value="login1", method = RequestMethod.POST)
+	public String login1(HttpServletRequest request) {
+		String username = request.getParameter("j_username");
+		String password = us.findUser(username).getPassWord();
+		
+		try {
+			UserDetails userDetails = userDetailsSvc.loadUserByUsername(username);
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+//			authMgr.authenticate(auth);
+		    // redirect into secured main page if authentication successful
+		    if(auth.isAuthenticated()) {
+		    	SecurityContextHolder.getContext().setAuthentication(auth);
+		        return "redirect:/home";
+		    }
+		} catch (Exception e) {
+//			logger.debug("Problem authenticating user" + username, e);
+		}
+		 
+		return "redirect:/error";
+	}
+	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
-	public ModelAndView mainPage() {
-		UserInfo userInfo = us.process2();
+	public ModelAndView mainPage(Principal principal){
+		String username = principal.getName();
+		System.out.println(username);
+		UserInfo userInfo = us.process2(username);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
 		mav.addObject("title", "Sample06: Spring Security + Spring 3 MVC ~ Hibernate");
 		mav.addObject("userInfo", userInfo);
 		return mav;
 	}
-//	
-//	@RequestMapping(value="/confirmation", method=RequestMethod.POST)
-//	public ModelAndView enroll(HttpServletRequest request){
-//		String username = request.getParameter("userName");
-//		String password = request.getParameter("passWord");
-//		String email = request.getParameter("email");
-//		String firstname = request.getParameter("firstname");
-//		String lastname = request.getParameter("lastname");
-//		ModelAndView mav = new ModelAndView();
-//		User user = new User(username, password);
-//		user.setEmail(email);
-//		user.setAuthority("ROLE_USER");
-//		user.setBalance(new BigDecimal(0));
-//		user.setEnable(0);
-//	}
+
 	@RequestMapping(value="/confirmation", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
@@ -78,6 +106,22 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("confirmation");
 		mav.addObject("userInfo", userInfo);
+		return mav;
+	}
+	
+	@RequestMapping(value="/activateAccount", method = RequestMethod.GET)
+	public ModelAndView activeMail(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		int enabled = us.findUser(username).getEnabled();
+		if(enabled==1){
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("linkoutoftime");
+			return mav;
+		}
+		rs.ActivateUser(username);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("active_confirm");
+		mav.addObject("userName", username);
 		return mav;
 	}
 	
@@ -100,16 +144,4 @@ public class LoginController {
 		}
 		return "false";
 	}
-	
-//	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
-//	@ResponseBody
-//	public String isUserExist(@ModelAttribute("user") 
-//			User user, BindingResult result){
-//		System.out.println(user.getUserName() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//		if(us.isUserExist(user)) {
-//			System.out.println("name existeddd...........................");
-//			return "true";
-//		}
-//		return "false";
-//	}
 }

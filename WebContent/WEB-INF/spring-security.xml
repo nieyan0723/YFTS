@@ -10,18 +10,19 @@
 			
 	<sec:http auto-config="true"  use-expressions="true">
     	<sec:intercept-url pattern="/home*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+    	<sec:intercept-url pattern="/pending*" access="hasRole('ROLE_ADMIN')"/>
+    	<sec:intercept-url pattern="/login1*" access="isAnonymous()"/>
     	<sec:form-login 
         	login-page="/login"
-        	default-target-url="/home"
+        	authentication-success-handler-ref="loginSuccessfulAuthHandler"
         	authentication-failure-url="/login?login_error=1" 
         />
         <sec:logout logout-success-url="/login"  delete-cookies="JSESSIONID"/>
 	</sec:http>
- 	
+	
 	<sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider>
-
-        	<sec:jdbc-user-service data-source-ref="dataSource"
+        	<sec:jdbc-user-service id="jdbcUserService" data-source-ref="dataSource"
 		   		users-by-username-query="
 		      		select username, password, enabled 
 		      		from yfts_user where username=?" 
@@ -31,5 +32,9 @@
 			/>
         </sec:authentication-provider>
     </sec:authentication-manager>
+    <bean id="loginSuccessfulAuthHandler" class="com.mercury.security.LoginSuccessfulAuthenticationHandler">
+	    <property name="defaultTargetUrl" value="/home" />
+	    <property name="alwaysUseDefaultTargetUrl" value="true" />
+	</bean>
  	
 </beans>

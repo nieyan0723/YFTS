@@ -21,21 +21,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mercury.beans.User;
+import com.mercury.beans.UserInfo;
 import com.mercury.dao.UserDao;
 
 @Service
 @Transactional
 public class RegisterService {
 	@Autowired
-	private UserDao userDao;
+	private UserDao ud;
 	
-	public UserDao getUserDao() {
-		return userDao;
+	public UserDao getud() {
+		return ud;
 	}
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setud(UserDao ud) {
+		this.ud = ud;
 	}
+	
+	public void ActivateUser(String username){
+		User user = ud.findByUserName(username);
+		user.setEnabled(1);
+		ud.update(user);
+	}
+	
 	private static String md5(String string) {  
         MessageDigest md = null;  
         try {  
@@ -115,7 +124,7 @@ public class RegisterService {
             BodyPart messageBodyPart = new MimeBodyPart();
             //now set the actual message
             //messageBodyPart.setText("Dear " + username +",\n\nWelcome to Yahoo Finance!");
-            String link = "http://localhost:8080/YahooFinanceProject/activateAccount.html?username=" + username + "&" + "checkcode" + "=" + md5(username);  
+            String link = "http://localhost:8080/YFTS/activateAccount.html?username=" + username + "&" + "checkcode" + "=" + md5(username);  
             messageBodyPart.setContent("Dear " + username + "<br><br>Welcome to Yahoo Finance!<br>" + 
             		"<a href='" + link +"'>Please click this link to activate your account</a>","text/html;charset=utf-8");  
             // Create a multipart message
