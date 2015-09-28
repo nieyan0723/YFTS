@@ -2,9 +2,6 @@ package com.mercury.beans;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -93,15 +90,5 @@ public class Transaction {
 				+","+Integer.toString(amount)+","+price.toString()+","
 				+ts.toString();
 	}
-	
-	public List<String> toList(){
-		List<String> transRecord = new ArrayList<String>();
-		transRecord.add(Integer.toString(tid));
-		transRecord.add(uid.toString());
-		transRecord.add(uid.toString());
-		transRecord.add(Integer.toString(amount));
-		transRecord.add(price.toString());
-		transRecord.add(ts.toString());
-		return transRecord;
-	}
+
 }
