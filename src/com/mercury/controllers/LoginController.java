@@ -60,48 +60,29 @@ public class LoginController {
 		this.rs = rs;
 	}
 	
+	//for login
 	@RequestMapping(value="login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 		return "login";
 	}
 	
-	@RequestMapping(value="login1", method = RequestMethod.POST)
-	public String login1(HttpServletRequest request) {
-		String username = request.getParameter("j_username");
-		String password = us.findUser(username).getPassWord();
-		
-		try {
-			UserDetails userDetails = userDetailsSvc.loadUserByUsername(username);
-			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-//			authMgr.authenticate(auth);
-		    // redirect into secured main page if authentication successful
-		    if(auth.isAuthenticated()) {
-		    	SecurityContextHolder.getContext().setAuthentication(auth);
-		        return "redirect:/home";
-		    }
-		} catch (Exception e) {
-//			logger.debug("Problem authenticating user" + username, e);
-		}
-		 
-		return "redirect:/error";
-	}
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView mainPage(Principal principal){
 		String username = principal.getName();
 		System.out.println(username);
-		UserInfo userInfo = us.process2(username);
+		UserInfo userInfo = us.userLogin(username);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
-		mav.addObject("title", "Sample06: Spring Security + Spring 3 MVC ~ Hibernate");
 		mav.addObject("userInfo", userInfo);
 		return mav;
 	}
 
+	//for sign up
 	@RequestMapping(value="/confirmation", method=RequestMethod.POST)
 	public ModelAndView process(@ModelAttribute("user") 
 			User user, BindingResult result) {
-		UserInfo userInfo = us.process(user);
+		UserInfo userInfo = rs.register(user);
 		rs.sendMail(user.getUserName(), user.getEmail());
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("confirmation");
@@ -112,7 +93,7 @@ public class LoginController {
 	@RequestMapping(value="/activateAccount", method = RequestMethod.GET)
 	public ModelAndView activeMail(HttpServletRequest request) {
 		String username = request.getParameter("username");
-		int enabled = us.findUser(username).getEnabled();
+		int enabled = us.findByUserName(username).getEnabled();
 		if(enabled==1){
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("linkoutoftime");
@@ -143,5 +124,23 @@ public class LoginController {
 			}
 		}
 		return "false";
+	}
+	
+	@RequestMapping(value="login_auto", method = RequestMethod.POST)
+	public String loginAuto(HttpServletRequest request) {
+		String username = request.getParameter("j_username");
+		String password = us.findByUserName(username).getPassWord();
+		try {
+			UserDetails userDetails = userDetailsSvc.loadUserByUsername(username);
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+		    // redirect into secured main page if authentication successful
+		    if(auth.isAuthenticated()) {
+		    	SecurityContextHolder.getContext().setAuthentication(auth);
+		        return "redirect:/home";
+		    }
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return "redirect:/error";
 	}
 }

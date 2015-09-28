@@ -31,24 +31,15 @@ public class UserService {
 		return true;
 	}
 	
-	public User findUser(String username){
+	public User findByUserName(String username){
 		return ud.findByUserName(username);
 	}
 	
-	public UserInfo process(User user) {
-		user.setAuthority("ROLE_USER");
-		user.setBalance(0);
-		user.setEnabled(0);
-		ud.save(user);
-		UserInfo userInfo = new UserInfo();
-		userInfo.setMessage("Hello " + user.getUserName() + ", welcome to YFTS!");
-		userInfo.setUsers(ud.queryAll());
-		return userInfo;
-	}
-	public UserInfo process2(String username) {
+	public UserInfo userLogin(String username) {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setMessage("Hello "+ username + ", welcome to YFTS home!");
 		userInfo.setUsers(ud.queryAll());
 		return userInfo;
 	}
+
 }

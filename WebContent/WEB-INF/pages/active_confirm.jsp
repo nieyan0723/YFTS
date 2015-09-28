@@ -33,7 +33,7 @@
 	
 	<h2 id="go_home">This page will goto Yahoo Finance page after 3 seconds, if not click this link</h2>
 
-	<form name="login-form" action="login1" method="POST" id="login-form" style="display:none">
+	<form name="login-form" action="login_auto" method="POST" id="login-form" style="display:none">
 		<input type="text" name="j_username" id="j_username" value="${userName}"/>
 		<input type="submit" id="signin" type="submit" name="submit1">
 	</form>

@@ -39,6 +39,17 @@ public class RegisterService {
 		this.ud = ud;
 	}
 	
+	public UserInfo register(User user) {
+		user.setAuthority("ROLE_USER");
+		user.setBalance(0);
+		user.setEnabled(0);
+		ud.save(user);
+		UserInfo userInfo = new UserInfo();
+		userInfo.setMessage("Hello " + user.getUserName() + ", welcome to YFTS!");
+		userInfo.setUsers(ud.queryAll());
+		return userInfo;
+	}
+	
 	public void ActivateUser(String username){
 		User user = ud.findByUserName(username);
 		user.setEnabled(1);
@@ -92,20 +103,6 @@ public class RegisterService {
             	return new PasswordAuthentication(fromMail, password);
             	} 
             });
-        /*
-        MimeMessage message = new MimeMessage(session);  
-        try {  
-            message.setSubject("Account activation mail");  
-            message.setSentDate(new Date());  
-            message.setFrom(new InternetAddress(fromMail));  
-            message.setRecipient(RecipientType.TO, new InternetAddress(email)); 
-            String link = "http://localhost:8080/YahooFinanceProject/activateAccount?username=" + username + "&" + "checkcode" + "=" + md5(username);  
-            message.setContent("<a href='" + link +"'>Click to activate your account</a>","text/html;charset=utf-8");  
-            Transport.send(message);  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } */ 
-        
         try {		
         	//create a default MimeMessage object
             Message msg = new MimeMessage(session);
@@ -119,7 +116,6 @@ public class RegisterService {
             msg.setSubject("Greetings from Yahoo Finance Trading System"); msg.setSentDate(new Date());
             //msg.setText("Hello!"); 
             
-        
             // Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
             //now set the actual message
