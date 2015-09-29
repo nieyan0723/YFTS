@@ -5,7 +5,10 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+
+import com.mercury.beans.Stock;
 import com.mercury.beans.Transaction;
+import com.mercury.beans.User;
 import com.mercury.dao.TransDao;
 
 public class TransDaoImpl implements TransDao {
@@ -30,16 +33,16 @@ public class TransDaoImpl implements TransDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Transaction> queryByUserId(int uid) {
+	public List<Transaction> queryByUser(User user) {
 		return sessionFactory.getCurrentSession().createCriteria(Transaction.class)
-				.add(Restrictions.eq("uid", uid)).list();
+				.add(Restrictions.eq("own.user", user)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Transaction> queryByStockId(int sid) {
+	public List<Transaction> queryByStock(Stock stock) {
 		return sessionFactory.getCurrentSession().createCriteria(Transaction.class)
-				.add(Restrictions.eq("sid", sid)).list();
+				.add(Restrictions.eq("own.stock", stock)).list();
 	}
 
 	@SuppressWarnings("unchecked")

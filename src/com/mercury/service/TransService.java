@@ -14,7 +14,6 @@ import com.mercury.dao.OwnInfoDao;
 import com.mercury.dao.StockDao;
 import com.mercury.dao.TransDao;
 import com.mercury.dao.UserDao;
-import com.mercury.util.CsvUtil;
 
 @Service
 public class TransService {
@@ -28,6 +27,8 @@ public class TransService {
 	private TransDao td;
 	@Autowired 
 	private OwnInfoDao od;
+	@Autowired
+	private CsvUtil cu;
 	
 	public TransDao getTd() {
 		return td;
@@ -68,12 +69,12 @@ public class TransService {
 
 	@Transactional
 	public List<Transaction> queryByUser(User user){
-		return td.queryByUserId(user.getUid());
+		return td.queryByUser(user);
 	}
 	
 	@Transactional
 	public List<Transaction> queryByStock(Stock stock){
-		return td.queryByUserId(stock.getSid());
+		return td.queryByStock(stock);
 	}
 	
 	@Transactional
@@ -83,7 +84,7 @@ public class TransService {
 	
 	@Transactional
 	public List<Transaction> getAllPendings(String path){
-		List<Transaction> list = CsvUtil.parseCSV(path + csvName);
+		List<Transaction> list = cu.parseCSV(path + csvName);
 		return list;
 	}
 	
@@ -91,7 +92,7 @@ public class TransService {
 	public List<Transaction> findPendingByUid(int uid, String path){
 		List<Transaction> list = getAllPendings(path);
 		for (Transaction t: list){
-			if (t.getUid() != uid){
+			if (t.getUser().getUid() != uid){
 				list.remove(t);
 			}
 		}
@@ -99,8 +100,9 @@ public class TransService {
 	}
 	
 	//Add new pending transaction to csv file
+	@Transactional
 	public void createPending(Transaction trans, String path){
-		CsvUtil.appendCSV(trans, path + csvName);
+		cu.appendCSV(trans, path + csvName);
 	}
 	
 	/*Commit pending transaction in csv file, save it to database, 
@@ -111,10 +113,10 @@ public class TransService {
 		//Parsing pending to transaction
 		List<Transaction> transList = getAllPendings(path);
 		Transaction tx = transList.get(transIndex);
-		User user = ud.findByUid(tx.getUid());
-		System.out.println("Uid: " + tx.getUid());
-		Stock stock = sd.findBySid(tx.getSid());
-		System.out.println("Sid: " + tx.getSid());
+		User user = tx.getUser();
+		System.out.println("Uid: " + user.getUid());
+		Stock stock = tx.getStock();
+		System.out.println("Sid: " + stock.getSid());
 		List<OwnershipInfo> ownList = od.findByOwn(user, stock);
 		OwnershipInfo ois = new OwnershipInfo();
 		ois.setUser(user);
@@ -131,13 +133,12 @@ public class TransService {
 		}		
 		//Calculate and update balance after transaction
 		int balance = user.getBalance();
-		System.out.println("balance: " + balance);
-		balance = (int) Math.round(balance - tx.getPrice().doubleValue() * change);
-		System.out.println("balance: " + balance);
+		balance = (int) Math.round(balance - tx.getPrice().doubleValue() * change) - 5;
 		if (balance < 0) balance = 0;
 		user.setBalance(balance);
+		user.addTrans(tx);			//Save transaction to databse
 		ud.update(user);
-		td.saveTransaction(tx);		//Save transaction to databse
+//		td.saveTransaction(tx);		
 		dropPending(transIndex, path);
 	}
 	
@@ -150,17 +151,19 @@ public class TransService {
 	}
 	
 	//Delete pending transaction from csv file
+	@Transactional
 	public void dropPending(int transIndex, String path){
 		List<Transaction> list = getAllPendings(path);
 		list.remove(transIndex);
-		CsvUtil.rewriteCSV(list, path + csvName);
+		cu.rewriteCSV(list, path + csvName);
 	}
 	
+	@Transactional
 	public void dropPendings(List<Integer> transList, String path){
 		List<Transaction> list = getAllPendings(path);
 		for (Integer i: transList){
 			list.remove(i);
 		}
-		CsvUtil.rewriteCSV(list, path + csvName);
+		cu.rewriteCSV(list, path + csvName);
 	}
 }

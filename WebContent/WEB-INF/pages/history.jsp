@@ -22,7 +22,7 @@
 </head>
 <body>
 	<h1>
-		<font color="red">All the pending transactions</font>
+		<font color="red">All the transaction history</font>
 	</h1>
 	<form id="listForm">
 		<table border="1">
@@ -37,8 +37,8 @@
 			<c:forEach var="tran" items="${transList}">
 				<tr>
 					<td>${tran.tid}</td>
-					<td>${tran.uid}</td>
-					<td>${tran.sid}</td>
+					<td>${tran.own.user.uid}</td>
+					<td>${tran.own.stock.sid}</td>
 					<td>${tran.amount}</td>
 					<td>${tran.price}</td>
 					<td>${tran.ts}</td>

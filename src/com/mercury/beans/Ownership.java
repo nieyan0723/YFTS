@@ -28,24 +28,6 @@ public class Ownership implements Serializable{
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
-	
-//	private Integer user;
-//	private Integer stock;	
-//	
-//	@ManyToOne
-//	public Integer getuser() {
-//		return user;
-//	}
-//	public void setuser(Integer user) {
-//		this.user = user;
-//	}
-//	@ManyToOne
-//	public Integer getstock() {
-//		return stock;
-//	}
-//	public void setstock(Integer stock) {
-//		this.stock = stock;
-//	}
 
 	@Override
 	public boolean equals(Object o){

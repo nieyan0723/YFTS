@@ -17,7 +17,6 @@ public class StockService {
 	public StockDao getSd() {
 		return sd;
 	}
-
 	public void setSd(StockDao sd){
 		this.sd = sd;
 	}	
