@@ -35,6 +35,7 @@ public class UserService {
 		return true;
 	}
 	
+<<<<<<< HEAD
 	@Transactional
 	public UserInfo process(User user) {
 		user.setAuthority("ROLE_USER");
@@ -49,9 +50,17 @@ public class UserService {
 	
 	@Transactional
 	public UserInfo process2() {
+=======
+	public User findByUserName(String username){
+		return ud.findByUserName(username);
+	}
+	
+	public UserInfo userLogin(String username) {
+>>>>>>> c6d0593cb61ce890472d4d796b103f41fe1b89d2
 		UserInfo userInfo = new UserInfo();
-		userInfo.setMessage("Hello , welcome to YFTS!");
+		userInfo.setMessage("Hello "+ username + ", welcome to YFTS home!");
 		userInfo.setUsers(ud.queryAll());
 		return userInfo;
 	}
+
 }

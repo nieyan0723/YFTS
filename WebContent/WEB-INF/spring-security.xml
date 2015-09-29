@@ -6,6 +6,7 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+<<<<<<< HEAD
 
 	<sec:http auto-config="true" use-expressions="true">
 		<sec:intercept-url pattern="/home*"
@@ -20,12 +21,43 @@
 
 			<sec:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="
+=======
+			
+	<sec:http auto-config="true"  use-expressions="true">
+    	<sec:intercept-url pattern="/home*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+    	<sec:intercept-url pattern="/pending*" access="hasRole('ROLE_ADMIN')"/>
+    	<sec:intercept-url pattern="/login_auto*" access="isAnonymous()"/>
+    	<sec:form-login 
+        	login-page="/login"
+        	authentication-success-handler-ref="loginSuccessfulAuthHandler"
+        	authentication-failure-url="/login?login_error=1" 
+        />
+        <sec:logout logout-success-url="/login"  delete-cookies="JSESSIONID"/>
+	</sec:http>
+	
+	<sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider>
+        	<sec:jdbc-user-service id="jdbcUserService" data-source-ref="dataSource"
+		   		users-by-username-query="
+>>>>>>> c6d0593cb61ce890472d4d796b103f41fe1b89d2
 		      		select username, password, enabled 
 		      		from yfts_user where username=?"
 				authorities-by-username-query="
 		      		select username, authority from yfts_user 
+<<<<<<< HEAD
 		      		where username =?" />
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 
+=======
+		      		where username =?" 
+			/>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+    <bean id="loginSuccessfulAuthHandler" class="com.mercury.security.LoginSuccessfulAuthenticationHandler">
+	    <property name="defaultTargetUrl" value="/home" />
+	    <property name="alwaysUseDefaultTargetUrl" value="true" />
+	</bean>
+ 	
+>>>>>>> c6d0593cb61ce890472d4d796b103f41fe1b89d2
 </beans>
