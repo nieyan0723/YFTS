@@ -24,8 +24,8 @@
 <form id="listForm" action="pending" method="post">
 	<table border="1">
 		<tr>
-			<th>User ID</th>
-			<th>Stock ID</th>
+			<th>User Name</th>
+			<th>Stock Symbol</th>
 			<th>Amount</th>
 			<th>Price</th>
 			<th>Transaction Time</th>
@@ -34,8 +34,8 @@
 		</tr>
 		<c:forEach var="tran" items="${transList}">
 			<tr>
-				<td>${tran.uid}</td>
-				<td>${tran.sid}</td>
+				<td>${tran.own.user.userName}</td>
+				<td>${tran.own.stock.symbol}</td>
 				<td>${tran.amount}</td>
 				<td>${tran.price}</td>
 				<td>${tran.ts}</td>

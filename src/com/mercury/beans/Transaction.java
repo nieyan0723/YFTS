@@ -2,34 +2,33 @@ package com.mercury.beans;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="YFTS_TRANS")
+@AssociationOverrides(value = { 
+		@AssociationOverride (name="own.user", joinColumns=@JoinColumn(name="USER_ID")),
+		@AssociationOverride (name="own.stock", joinColumns=@JoinColumn(name="STOCK_ID")) })
 public class Transaction {
 	private int tid;
-	private Integer uid;
-	private Integer sid;
+	private Ownership own = new Ownership();
 	private int amount;
 	private BigDecimal price;
 	private Timestamp ts;
 	
 	public Transaction(){}	
-		
-	public Transaction(Integer uid, Integer sid, int amount,
-			BigDecimal price, Timestamp ts) {
-		this.uid = uid;
-		this.sid = sid;
-		this.amount = amount;
-		this.price = price;
-		this.ts = ts;
-	}
 
 	@Id
 	@GeneratedValue(generator="trans_id_gen")
@@ -42,20 +41,28 @@ public class Transaction {
 		this.tid = tid;
 	}
 	
-	@Column(name="USER_ID")
-	public Integer getUid() {
-		return uid;
+	@Embedded
+	public Ownership getOwn() {
+		return own;
 	}
-	public void setUid(Integer uid) {
-		this.uid = uid;
+	public void setOwn(Ownership own) {
+		this.own = own;
 	}
 	
-	@Column(name="STOCK_ID")
-	public Integer getSid() {
-		return sid;
+	@Transient
+	public User getUser() {
+		return getOwn().getUser();
 	}
-	public void setSid(Integer sid) {
-		this.sid = sid;
+	public void setUser(User user) {
+		getOwn().setUser(user);
+	}
+	
+	@Transient
+	public Stock getStock() {
+		return getOwn().getStock();
+	}
+	public void setStock(Stock stock) {
+		getOwn().setStock(stock);
 	}
 	
 	@Column(name="AMOUNT")
@@ -84,7 +91,7 @@ public class Transaction {
 	
 	@Override
 	public String toString(){
-		return uid.toString()+","+sid.toString()
+		return Integer.toString(getUser().getUid())+ ","+ Integer.toString(getStock().getSid())
 				+","+Integer.toString(amount)+","+price.toString()+","
 				+ts.toString();
 	}

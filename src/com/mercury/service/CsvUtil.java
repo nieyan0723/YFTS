@@ -1,4 +1,4 @@
-package com.mercury.util;
+package com.mercury.service;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,25 +11,36 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.Transaction;
+import com.mercury.dao.StockDao;
+import com.mercury.dao.UserDao;
 
-
+@Service
 public class CsvUtil {
-	public static String csvPath;
+	public String csvPath;
+	
+	@Autowired
+	private UserDao ud;
+	@Autowired
+	private StockDao sd;	
 	
 	public CsvUtil(){}
 	public CsvUtil(String csvPath){
-		CsvUtil.csvPath = csvPath;
+		this.csvPath = csvPath;
 	}
 	public String getCsvPath() {
 		return csvPath;
 	}
 	public void setCsvPath(String csvPath) {
-		CsvUtil.csvPath = csvPath;
+		this.csvPath = csvPath;
 	}
 	
-	public static List<Transaction> parseCSV(String csvFile){
+	@Transactional
+	public List<Transaction> parseCSV(String csvFile){
 		List<Transaction> list = new ArrayList<Transaction>();
 		try{
 			FileReader fr = new FileReader(csvFile);
@@ -37,8 +48,8 @@ public class CsvUtil {
 			List<CSVRecord> l = parser.getRecords();
 			for (CSVRecord r:l){
 				Transaction ts = new Transaction();
-				ts.setUid(Integer.parseInt(r.get(0)));
-				ts.setSid(Integer.parseInt(r.get(1)));
+				ts.setUser(ud.findByUid(Integer.parseInt(r.get(0))));
+				ts.setStock(sd.findBySid(Integer.parseInt(r.get(1))));
 				ts.setAmount(Integer.parseInt(r.get(2)));
 				ts.setPrice(new BigDecimal(r.get(3)));
 				ts.setTs(Timestamp.valueOf(r.get(4)));
@@ -53,7 +64,7 @@ public class CsvUtil {
 		return list;
 	}
 	
-	public static void appendCSV(Transaction trans, String csvFile){
+	public void appendCSV(Transaction trans, String csvFile){
 		try{
 			FileWriter fw = new FileWriter(csvFile, true);			
 			CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT);
@@ -66,7 +77,7 @@ public class CsvUtil {
 		}
 	}
 	
-	public static void rewriteCSV(List<Transaction> trans, String csvFile){
+	public void rewriteCSV(List<Transaction> trans, String csvFile){
 		try{
 			FileWriter fw = new FileWriter(csvFile);
 			CSVPrinter cp = new CSVPrinter(fw, CSVFormat.DEFAULT);
@@ -81,12 +92,4 @@ public class CsvUtil {
 		}
 	}
 	
-	public static void main(String[] args){
-		Transaction t1 = new Transaction(1,1,1000,new BigDecimal(20.02f), new Timestamp(System.currentTimeMillis()));
-		Transaction t2 = new Transaction(2,2,-1000,new BigDecimal(20.02f), new Timestamp(System.currentTimeMillis()));
-		List<Transaction> list = new ArrayList<Transaction>();
-		list.add(t1);
-		list.add(t2);
-		rewriteCSV(list, "test.csv");
-	}
 }

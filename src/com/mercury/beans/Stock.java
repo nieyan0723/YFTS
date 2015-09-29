@@ -25,6 +25,7 @@ public class Stock implements Serializable{
 	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
 	
 //	private Set<Transaction> trans = new HashSet<Transaction>();
+	private Set<Transaction> trans = new HashSet<Transaction>();
 	
 	@Id
 	@GeneratedValue(generator="stock_id_gen")
@@ -53,7 +54,7 @@ public class Stock implements Serializable{
 		this.stockName = stockName;
 	}
 	
-	@OneToMany(mappedBy="own.stock", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="own.stock", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<OwnershipInfo> getOwns() {
 		return owns;
 	}
@@ -67,17 +68,17 @@ public class Stock implements Serializable{
 		owns.remove(osi);
 	}
 	
-//	@OneToMany(targetEntity=Stock.class, mappedBy="sid", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//	public Set<Transaction> getTrans() {
-//		return trans;
-//	}
-//	public void setTrans(Set<Transaction> trans) {
-//		this.trans = trans;
-//	}
-//	public void addTrans(Transaction tran){
-//		trans.add(tran);
-//	}
-//	public void removeTrans(Transaction tran){
-//		trans.remove(tran);
-//	}
+	@OneToMany(mappedBy="own.stock", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	public Set<Transaction> getTrans() {
+		return trans;
+	}
+	public void setTrans(Set<Transaction> trans) {
+		this.trans = trans;
+	}
+	public void addTrans(Transaction tran){
+		trans.add(tran);
+	}
+	public void removeTrans(Transaction tran){
+		trans.remove(tran);
+	}
 }
