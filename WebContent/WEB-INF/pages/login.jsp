@@ -165,6 +165,9 @@
 				<td><input type="text" name="lastName" id="j_lastName" /></td>
 			</tr>
 			<tr>
+				<td colspan="2">I agree YFTS<a href="terms">Terms</a> and <a href="policy">Policy</a></td>
+			</tr>
+			<tr>
 				<td></td>
 				<td><input type="reset" value="Clear" id="clear2" /> <input
 					type="submit" value="Submit2" id="register" /></td>

@@ -56,7 +56,7 @@ public class RegisterService {
 		ud.update(user);
 	}
 	
-	private static String md5(String string) {  
+	public String md5(String string) {  
         MessageDigest md = null;  
         try {  
             md = MessageDigest.getInstance("md5");  

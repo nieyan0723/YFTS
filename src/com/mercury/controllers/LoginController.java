@@ -93,17 +93,26 @@ public class LoginController {
 	@RequestMapping(value="/activateAccount", method = RequestMethod.GET)
 	public ModelAndView activeMail(HttpServletRequest request) {
 		String username = request.getParameter("username");
-		int enabled = us.findByUserName(username).getEnabled();
-		if(enabled==1){
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("linkoutoftime");
+		User user = us.findByUserName(username);
+		String checkcode = request.getParameter("checkcode");
+		ModelAndView mav = new ModelAndView();
+		System.out.println(rs.md5(username).equals(checkcode));
+		if(rs.md5(username).equals(checkcode)){
+			
+			int enabled = user.getEnabled();
+			if(enabled==1){
+				mav.setViewName("linkoutoftime");
+				return mav;
+			}
+			rs.ActivateUser(username);
+			mav.setViewName("active_confirm");
+			mav.addObject("userName", username);
 			return mav;
 		}
-		rs.ActivateUser(username);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("active_confirm");
-		mav.addObject("userName", username);
+		mav.setViewName("error");
+		mav.addObject("content","invalid link");
 		return mav;
+		
 	}
 	
 	@RequestMapping(value="/registervalidation", method=RequestMethod.POST)
