@@ -46,6 +46,7 @@ public class StockDaoImpl implements StockDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Stock> queryAll() {
+		System.out.println("123");
 		return sessionFactory.getCurrentSession().createCriteria(Stock.class)
 				.addOrder(Order.asc("sid")).list();
 	}
