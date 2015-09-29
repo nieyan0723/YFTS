@@ -3,45 +3,50 @@ package com.mercury.dao.impl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.mercury.beans.Stock;
 import com.mercury.dao.StockDao;
 
+@Repository
 public class StockDaoImpl implements StockDao {
-	private HibernateTemplate template;
+	private SessionFactory sessionFactory;
 	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		template = new HibernateTemplate(sessionFactory);
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	public void save(Stock stock) {
-		template.save(stock);
+		sessionFactory.getCurrentSession().save(stock);
 	}
 
 	@Override
 	public void delete(Stock stock) {
-		template.delete(stock);
+		sessionFactory.getCurrentSession().delete(stock);
 	}
 
 	@Override
 	public Stock findBySid(int sid) {
-		return template.get(Stock.class, sid);
+		return (Stock) sessionFactory.getCurrentSession().get(Stock.class, sid);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Stock> findBySymbol(String symbol) {
-		return template.findByCriteria(DetachedCriteria.forClass(Stock.class).add(Restrictions.eq("symbol", symbol)));
+		return sessionFactory.getCurrentSession().createCriteria(Stock.class)
+				.add(Restrictions.eq("symbol", symbol)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Stock> queryAll() {
-		String hql = "from Stock";
-		return template.find(hql);
+		return sessionFactory.getCurrentSession().createCriteria(Stock.class)
+				.addOrder(Order.asc("sid")).list();
 	}
 }

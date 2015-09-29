@@ -44,6 +44,8 @@ public class CsvUtil {
 				ts.setTs(Timestamp.valueOf(r.get(4)));
 				list.add(ts);
 			}
+			fr.close();
+			parser.close();
 			
 		}catch (Exception e){
 			e.printStackTrace();

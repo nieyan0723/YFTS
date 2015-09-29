@@ -100,8 +100,8 @@ create table yfts_trans
 	constraint yfts_trans_sid_fk foreign key (stock_id) references yfts_stock (stock_id)
 );
 
-insert into yfts_user values(1,'user','123456','123@123.com','user','user',900,'ROLE_USER',1);
-insert into yfts_user values(2,'admin','123456','234@123.com','admin','admin',900,'ROLE_ADMIN',1);
+insert into yfts_user values(1,'user','123456','123@123.com','user','user',1000000,'ROLE_USER',1);
+insert into yfts_user values(2,'admin','123456','234@123.com','admin','admin',1000000,'ROLE_ADMIN',1);
 
 insert into yfts_stock values(1,'BOA','Bank of America');
 insert into yfts_stock values(2,'GOOG','Google');

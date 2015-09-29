@@ -31,7 +31,7 @@ public class TransController {
 	}
 	
 	@RequestMapping(value="/pending")
-	public ModelAndView listPendings(HttpServletRequest request){
+	public ModelAndView listPendings(HttpServletRequest request) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		ServletContext context = request.getServletContext();
 		List<Transaction> transList = ts.getAllPendings(context.getRealPath("CSV"));

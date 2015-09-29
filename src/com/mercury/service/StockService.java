@@ -1,11 +1,10 @@
 package com.mercury.service;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.Stock;
 import com.mercury.dao.StockDao;
@@ -23,34 +22,33 @@ public class StockService {
 		this.sd = sd;
 	}	
 	
+	@Transactional
 	public void addStock(Stock stock){
 		stock.setSymbol(stock.getSymbol().toUpperCase());
 		sd.save(stock);
 	}
 	
+	@Transactional
 	public void removeStock(Stock stock){
 		sd.delete(stock);
 	}
 	
+	@Transactional
 	public Stock loadById(int id){
 		return sd.findBySid(id);
 	}
 	
+	@Transactional
 	public List<Stock> getByName(String name){
 		return sd.findBySymbol(name);
 	}
 	
+	@Transactional
 	public List<Stock> getAllStock(){
-		List<Stock> list = sd.queryAll();
-		Collections.sort(list, new Comparator<Stock>(){
-			@Override
-			public int compare(Stock a, Stock b){
-				return a.getSid() - b.getSid();
-			}
-		});
-		return list;
+		return sd.queryAll();
 	}
 	
+	@Transactional
 	public boolean hasStock(Stock stock){
 		List<Stock> s = getByName(stock.getSymbol().toUpperCase());
 		if (s == null || s.size() == 0){

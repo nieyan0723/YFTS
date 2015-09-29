@@ -1,4 +1,5 @@
-<%@ page import="java.util.*,java.sql.*,javax.naming.*,javax.sql.*,org.apache.tomcat.dbcp.dbcp.BasicDataSource" %>
+<%@ page
+	import="java.util.*,java.sql.*,javax.naming.*,javax.sql.*,org.apache.tomcat.dbcp.dbcp.BasicDataSource"%>
 
 <% 
 /**
@@ -23,19 +24,20 @@
 
 <html>
 <head>
-	<title>Alive</title>
-	<style>
-		span {
-			color: green
-		}
-		div {
-			color: red
-		}
-	</style>
+<title>Alive</title>
+<style>
+span {
+	color: green
+}
+
+div {
+	color: red
+}
+</style>
 </head>
 <body>
 
-<% 
+	<% 
 	for (String key: connectionList.keySet()) {
 		Context initCtx = null;
 		Context env = null;

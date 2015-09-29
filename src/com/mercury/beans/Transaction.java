@@ -31,8 +31,6 @@ public class Transaction {
 		this.ts = ts;
 	}
 
-
-
 	@Id
 	@GeneratedValue(generator="trans_id_gen")
 	@GenericGenerator(name="trans_id_gen", strategy="increment")

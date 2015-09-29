@@ -11,6 +11,8 @@ public class Ownership implements Serializable{
 	private User user;
 	private Stock stock;
 	
+	public Ownership () {}
+	
 	@ManyToOne
 	public User getUser() {
 		return user;
@@ -27,6 +29,24 @@ public class Ownership implements Serializable{
 		this.stock = stock;
 	}
 	
+//	private Integer user;
+//	private Integer stock;	
+//	
+//	@ManyToOne
+//	public Integer getuser() {
+//		return user;
+//	}
+//	public void setuser(Integer user) {
+//		this.user = user;
+//	}
+//	@ManyToOne
+//	public Integer getstock() {
+//		return stock;
+//	}
+//	public void setstock(Integer stock) {
+//		this.stock = stock;
+//	}
+
 	@Override
 	public boolean equals(Object o){
 		if (!(o instanceof Ownership)) return false;
@@ -49,7 +69,7 @@ public class Ownership implements Serializable{
 	
 	@Override
 	public int hashCode(){
-		int hash = user!=null ? user.hashCode() : 0; 
+		int hash = user !=null ? user.hashCode() : 0; 
 		hash = 31 * hash + (stock!=null ? stock.hashCode() : 0);
 		return hash;
 	}

@@ -18,9 +18,11 @@ import javax.persistence.Transient;
 		@AssociationOverride (name="own.user", joinColumns=@JoinColumn(name="USER_ID")),
 		@AssociationOverride (name="own.stock", joinColumns=@JoinColumn(name="STOCK_ID")) })
 public class OwnershipInfo {
-	private Ownership own;
+	private Ownership own = new Ownership();
 	private Integer quantity;
 	
+	public OwnershipInfo() {}
+		
 	@EmbeddedId
 	public Ownership getOwn() {
 		return own;
@@ -67,7 +69,7 @@ public class OwnershipInfo {
 	}
 	
 	@Override
-	public int hashCode(){		
+	public int hashCode(){
 		return getOwn()!=null ? getOwn().hashCode() : 0;
 	}
 }

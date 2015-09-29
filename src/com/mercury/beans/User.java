@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="YFTS_USER")
@@ -29,7 +30,7 @@ public class User implements Serializable{
 	private String authority;
 	private int enabled;
 	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
-	private Set<Transaction> trans = new HashSet<Transaction>();
+//	private Set<Transaction> trans = new HashSet<Transaction>();
 
 	@Id
 	@GeneratedValue(generator="user_id_gen")
@@ -120,17 +121,17 @@ public class User implements Serializable{
 		owns.remove(osi);
 	}	
 	
-	@OneToMany(targetEntity=User.class, mappedBy="uid", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public Set<Transaction> getTrans() {
-		return trans;
-	}
-	public void setTrans(Set<Transaction> trans) {
-		this.trans = trans;
-	}
-	public void addTrans(Transaction tran){
-		trans.add(tran);
-	}
-	public void removeTrans(Transaction tran){
-		trans.remove(tran);
-	}
+//	@OneToMany(targetEntity=User.class, mappedBy="uid", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//	public Set<Transaction> getTrans() {
+//		return trans;
+//	}
+//	public void setTrans(Set<Transaction> trans) {
+//		this.trans = trans;
+//	}
+//	public void addTrans(Transaction tran){
+//		trans.add(tran);
+//	}
+//	public void removeTrans(Transaction tran){
+//		trans.remove(tran);
+//	}
 }

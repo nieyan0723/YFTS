@@ -2,6 +2,7 @@ package com.mercury.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.beans.User;
 import com.mercury.beans.UserInfo;
@@ -19,6 +20,7 @@ public class MainService {
 		this.ud = ud;
 	}
 	
+	@Transactional
 	public UserInfo process(User user) {
 		ud.save(user);
 		UserInfo userInfo = new UserInfo();
