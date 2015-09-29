@@ -1,6 +1,11 @@
 package com.mercury.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.Stock;
+import com.mercury.beans.StockInfo;
 import com.mercury.service.StockService;
 
 @Controller
@@ -22,6 +28,9 @@ public class StockController {
 	@Autowired
 	private StockService ss;
 
+	private List<Stock> stocks;
+	private List<StockInfo> si;
+	
 	public StockService getSs() {
 		return ss;
 	}
@@ -61,5 +70,18 @@ public class StockController {
 	public String addStock(@ModelAttribute("stock") Stock stock, BindingResult result){
 		ss.addStock(stock);
 		return "redirect:stock";
+	}
+	
+	@RequestMapping(value="/market", method=RequestMethod.GET)
+	@ResponseBody
+	public List<StockInfo> market() {
+		stocks = ss.getAllStock();
+		si= ss.getInfo(stocks);
+		return si;
+	}
+	
+	@RequestMapping(value="/marketdata", method=RequestMethod.GET)
+	public String marketData() {
+		return "marketdata";
 	}
 }

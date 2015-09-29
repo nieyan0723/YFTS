@@ -1,17 +1,13 @@
 package com.mercury.beans;
 
+import java.util.List;
+
 
 public class StockInfo {
-	private String id;
 	private double price;
 	private double change;
+	private String symbol;
 	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public double getPrice() {
 		return price;
 	}
@@ -24,5 +20,13 @@ public class StockInfo {
 	public void setChange(double change) {
 		this.change = change;
 	}
+	public String getSymbol() {
+		return symbol;
+	}
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+	
+	
 	
 }

@@ -98,7 +98,6 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(rs.md5(username).equals(checkcode));
 		if(rs.md5(username).equals(checkcode)){
-			
 			int enabled = user.getEnabled();
 			if(enabled==1){
 				mav.setViewName("linkoutoftime");

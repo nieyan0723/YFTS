@@ -23,6 +23,7 @@ public class Stock implements Serializable{
 	private String symbol;
 	private String stockName;
 	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
+	
 //	private Set<Transaction> trans = new HashSet<Transaction>();
 	
 	@Id
