@@ -30,18 +30,22 @@ public class TransController {
 		this.ts = ts;
 	}
 	
+	
 	@RequestMapping(value="/pending")
-	public ModelAndView listPendings(HttpServletRequest request) throws Exception{
-		ModelAndView mav = new ModelAndView();
+	public String listPendings(HttpServletRequest request) throws Exception{
+		return "pending";
+	}
+	
+	@RequestMapping(value="/getPending")
+	@ResponseBody
+	public List<Transaction> getPending(HttpServletRequest request) throws Exception{
 		ServletContext context = request.getServletContext();
-		List<Transaction> transList = ts.getAllPendings(context.getRealPath("CSV"));
-		mav.setViewName("pending");
-		mav.addObject("transList", transList);
-		return mav;
+		List<Transaction> pendingList = ts.getAllPendings(context.getRealPath("CSV"));
+		return pendingList;
 	}
 	
 	//Drop a pending transaction
-	@RequestMapping(value="/pending", params="drop", method=RequestMethod.POST)
+	@RequestMapping(value="/pending", params="drop", method=RequestMethod.GET)
 	public String dropPending(@RequestParam("drop") int tid, HttpServletRequest request) throws Exception {
 		ServletContext context = request.getServletContext();
 		ts.dropPending(tid, context.getRealPath("CSV"));
@@ -49,7 +53,7 @@ public class TransController {
 	}
 	
 	//Commit a pending transaction
-	@RequestMapping(value="/pending", params="commit", method=RequestMethod.POST)
+	@RequestMapping(value="/pending", params="commit", method=RequestMethod.GET)
 	public String commitPending(@RequestParam("commit") int tid, HttpServletRequest request) throws Exception {
 		ServletContext context = request.getServletContext();
 		ts.commitPending(tid, context.getRealPath("CSV"));
