@@ -93,11 +93,11 @@ public class Transaction {
 		this.ts = ts;
 	}
 	
-//	@Override
-//	public String toString(){
-//		return Integer.toString(getUser().getUid())+ ","+ Integer.toString(getStock().getSid())
-//				+","+Integer.toString(amount)+","+price.toString()+","
-//				+ts.toString();
-//	}
+	@Override
+	public String toString(){
+		return Integer.toString(getUser().getUid())+ ","+ Integer.toString(getStock().getSid())
+				+","+Integer.toString(amount)+","+price.toString()+","
+				+ts.toString();
+	}
 
 }
