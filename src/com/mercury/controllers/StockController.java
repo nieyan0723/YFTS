@@ -63,6 +63,8 @@ public class StockController {
 		if (ss.hasStock(stock)){
 			System.out.println("Stock already exists!");
 			return "Stock already exists!";
+		}else if(!ss.realStock(stock)){
+			return "Not a valid stock!";
 		}
 		return "valid";
 	}	

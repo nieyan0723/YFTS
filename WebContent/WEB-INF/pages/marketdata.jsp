@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<script src="js/angular.min.js"></script>
+<!-- <script src="js/angular.min.js"></script>
+<script src="../../js/angular-resource.min.js"></script>angularJS Ajax call: http call -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script>
@@ -19,7 +20,7 @@
 			}).success(function(data) {
 				$scope.stocksArray = data;
 			}).error(function(data) {
-				alert(data);
+				alert("AJAX ERROR!");
 			});
 		}, 500);
 	});	
@@ -37,16 +38,22 @@
 		<table id="stockList" border="1" style="width: 500px">
 			<tr>
 				<th>Stock ID</th>
+				<th>Stock Name</th>
 				<th>Price</th>
 				<th>Change</th>
 			</tr>
 			<tr ng-repeat="stock in stocksArray">
 				<td>{{stock.symbol}}</td>
-				<td>{{stock.price}}</td>
+				<td>{{stock.stockName}}</td>
+				<td>
+					<b ng-if="stock.stockName=='Not Exist'">Not Exist</b>
+					<b ng-if="stock.stockName!='Not Exist'">{{stock.price}}</b>
+				</td>
 				<td>
 					<b ng-if="stock.change>0" style="color:green">{{stock.change}}</b>
 					<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
-					<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
+					<b ng-if="stock.change==0 && stock.stockName!='Not Exist'" style="color:black">{{stock.change}}</b>
+					<b ng-if="stock.stockName=='Not Exist'" style="color:black">Not Exist</b>
 				</td>
 			</tr>
 		</table>

@@ -27,6 +27,14 @@ public class StockService {
 		this.sd = sd;
 	}	
 	
+	public boolean realStock(Stock stock){
+		StockInfo stockInfo = getStockInfo(stock);
+		if(!stockInfo.getStockName().equals("Not Exist")){
+			return true;
+		}
+		return false;
+	}
+	
 	@Transactional
 	public void addStock(Stock stock){
 		stock.setSymbol(stock.getSymbol().toUpperCase());
@@ -63,8 +71,9 @@ public class StockService {
 		}
 	}
 	
-	public StockInfo getPrice(Stock stock) {
+	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1&e=.c";
+		String stockName = "Not Exist";
 		double price = 0;
 		double change = 0;
 		try {
@@ -72,15 +81,20 @@ public class StockService {
 			URLConnection urlconn = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlconn.getInputStream()));
 			String content = in.readLine();
+			System.out.println(content);
 			content = content.replace((char)34, (char)32);//' ' replace '"'
 			String[] tokens = content.split(",");
-			price = Double.parseDouble(tokens[tokens.length-1].trim());
-			change = Double.parseDouble(tokens[tokens.length-2].trim());
+			if(!tokens[tokens.length-3].trim().equals("N/A")){
+				stockName = tokens[tokens.length-3].trim();
+				price = Double.parseDouble(tokens[tokens.length-1].trim());
+				change = Double.parseDouble(tokens[tokens.length-2].trim());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		StockInfo si = new StockInfo();
 		si.setSymbol(stock.getSymbol());
+		si.setStockName(stockName);
 		si.setPrice(price);
 		si.setChange(change);
 		return si;
@@ -90,7 +104,7 @@ public class StockService {
 	public List<StockInfo> getInfo(List<Stock> stocks) {
 		List<StockInfo> sf = new ArrayList<StockInfo>();
 		for (Stock s : stocks) {
-			sf.add(getPrice(s));
+			sf.add(getStockInfo(s));
 		}
 		return sf;
 	}

@@ -6,6 +6,13 @@ import java.util.List;
 public class StockInfo {
 	private double price;
 	private double change;
+	private String stockName;
+	public String getStockName() {
+		return stockName;
+	}
+	public void setStockName(String stockName) {
+		this.stockName = stockName;
+	}
 	private String symbol;
 	
 	public double getPrice() {

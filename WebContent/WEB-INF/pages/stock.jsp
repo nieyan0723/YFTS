@@ -14,33 +14,12 @@
 	$(document).ready(function(){
  		$("#j_symbol").on("blur", validateForm);
  		$("#j_stockName").on("blur", validateForm);
-		$("#j_symbol").on("input", function(){
-			var newStock = {symbol: $("#j_symbol").val()};
-			$.ajax({
-				url: "validateStock",
-				type: "get",
-				dataType: "text",
-				data: newStock,
-				async: false,
-				success: function(response){
-					if (response != "valid"){
-						$("#stock_error").text(response);
-						$("#stock_error").css("visibility", "visible");
-						$("#j_add").prop("disabled", true);
-					}else {
-						$("#stock_error").css("visibility", "hidden");
-					}
-				},
-				error: function(){
-					alert("error");
-				}
-			});
-		});
 	});
 
 	function validateForm(){
 		var symbol = $("#j_symbol").val();
 		var stockName = $("#j_stockName").val();
+		var newStock = {symbol: $("#j_symbol").val()};
 		if (symbol.length==0){
 			$("#symbol_error").text("Please input valid stock symbol!");
 			$("#symbol_error").css("visibility", "visible");
@@ -59,6 +38,26 @@
 		if (symbol.length!=0 && stockName.length!=0 && $("#stock_error").css("visibility")!="visible"){
 			$("#j_add").prop("disabled", false);
 		}
+		
+		$.ajax({
+			url: "validateStock",
+			type: "get",
+			dataType: "text",
+			data: newStock,
+			async: false,
+			success: function(response){
+				if (response != "valid"){
+					$("#stock_error").text(response);
+					$("#stock_error").css("visibility", "visible");
+					$("#j_add").prop("disabled", true);
+				}else {
+					$("#stock_error").css("visibility", "hidden");
+				}
+			},
+			error: function(){
+				alert("error");
+			}
+		});
 	};
 </script>
 <style type="text/css">
