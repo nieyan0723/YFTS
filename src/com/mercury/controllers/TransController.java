@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,11 +22,10 @@ import com.mercury.service.TransService;
 public class TransController {
 	@Autowired
 	private TransService ts;
-
+	
 	public TransService getTs() {
 		return ts;
 	}
-
 	public void setTs(TransService ts) {
 		this.ts = ts;
 	}
@@ -53,15 +53,19 @@ public class TransController {
 	public String commitPending(@RequestParam("commit") int tid, HttpServletRequest request) throws Exception {
 		ServletContext context = request.getServletContext();
 		ts.commitPending(tid, context.getRealPath("CSV"));
+		ts.dropPending(tid, context.getRealPath("CSV"));
 		return "redirect:pending";
 	}
 	
-	@RequestMapping(value="/history")
-	public ModelAndView listHistory(){
-		ModelAndView mav = new ModelAndView();
-		List<Transaction> transList = ts.queryAll();
-		mav.setViewName("history");
-		mav.addObject("transList", transList);
-		return mav;
+	@RequestMapping(value="/getHistory", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Transaction> getHistory(){
+		return ts.queryAll();
 	}
+	
+	@RequestMapping(value="/history", method=RequestMethod.GET)
+	public String listHistroy(){
+		return "history";
+	}
+
 }

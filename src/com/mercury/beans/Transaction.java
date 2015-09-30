@@ -14,7 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.mercury.json.TimestampSerializer;
 
 @Entity
 @Table(name="YFTS_TRANS")
@@ -82,6 +85,7 @@ public class Transaction {
 	}
 	
 	@Column(name="TRANS_TIME")
+	@JsonSerialize(using=TimestampSerializer.class)
 	public Timestamp getTs() {
 		return ts;
 	}
@@ -89,11 +93,11 @@ public class Transaction {
 		this.ts = ts;
 	}
 	
-	@Override
-	public String toString(){
-		return Integer.toString(getUser().getUid())+ ","+ Integer.toString(getStock().getSid())
-				+","+Integer.toString(amount)+","+price.toString()+","
-				+ts.toString();
-	}
+//	@Override
+//	public String toString(){
+//		return Integer.toString(getUser().getUid())+ ","+ Integer.toString(getStock().getSid())
+//				+","+Integer.toString(amount)+","+price.toString()+","
+//				+ts.toString();
+//	}
 
 }

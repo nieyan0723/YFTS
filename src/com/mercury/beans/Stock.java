@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 @SuppressWarnings("serial")
@@ -23,8 +24,6 @@ public class Stock implements Serializable{
 	private String symbol;
 	private String stockName;
 	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
-	
-//	private Set<Transaction> trans = new HashSet<Transaction>();
 	private Set<Transaction> trans = new HashSet<Transaction>();
 	
 	@Id
@@ -54,6 +53,7 @@ public class Stock implements Serializable{
 		this.stockName = stockName;
 	}
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="own.stock", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<OwnershipInfo> getOwns() {
 		return owns;
@@ -68,6 +68,7 @@ public class Stock implements Serializable{
 		owns.remove(osi);
 	}
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="own.stock", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<Transaction> getTrans() {
 		return trans;

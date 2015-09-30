@@ -114,9 +114,7 @@ public class TransService {
 		List<Transaction> transList = getAllPendings(path);
 		Transaction tx = transList.get(transIndex);
 		User user = tx.getUser();
-		System.out.println("Uid: " + user.getUid());
 		Stock stock = tx.getStock();
-		System.out.println("Sid: " + stock.getSid());
 		List<OwnershipInfo> ownList = od.findByOwn(user, stock);
 		OwnershipInfo ois = new OwnershipInfo();
 		ois.setUser(user);
@@ -127,7 +125,6 @@ public class TransService {
 			ois.setQuantity(change < 0 ? 0 : change);
 			user.addOwns(ois);
 		}else {
-			System.out.println(ownList);
 			change += ownList.get(0).getQuantity();
 			ownList.get(0).setQuantity(change < 0 ? 0 : change);
 		}		
@@ -138,8 +135,6 @@ public class TransService {
 		user.setBalance(balance);
 		user.addTrans(tx);			//Save transaction to databse
 		ud.update(user);
-//		td.saveTransaction(tx);		
-		dropPending(transIndex, path);
 	}
 	
 	@Transactional

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -107,6 +108,7 @@ public class User implements Serializable{
 		this.enabled = enabled;
 	}
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="own.user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<OwnershipInfo> getOwns() {
 		return owns;
@@ -121,6 +123,7 @@ public class User implements Serializable{
 		owns.remove(osi);
 	}	
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="own.user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	public Set<Transaction> getTrans() {
 		return trans;
