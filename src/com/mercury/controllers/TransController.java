@@ -1,5 +1,6 @@
 package com.mercury.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -15,19 +16,31 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.beans.Transaction;
+import com.mercury.beans.User;
 import com.mercury.service.TransService;
+import com.mercury.service.UserService;
 
 @Controller
 @SessionAttributes
 public class TransController {
 	@Autowired
 	private TransService ts;
+	@Autowired
+	private UserService us;
 	
 	public TransService getTs() {
 		return ts;
 	}
 	public void setTs(TransService ts) {
 		this.ts = ts;
+	}
+	
+	@RequestMapping(value="/validTran")
+	@ResponseBody
+	public User getValidUser(Principal principal){
+		String userName = principal.getName();
+		System.out.println("UserName: " + userName);
+		return us.findByUserName(userName);
 	}
 	
 	

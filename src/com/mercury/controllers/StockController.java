@@ -1,13 +1,7 @@
 package com.mercury.controllers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -59,7 +53,6 @@ public class StockController {
 	@RequestMapping(value="/validateStock", method=RequestMethod.GET)
 	@ResponseBody
 	public String validateStock(@ModelAttribute("stock") Stock stock, BindingResult result){
-		System.out.println(stock.getSymbol() + "\t" + stock.getStockName());
 		if (ss.hasStock(stock)){
 			System.out.println("Stock already exists!");
 			return "Stock already exists!";
