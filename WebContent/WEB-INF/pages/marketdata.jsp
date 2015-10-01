@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <title>Real Time Market Data</title>
@@ -33,6 +34,18 @@
 </style>
 </head>
 <body ng-app="ui.bootstrap.demo">
+	<nav>
+		<ul>
+			<li><a href="home">HOME</a></li>
+			<li>ABOUT</li>
+			<li><a href="portfolio">My portfolio</a></li>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li><a href="pending">Pending</a></li>
+			</sec:authorize>
+			<li><a href="marketdata">Market data</a></li>
+		</ul>
+	</nav>
+<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
 	<h2>This demo is show real time market data using Angular JS</h2>
 	<div  ng-controller="ModalDemoCtrl">
 		<h3>Market Data</h3>

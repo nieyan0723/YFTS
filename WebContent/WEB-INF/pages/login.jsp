@@ -117,9 +117,8 @@ background-color:yellow;
 <body>
 <nav>
 	<ul>
-		<li><a href="login">HOME</a></li>
+		<li><a href="home">HOME</a></li>
 		<li>ABOUT</li>
-		<li>My portfolio</li>
 		<li><a href="marketdata">Market data</a></li>
 	</ul>
 </nav>

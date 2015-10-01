@@ -39,17 +39,11 @@ public class TransController {
 	@RequestMapping(value="/validTran")
 	@ResponseBody
 	public User getValidUser(Principal principal){
-<<<<<<< HEAD
-		String userName = principal.getName();
-		System.out.println("UserName: " + userName);
-		return us.findUserByUserName(userName);
-=======
 		String userName = null;
 		if (principal != null && principal.getName() != null){
 			userName = principal.getName();			
 		}
-		return us.findByUserName(userName);
->>>>>>> 1263fac38a47c326a18722be4c3d0fec9d6d51e2
+		return us.findUserByUserName(userName);
 	}
 	
 	

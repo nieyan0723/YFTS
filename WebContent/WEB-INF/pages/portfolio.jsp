@@ -8,6 +8,15 @@
 <title>Portfolio</title>
 </head>
 <body>
+	<nav>
+		<ul>
+			<li><a href="home">HOME</a></li>
+			<li>ABOUT</li>
+			<li><a href="portfolio">My portfolio</a></li>
+			<li><a href="marketdata">Market data</a></li>
+		</ul>
+	</nav>
+<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
 	<form action="portfolio" id="listUserStocks" method="post">
 		<table border="1">
 			<tr>

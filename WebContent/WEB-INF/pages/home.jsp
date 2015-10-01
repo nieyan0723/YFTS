@@ -11,6 +11,19 @@
 <title>YFTS</title>
 </head>
 <body>
+	<nav>
+		<ul>
+			<li><a href="home">HOME</a></li>
+			<li>ABOUT</li>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<li><a href="portfolio">My portfolio</a></li>
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li><a href="pending">Pending</a></li>
+			</sec:authorize>
+			<li><a href="marketdata">Market data</a></li>
+		</ul>
+	</nav>
 	<h1>
 		<font color="green">${userInfo.message}</font>
 	</h1>
