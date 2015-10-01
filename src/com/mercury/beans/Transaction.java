@@ -1,4 +1,4 @@
-package com.mercury.beans;
+ package com.mercury.beans;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

@@ -11,14 +11,13 @@ public class StockInfo {
 	public void setSid(int sid) {
 		this.sid = sid;
 	}
+	private String symbol;
 	public String getStockName() {
 		return stockName;
 	}
 	public void setStockName(String stockName) {
 		this.stockName = stockName;
 	}
-	private String symbol;
-	
 	public double getPrice() {
 		return price;
 	}

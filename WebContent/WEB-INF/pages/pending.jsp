@@ -7,11 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="/YFTS/resources/js/checklist-model.js"></script>
 <script>
-	angular.module("mainModule", [])
-		.controller("mainController", function($scope, $http) {
+var app = angular.module('mainModule', ['checklist-model']);
+app.controller("mainController", function($scope, $http) {
 			$scope.transList = [];
+			$scope.ab = "jone";
 			$http({
 				method: "GET",
 				url: "getPending",
@@ -20,16 +26,21 @@
 			}).error(function(data) {
 				alert("AJAX ERROR");
 			});
-			$scope.checkAll = function(){
-				if($scope.selectedAll){
-					$scope.selectedAll = true;
-				}else{
-					$scope.selectedAll = false;
-				}
-				anuglar.forEach($scope.transList, function(tran){
-					tran.Selected = $scope.selectedAll;
-				});
+			$scope.selected = {
+					 trans: []
 			};
+			$scope.checkAll = function($event) {
+				var checkbox = $event.target;
+				if(checkbox.checked){
+					for ( var i = 0; i < $scope.transList.length; i++) {
+					    var entity = $scope.transList.indexOf($scope.transList[i]);
+					    $scope.selected.trans.push(entity);
+					}
+					//$scope.selected.trans=$scope.transList.length;
+				}else{
+					$scope.selected.trans = [];
+				}
+	        };
 		});	
 </script>
 <style type="text/css">
@@ -44,14 +55,14 @@
 <form id="pendingList" action="pending" method="get">
 	<table border="1" ng-controller="mainController">
 		<tr>
-			<th>User ID</th>
+			<th>User ID<p><font color="red">{{trans.transList[1].amount}}</font></p></th>
 			<th>Stock ID</th>
 			<th>Amount</th>
 			<th>Price</th>
 			<th>Transaction Time</th>
 			<th>Commit</th>
 			<th>Drop</th>
-			<th><input type="checkbox" name="selectAll" ng-model="selectedAll" ng-click="checkAll()"/></th>
+			<th><input type="checkbox" name="selectAll" ng-model="selectAll" ng-click="checkAll($event)"/></th>
 		</tr>
 		<tr ng-repeat="tran in transList">
 			<td>{{tran.own.user.uid}}</td>
@@ -62,12 +73,12 @@
 			<td><button class="commit" name="commit" value={{transList.indexOf(tran)}}>Commit</button></td>
 			<td><button class="drop" name="drop" value={{transList.indexOf(tran)}}>Drop</button></td>
 			<td>
-				<label>{{tran.own.user.uid}}
-					<input type="checkbox" ng-model="tran.Selected"/>
+				<label>{{transList.indexOf(tran)}}
+					<input id="tagglebox" ng-checked="selectAll" type="checkbox" checklist-value="transList.indexOf(tran)" checklist-model="selected.trans" /> 
 				</label>
-				
 			</td>
 		</tr>
+		<tr><td colspan="7">{{selected.trans}}</td></tr>
 	</table>
 	<br/>
 	<div>
