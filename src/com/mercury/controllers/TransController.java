@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +39,17 @@ public class TransController {
 	@RequestMapping(value="/validTran")
 	@ResponseBody
 	public User getValidUser(Principal principal){
+<<<<<<< HEAD
 		String userName = principal.getName();
 		System.out.println("UserName: " + userName);
 		return us.findUserByUserName(userName);
+=======
+		String userName = null;
+		if (principal != null && principal.getName() != null){
+			userName = principal.getName();			
+		}
+		return us.findByUserName(userName);
+>>>>>>> 1263fac38a47c326a18722be4c3d0fec9d6d51e2
 	}
 	
 	
@@ -55,6 +64,20 @@ public class TransController {
 		ServletContext context = request.getServletContext();
 		List<Transaction> pendingList = ts.getAllPendings(context.getRealPath("CSV"));
 		return pendingList;
+	}
+	
+	@RequestMapping(value="/addPending", method=RequestMethod.POST, produces="text/plain")
+	@ResponseBody
+	public String addPending(@RequestBody Transaction tran, 
+			HttpServletRequest request) throws Exception{
+		if (tran != null){
+			System.out.println(tran);
+			ServletContext context = request.getServletContext();
+			ts.createPending(tran, context.getRealPath("CSV"));
+			return "success";
+		}else{
+			return "failure";
+		}
 	}
 	
 	//Drop a pending transaction
