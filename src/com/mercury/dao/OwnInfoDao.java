@@ -11,7 +11,7 @@ public interface OwnInfoDao {
 	public void update(OwnershipInfo ois);
 	public void delete(OwnershipInfo ois);
 	public void saveOrUpdate(OwnershipInfo ois);
-	public List<OwnershipInfo> findByUser(User user);
+	public List<OwnershipInfo> findOwnByUser(User user);
 	public List<OwnershipInfo> findByStock(Stock stock);
 	public List<OwnershipInfo> findByOwn(User user, Stock stock);
 	public List<OwnershipInfo> queryAll();

@@ -31,12 +31,12 @@ app.controller("mainController", function($scope, $http) {
 			};
 			$scope.checkAll = function($event) {
 				var checkbox = $event.target;
+				$scope.selected.trans = [];
 				if(checkbox.checked){
 					for ( var i = 0; i < $scope.transList.length; i++) {
 					    var entity = $scope.transList.indexOf($scope.transList[i]);
 					    $scope.selected.trans.push(entity);
 					}
-					//$scope.selected.trans=$scope.transList.length;
 				}else{
 					$scope.selected.trans = [];
 				}

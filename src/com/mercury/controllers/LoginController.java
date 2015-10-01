@@ -65,11 +65,6 @@ public class LoginController {
 	public String login(ModelMap model) {
 		return "login";
 	}
-	@RequestMapping(value="test", method = RequestMethod.GET)
-	public String test(ModelMap model) {
-		return "test";
-	}
-	
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public ModelAndView mainPage(Principal principal){
@@ -97,7 +92,7 @@ public class LoginController {
 	@RequestMapping(value="/activateAccount", method = RequestMethod.GET)
 	public ModelAndView activeMail(HttpServletRequest request) {
 		String username = request.getParameter("username");
-		User user = us.findByUserName(username);
+		User user = us.findUserByUserName(username);
 		String checkcode = request.getParameter("checkcode");
 		ModelAndView mav = new ModelAndView();
 		System.out.println(rs.md5(username).equals(checkcode));
@@ -141,7 +136,7 @@ public class LoginController {
 	@RequestMapping(value="login_auto", method = RequestMethod.POST)
 	public String loginAuto(HttpServletRequest request) {
 		String username = request.getParameter("j_username");
-		String password = us.findByUserName(username).getPassWord();
+		String password = us.findUserByUserName(username).getPassWord();
 		try {
 			UserDetails userDetails = userDetailsSvc.loadUserByUsername(username);
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());

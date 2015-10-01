@@ -40,7 +40,7 @@ public class TransController {
 	public User getValidUser(Principal principal){
 		String userName = principal.getName();
 		System.out.println("UserName: " + userName);
-		return us.findByUserName(userName);
+		return us.findUserByUserName(userName);
 	}
 	
 	
