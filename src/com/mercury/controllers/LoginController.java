@@ -65,6 +65,10 @@ public class LoginController {
 	public String login(ModelMap model) {
 		return "login";
 	}
+	@RequestMapping(value="test", method = RequestMethod.GET)
+	public String test(ModelMap model) {
+		return "test";
+	}
 	
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
