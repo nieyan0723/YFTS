@@ -47,6 +47,7 @@ public class StockDaoImpl implements StockDao {
 	@Override
 	public List<Stock> queryAll() {
 		System.out.println("123");
+//		query.setCacheable(true);
 		return sessionFactory.getCurrentSession().createCriteria(Stock.class)
 				.addOrder(Order.asc("sid")).list();
 	}
