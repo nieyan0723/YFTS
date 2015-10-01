@@ -29,7 +29,7 @@ public class StockService {
 	
 	public boolean realStock(Stock stock){
 		StockInfo stockInfo = getStockInfo(stock);
-		if(!stockInfo.getStockName().equals("Not Exist")){
+		if(stockInfo != null && stockInfo.getStockName() != null){
 			return true;
 		}
 		return false;
@@ -73,7 +73,7 @@ public class StockService {
 	
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1&e=.c";
-		String stockName = "Not Exist";
+		String stockName = "";
 		double price = 0;
 		double change = 0;
 		try {
@@ -84,10 +84,14 @@ public class StockService {
 			System.out.println(content);
 			content = content.replace((char)34, (char)32);//' ' replace '"'
 			String[] tokens = content.split(",");
+			int length = tokens.length;
+			if (tokens.length <3) return null;
 			if(!tokens[tokens.length-3].trim().equals("N/A")){
-				stockName = tokens[tokens.length-3].trim();
-				price = Double.parseDouble(tokens[tokens.length-1].trim());
-				change = Double.parseDouble(tokens[tokens.length-2].trim());
+				for (int i= length-3; i>0; i--){
+					stockName = tokens[i].trim() + stockName;
+				}
+				price = Double.parseDouble(tokens[length-1].trim());
+				change = Double.parseDouble(tokens[length-2].trim());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,7 +108,8 @@ public class StockService {
 	public List<StockInfo> getInfo(List<Stock> stocks) {
 		List<StockInfo> sf = new ArrayList<StockInfo>();
 		for (Stock s : stocks) {
-			sf.add(getStockInfo(s));
+			StockInfo info = getStockInfo(s);
+			if (info != null && info.getStockName() != "") sf.add(info);
 		}
 		return sf;
 	}
