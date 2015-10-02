@@ -97,8 +97,7 @@ public class StockService {
 			e.printStackTrace();
 		}
 		StockInfo si = new StockInfo();
-		si.setSid(stock.getSid());
-		si.setSymbol(stock.getSymbol());
+		si.setStock(stock);
 		si.setStockName(stockName);
 		si.setPrice(price);
 		si.setChange(change);

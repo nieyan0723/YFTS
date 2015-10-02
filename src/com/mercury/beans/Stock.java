@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Stock implements Serializable{
 	private int sid;
 	private String symbol;
-	private String stockName;
+	private String stockDesc;
 	private Set<OwnershipInfo> owns = new HashSet<OwnershipInfo>();
 	private Set<Transaction> trans = new HashSet<Transaction>();
 	
@@ -46,11 +46,11 @@ public class Stock implements Serializable{
 	}
 	
 	@Column(name="STOCKNAME")
-	public String getStockName() {
-		return stockName;
+	public String getStockDesc() {
+		return stockDesc;
 	}
-	public void setStockName(String stockName) {
-		this.stockName = stockName;
+	public void setStockDesc(String stockDesc) {
+		this.stockDesc = stockDesc;
 	}
 	
 	@JsonIgnore

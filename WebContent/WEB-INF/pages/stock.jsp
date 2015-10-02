@@ -11,12 +11,12 @@
 <script>
 	$(document).ready(function(){
  		$("#j_symbol").on("blur", validateForm);
- 		$("#j_stockName").on("blur", validateForm);
+ 		$("#j_stockDesc").on("blur", validateForm);
 	});
 
 	function validateForm(){
 		var symbol = $("#j_symbol").val();
-		var stockName = $("#j_stockName").val();
+		var stockDesc = $("#j_stockDesc").val();
 		var newStock = {symbol: $("#j_symbol").val()};
 		if (symbol.length==0){
 			$("#symbol_error").text("Please input valid stock symbol!");
@@ -25,7 +25,7 @@
 		}else {
 			$("#symbol_error").css("visibility", "hidden");
 		}
-		if (stockName.length==0){
+		if (stockDesc.length==0){
 			$("#name_error").text("Please input valid stock name!");
 			$("#name_error").css("visibility", "visible");
 			$("#j_add").prop("disabled", true);
@@ -33,7 +33,7 @@
 		else {
 			$("#name_error").css("visibility", "hidden");
 		}
-		if (symbol.length!=0 && stockName.length!=0 && $("#stock_error").css("visibility")!="visible"){
+		if (symbol.length!=0 && stockDesc.length!=0 && $("#stock_error").css("visibility")!="visible"){
 			$("#j_add").prop("disabled", false);
 		}
 		
@@ -74,14 +74,14 @@
 			<tr>
 				<th>Stock ID</th>
 				<th>Symbol</th>
-				<th>Stock Name</th>
+				<th>Stock Desc</th>
 				<th>Delete</th>
 			</tr>
 			<c:forEach var="stock" items="${stockList}">
 				<tr>
 					<td>${stock.sid}</td>
 					<td>${stock.symbol}</td>
-					<td>${stock.stockName}</td>
+					<td>${stock.stockDesc}</td>
 					<td><button class="delete" name="delete" value="${stock.sid}">Delete</button></td>
 				</tr>
 			</c:forEach>
@@ -101,9 +101,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Stock Name:</td>
-				<td><input type="text" name="stockName" id="j_stockName"
-					required /></td>
+				<td>Stock Desc:</td>
+				<td><input type="text" name="stockDesc" id="j_stockDesc"
+					required placeholder="Stock name or stock desc"/></td>
 				<td>
 					<div class="error" id="name_error">msg</div>
 				</td>
