@@ -1,10 +1,17 @@
 package com.mercury.beans;
 
 public class StockInfo {
+	private int quantity;
 	private double price;
 	private double change;
 	private String stockName;
 	private Stock stock;
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	public Stock getStock() {
 		return stock;
 	}
@@ -28,10 +35,5 @@ public class StockInfo {
 	}
 	public void setChange(double change) {
 		this.change = change;
-	}
-	
-	@Override
-	public String toString(){
-		return "{price:"+price+",change:"+change+",stockName:"+stockName+",stock:{sid:"+stock.getSid()+",symbol:"+stock.getSymbol()+"}}";
 	}
 }

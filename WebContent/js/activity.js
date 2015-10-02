@@ -50,9 +50,9 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 		shared.setStock(stock);
 	};
 	
-	$scope.hasStock = function(stock) {
-		$scope.
-	}
+//	$scope.hasStock = function(stock) {
+//		$scope.
+//	}
 }]);
 app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared', 
                                  function ($scope, $modal, $log, shared) {

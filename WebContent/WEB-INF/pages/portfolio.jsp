@@ -43,7 +43,7 @@
 					<td>{{stock.price}}</th>
 					<td>
 						<b ng-if="stock.change>0" style="color:green">+{{stock.change}}</b>
-						<b ng-if="stock.change<0" style="color:red">-{{stock.change}}</b>
+						<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
 						<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b></th>
 					<td>{{quantity}}</td>
 					<td><input type="button" class="btn btn-default" name="buy" value="Buy" 
