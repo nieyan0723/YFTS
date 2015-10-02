@@ -69,8 +69,10 @@
 					<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
 				</td>
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-					<td><input type="button" class="btn btn-default" name="buy" value="Buy" 
-						ng-click="pass(stock); open()" /></td>
+					<td>
+						<input type="button" class="btn btn-default" name="buy" value="Buy" 
+							ng-click="pass(stock); open()" />
+					</td>
 				</sec:authorize>
 			</tr>
 		</table>

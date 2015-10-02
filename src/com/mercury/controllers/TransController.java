@@ -42,10 +42,11 @@ public class TransController {
 	@RequestMapping(value="/validTran")
 	@ResponseBody
 	public User getValidUser(Principal principal){
-		String userName = null;
-		if (principal != null && principal.getName() != null){
-			userName = principal.getName();			
+		String userName = null;		
+		if (principal == null || principal.getName() == null){
+			return null;
 		}
+		userName = principal.getName();		
 		return us.findUserByUserName(userName);
 	}
 	

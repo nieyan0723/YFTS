@@ -5,19 +5,38 @@ app.config(['$httpProvider', function ($httpProvider) {
 }]);
 app.service("shared", function() {
 	var _stock = null;
+	var _user = null;
 	return {
 		getStock : function() {
 			return _stock;
 		},
 		setStock : function(stock) {
 			_stock = stock;
+		},
+		getUser : function() {
+			return _user;
+		},
+		setUser : function(user){
+			_user = user;
 		}
 	};
 });
 app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", "shared", 
                                   function($scope, $interval, $http, $rootScope, shared) {
+	$scope.user;
+	$http({
+		method : "GET",
+		url : "validTran",
+	}).success(function(data, update) {
+		$scope.user = data;
+		shared.setUser($scope.user);
+		console.log(shared.getUser());
+	}).error(function(data) {
+		console.log("AJAX ERROR");
+	});	
+	
 	$scope.stocksArray = [];
-	 $interval(function() {
+	$interval(function() {
 		$http({
 			method : "GET",
 			url : "market",
@@ -26,13 +45,17 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 		}).error(function(data) {
 			console.log("AJAX ERROR!");
 		});
-	 }, 2000);
+	}, 2000);
 	$scope.pass = function(stock) {
 		shared.setStock(stock);
 	};
+	
+	$scope.hasStock = function(stock) {
+		$scope.
+	}
 }]);
-app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', '$rootScope', 'shared', 
-                                 function ($scope, $modal, $log, $rootScope, shared) {
+app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared', 
+                                 function ($scope, $modal, $log, shared) {
 	$scope.item;
 	$scope.animationsEnabled = true;
 	
@@ -66,27 +89,16 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', '$rootScope', 'shar
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, items) {
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, items, shared) {
+	$scope.user = shared.getUser();	
 	$scope.Math = window.Math;
 	$scope.buyItem = items;
-	$scope.upper;
-	$scope.user;
+	$scope.upper = Math.floor($scope.user.balance / $scope.buyItem.price);
 	$scope.quan = 1;
 	$scope.newTran;
 	$scope.$watch("quan",function(val,old){
 	       $scope.quan = parseInt(val); 
 	});
-		
-	$http({
-		method : "GET",
-		url : "validTran",
-	}).success(function(data, update) {
-		$scope.user = data;
-		$scope.upper = Math.floor($scope.user.balance / $scope.buyItem.price);
-
-	}).error(function(data) {
-		console.log("AJAX ERROR");
-	});	
 		
 	$scope.send = function(){
 		$http({
@@ -104,12 +116,12 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, ite
 					},
 					amount: $scope.quan,
 					price: $scope.buyItem.price,
-					ts: new Date()				
+					ts: new Date()
 			}
 		}).success(function (response) {
 			console.log(response);
 		}).error(function (data) {
-				console.log(data);
+			console.log(data);
 		}); 
 	};
 	
