@@ -2,14 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+<script	src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <script>
 	$(document).ready(function(){
  		$("#j_symbol").on("blur", validateForm);

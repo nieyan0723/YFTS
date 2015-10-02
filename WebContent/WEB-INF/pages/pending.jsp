@@ -49,10 +49,8 @@ app.controller("mainController", function($scope, $http) {
 </style>
 </head>
 <body ng-app="mainModule">
-<<<<<<< HEAD
 <h3>All the pending transactions</h3>
 <div ng-controller="mainController">
-=======
 <nav>
 		<ul>
 			<li><a href="home">HOME</a></li>
@@ -62,8 +60,6 @@ app.controller("mainController", function($scope, $http) {
 		</ul>
 	</nav>
 <a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
-<h1><font color="red">All the pending transactions</font></h1>
->>>>>>> e188fff423c0f13d8575a3b1d8d16941c017fb2f
 <form id="pendingList" action="pending" method="get">
 	<table border="1">
 		<tr>

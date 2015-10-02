@@ -6,6 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS Main Page</title>
+<script	src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/angular.min.js"></script>
 <style>
 nav
 {
@@ -29,10 +32,6 @@ nav ul li:hover{
 background-color:yellow;
 }
 </style>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script>
 	$(document).ready(function() {
 		if ("<c:out value='${param.login_error}'/>" != "") {

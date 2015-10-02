@@ -5,9 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS Test</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+<script	src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 
 <style>
 .alert {

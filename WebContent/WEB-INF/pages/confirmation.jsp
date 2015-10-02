@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Confirmation page</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
 	<h1>Check your email!</h1>

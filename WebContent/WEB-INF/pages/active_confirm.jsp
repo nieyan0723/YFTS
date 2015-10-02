@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Confirmation page</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <style type="text/css">
 #time, p, a {
 	text-align:center;

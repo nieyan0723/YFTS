@@ -5,10 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
 <h1>linkoutoftime!!!!!!!!!!!!!!!!!</h1>
-<script language="JavaScript1.2" type="text/javascript">
+<script type="text/javascript">
 	function delayURL(url) {
    		var delay=document.getElementById("time").innerHTML;
    		if(delay>0){
