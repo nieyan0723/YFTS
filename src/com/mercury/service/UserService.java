@@ -1,5 +1,6 @@
 package com.mercury.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,19 @@ public class UserService {
 	public List<OwnershipInfo> findOwnByUserName(String username){
 		User user = findUserByUserName(username);
 		return od.findOwnByUser(user);
+	}
+	
+	@Transactional
+	public void addBalance(String username, int addMoney) {
+		User user =ud.findByUserName(username);
+		int newBalance =user.getBalance() + addMoney;
+		if(newBalance<99999999) {
+			user.setBalance(newBalance);
+			ud.update(user);
+		}
+	}
+	@Transactional
+	public int getBalance(String username) {
+		return ud.findByUserName(username).getBalance();
 	}
 }

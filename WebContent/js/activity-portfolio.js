@@ -122,3 +122,36 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, ite
 		$modalInstance.dismiss('cancel');
 	};
 });
+
+app.controller("balController", function($scope, $http) {
+	$scope.request = {
+		amount : 0
+	};
+	$scope.isAmountValid = function() {
+		if ($scope.request.amount > 0 && $scope.request.amount < 1000000)
+			return true;
+	};
+
+	$scope.currentbalance = angular.element($("#remoteBalance")).text();
+	$scope.welcomeMsg = "Please enter the Money you want to add";
+	//$scope.canShow = false;	    
+	$scope.addMoneyRequest = function(request, resultVarName) {
+		//var msg;
+		$http({
+			method : "POST",
+			url : "addBal",
+			data : request.amount
+			
+		}).success(function(data, status, headers, config) {
+			$scope[resultVarName] = data;
+			request.amount = 0;
+			$scope.currentbalance = data;
+			if ($scope.currentbalance > 99000000) {
+				$scope.isAmountValid = false;
+			}
+			//$scope.welcomeMsg = data; 
+		}).error(function(data, status, headers, config) {
+			$scope[resultVarName] = "SUBMIT ERROR";
+		});
+	};
+});
