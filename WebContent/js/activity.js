@@ -6,6 +6,7 @@ app.config(['$httpProvider', function ($httpProvider) {
 app.service("shared", function() {
 	var _stock = null;
 	var _user = null;
+	var _stockInfo = null;
 	return {
 		getStock : function() {
 			return _stock;
@@ -18,28 +19,40 @@ app.service("shared", function() {
 		},
 		setUser : function(user){
 			_user = user;
+		},
+		getStockInfo : function(){
+			return _stockInfo;
+		},
+		setStockInfo : function(stockInfo){
+			_stockInfo = stockInfo;
 		}
 	};
 });
 app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", "shared", 
                                   function($scope, $interval, $http, $rootScope, shared) {
 	$scope.user;
-	$http({
-		method : "GET",
-		url : "validTran",
-	}).success(function(data, update) {
+	$http.get("validTran")
+	.success(function(data) {
 		$scope.user = data;
 		shared.setUser($scope.user);
 	}).error(function(data) {
 		console.log("AJAX ERROR");
 	});	
 	
+	$scope.stockInfo = [];
+	$http.get("getOwnInfo")
+	.success(function(data){
+		$scope.stockInfo = data;
+		shared.setStockInfo($scope.stockInfo);
+	})
+	.error(function(data){
+		console.log("AJAX ERROR");
+	});
+	
 	$scope.stocksArray = [];
 //	$interval(function() {
-		$http({
-			method : "GET",
-			url : "market",
-		}).success(function(data) {
+		$http.get("market")
+		.success(function(data) {
 			$scope.stocksArray = data;
 		}).error(function(data) {
 			console.log("AJAX ERROR!");
@@ -48,22 +61,10 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 	$scope.pass = function(stock) {
 		shared.setStock(stock);
 	};
-	
-	$scope.stockInfo = [];
-	$http.get("getOwnInfo")
-	.success(function(data){
-		$scope.stockInfo = data;
-		console.log($scope.stockInfo);
-	})
-	.error(function(data){
-		console.log("Error: " + data);
-	});
-	
+		
 	$scope.hasStock = function(stock) {
-		for(s in $scope.stockInfo){
-			console.log(s);
-//			console.log("StockArray" + stock.stock);
-			if (stock.stock == s.stock){
+		for (var i=0; i<$scope.stockInfo.length; i++){
+			if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
 				return true;
 			}
 		}
@@ -75,13 +76,13 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 	$scope.item;
 	$scope.animationsEnabled = true;
 	
-	$scope.open = function () {
+	$scope.openBuy = function () {
 		
 		$scope.item = shared.getStock();
 		var modalInstance = $modal.open({
 			animation: $scope.animationsEnabled,
-			templateUrl: 'myModalContent.html',
-			controller: 'ModalInstanceCtrl',
+			templateUrl: 'buyContent.html',
+			controller: 'ModalInstanceCtrlBuy',
 			resolve: {
 				items: function () {
 					return $scope.item;
@@ -95,17 +96,33 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 			$log.info('Modal dismissed at: ' + new Date());
 		});
 	};
+	
+	$scope.openSell = function () {
+		
+		$scope.item = shared.getStock();
+		var modalInstance = $modal.open({
+			animation: $scope.animationsEnabled,
+			templateUrl: 'sellContent.html',
+			controller: 'ModalInstanceCtrlSell',
+			resolve: {
+				items: function () {
+					return $scope.item;
+				}
+			}
+		});
 
-	$scope.toggleAnimation = function () {
-	    $scope.animationsEnabled = !$scope.animationsEnabled;
+		modalInstance.result.then(function (selectedItem) {
+			$scope.selected = selectedItem;
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
 	};
-
 }]);
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, items, shared) {
+app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, items, shared) {
 	$scope.user = shared.getUser();	
 	$scope.Math = window.Math;
 	$scope.buyItem = items;
@@ -125,9 +142,9 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, ite
 					own: {
 						user: $scope.user,
 						stock: {
-							sid: $scope.buyItem.sid,
-							symbol: $scope.buyItem.symbol,
-							stockName: $scope.buyItem.stockName
+							sid: $scope.buyItem.stock.sid,
+							symbol: $scope.buyItem.stock.symbol,
+							stockDesc: $scope.buyItem.stockName
 						},
 					},
 					amount: $scope.quan,
@@ -144,6 +161,61 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, ite
 	$scope.ok = function () {
 		$scope.send();
 		$modalInstance.close($scope.buyItem);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+});
+
+app.controller('ModalInstanceCtrlSell', function ($scope, $modalInstance, $http, items, shared) {
+	$scope.user = shared.getUser();	
+	$scope.Math = window.Math;
+	$scope.sellItem = items;
+	$scope.quan = 1;
+	$scope.newTran;
+	$scope.$watch("quan",function(val,old){
+	       $scope.quan = parseInt(val); 
+	});
+	
+	$scope.getAmount = function(sellItem){
+		$scope.stockInfo = shared.getStockInfo();
+		for (var i=0; i< $scope.stockInfo.length; i++){
+			if (sellItem.stock.sid == $scope.stockInfo[i].stock.sid){
+				return $scope.stockInfo[i].quantity;
+			}
+		}
+		return 0;
+	};
+	
+	$scope.send = function(){
+		$http({
+			method: "POST",
+			url: "addPending",
+			data: $scope.newTran = {
+					tid:0,
+					own: {
+						user: $scope.user,
+						stock: {
+							sid: $scope.sellItem.stock.sid,
+							symbol: $scope.sellItem.stock.symbol,
+							stockDesc: $scope.sellItem.stockName
+						},
+					},
+					amount: -$scope.quan,
+					price: $scope.sellItem.price,
+					ts: new Date()
+			}
+		}).success(function (response) {
+			console.log(response);
+		}).error(function (data) {
+			console.log(data);
+		}); 
+	};
+	
+	$scope.ok = function () {
+		$scope.send();
+		$modalInstance.close($scope.sellItem);
 	};
 
 	$scope.cancel = function () {

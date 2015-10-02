@@ -71,24 +71,22 @@
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
 					<td>						
 						<input type="button" class="btn btn-default" name="buy" value="Buy" 
-							ng-click="pass(stock); open()" />
-						<div ng-if="hasStock(stock)">
-							<input type="button" class="btn btn-default" name="sell" value="Sell" 
-								ng-click="pass(stock); open()" />
-						</div>
+							ng-click="pass(stock); openBuy()" />
+						<input ng-if="hasStock(stock)" type="button" class="btn btn-default" 
+						name="sell" value="Sell" ng-click="pass(stock); openSell()" />
 					</td>
 				</sec:authorize>
 			</tr>
 		</table>
 	</div>
 <div  ng-controller="ModalDemoCtrl">
-    <script type="text/ng-template" id="myModalContent.html">
+    <script type="text/ng-template" id="buyContent.html">
         <div class="modal-header">
             <h3 class="modal-title">Buy stocks: {{buyItem.stockName}}</h3>
         </div>
         <div class="modal-body">
             <label>Stock Symbol: </label>
-			<input type="text" ng-model="buyItem.symbol"/><br/>
+			<input type="text" ng-model="buyItem.stock.symbol"/><br/>
 			<label>Stock Name: </label>
 			<input type="text" ng-model="buyItem.stockName"/><br/>
 			<label>Unit Price: </label>
@@ -101,16 +99,40 @@
 		
         <div class="modal-footer">
 		<div>		
-			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{buyItem.symbol}}? 
+			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{buyItem.stock.symbol}}? 
 				Balance after transaction: {{Math.round(user.balance - buyItem.price * quan)}}</label>
 		</div><br/>
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>
-
-    <button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
-    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+    <script type="text/ng-template" id="sellContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Sell stocks: {{sellItem.stockName}} 
+				(Currently own {{getAmount(sellItem)}})</h3>
+        </div>
+        <div class="modal-body">
+            <label>Stock Symbol: </label>
+			<input type="text" ng-model="sellItem.stock.symbol"/><br/>
+			<label>Stock Name: </label>
+			<input type="text" ng-model="sellItem.stockName"/><br/>
+			<label>Unit Price: </label>
+			<input type="text" ng-model="sellItem.price"/><br/>
+			<label>Quantity: </label>
+			<input type="number" min="0" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
+			<input type="range" min="0" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
+			<br/>	
+        </div>		
+		
+        <div class="modal-footer">
+		<div>		
+			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{sellItem.stock.symbol}}? 
+				Balance after transaction: {{Math.round(user.balance + sellItem.price * quan)}}</label>
+		</div><br/>
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>
 </body>
 </html>
