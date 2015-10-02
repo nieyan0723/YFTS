@@ -36,8 +36,8 @@
 					<th>Quantity</th>
 					<th>Operation</th>
 				</tr>
-				<tr ng-repeat="(stock,quantity) in userOwns">
-					<td>{{stock}}</td>
+				<tr ng-repeat=" stock in userOwns">
+					<td>{{stock.stock.sid}}</td>
 					<td>{{stock.stock.symbol}}</td>
 					<td>{{stock.stockName}}</td>
 					<td>{{stock.price}}</th>
@@ -45,7 +45,7 @@
 						<b ng-if="stock.change>0" style="color:green">+{{stock.change}}</b>
 						<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
 						<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b></th>
-					<td>{{quantity}}</td>
+					<td>{{stock.quantity}}</td>
 					<td><input type="button" class="btn btn-default" name="buy" value="Buy" 
 					ng-click="pass(stock); open()" /></td>
 				</tr>

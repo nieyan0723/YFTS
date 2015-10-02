@@ -20,7 +20,7 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 	 $interval(function() {
 		$http({
 			method : "GET",
-			url : "getPortfolio",
+			url : "getOwnInfo",
 		}).success(function(data) {
 			$scope.userOwns = data;
 		}).error(function(data) {
