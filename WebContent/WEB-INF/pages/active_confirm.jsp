@@ -17,7 +17,7 @@
 </style>
 </head>
 <body>
-	<script language="JavaScript1.2" type="text/javascript">
+	<script type="text/javascript">
 		function delay() {
 	   		var delay=document.getElementById("time").innerHTML;
 	   		if(delay>0){
@@ -40,7 +40,7 @@
 	</form>
 	<script type="text/javascript">
 		delay();
-	</script>&nbsp;
+	</script>
 
 </body>
 </html>

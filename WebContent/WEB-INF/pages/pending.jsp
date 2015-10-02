@@ -86,7 +86,6 @@ app.controller("mainController", function($scope, $http) {
 				checklist-value="transList.indexOf(tran)" checklist-model="selected.trans" /> 
 			</td>
 		</tr>
-		<tr><td colspan="7">{{selected.trans}}</td></tr>
 	</table>
 	<br/>
 	<div>
