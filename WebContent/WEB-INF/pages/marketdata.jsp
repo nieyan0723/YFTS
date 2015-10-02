@@ -69,9 +69,13 @@
 					<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
 				</td>
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-					<td>
+					<td>						
 						<input type="button" class="btn btn-default" name="buy" value="Buy" 
 							ng-click="pass(stock); open()" />
+						<div ng-if="hasStock(stock)">
+							<input type="button" class="btn btn-default" name="sell" value="Sell" 
+								ng-click="pass(stock); open()" />
+						</div>
 					</td>
 				</sec:authorize>
 			</tr>

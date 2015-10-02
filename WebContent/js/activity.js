@@ -30,13 +30,12 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 	}).success(function(data, update) {
 		$scope.user = data;
 		shared.setUser($scope.user);
-		console.log(shared.getUser());
 	}).error(function(data) {
 		console.log("AJAX ERROR");
 	});	
 	
 	$scope.stocksArray = [];
-	$interval(function() {
+//	$interval(function() {
 		$http({
 			method : "GET",
 			url : "market",
@@ -45,14 +44,31 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 		}).error(function(data) {
 			console.log("AJAX ERROR!");
 		});
-	}, 2000);
+//	}, 2000);
 	$scope.pass = function(stock) {
 		shared.setStock(stock);
 	};
 	
-//	$scope.hasStock = function(stock) {
-//		$scope.
-//	}
+	$scope.stockInfo = [];
+	$http.get("getOwnInfo")
+	.success(function(data){
+		$scope.stockInfo = data;
+		console.log($scope.stockInfo);
+	})
+	.error(function(data){
+		console.log("Error: " + data);
+	});
+	
+	$scope.hasStock = function(stock) {
+		for(s in $scope.stockInfo){
+			console.log(s);
+//			console.log("StockArray" + stock.stock);
+			if (stock.stock == s.stock){
+				return true;
+			}
+		}
+		return false;
+	};
 }]);
 app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared', 
                                  function ($scope, $modal, $log, shared) {
