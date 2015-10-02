@@ -5,12 +5,12 @@
 <html>
 <head>
 <title>Real Time Market Data</title>
-    <script src="/YFTS/resources/js/angular.min.js"></script>
-    <script src="/YFTS/resources/js/ui-bootstrap-tpls-0.13.4.min.js"></script>
-    <script src="/YFTS/resources/js/angular-animate.min.js"></script>
-    <script src="/YFTS/resources/js/activity.js"></script>
-    <script src="/YFTS/resources/js/angular-resource.min.js"></script>
-    <link href="/YFTS/resources/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.4.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/activity.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>
 	h3 {
 		color: blue;
@@ -51,8 +51,8 @@
 				<td>{{stock.stockName}}</td>
 				<td>{{stock.price}}</td>
 				<td>
-					<b ng-if="stock.change>0" style="color:green">{{stock.change}}</b>
-					<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
+					<b ng-if="stock.change>0" style="color:green">+{{stock.change}}</b>
+					<b ng-if="stock.change<0" style="color:red">-{{stock.change}}</b>
 					<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
 				</td>
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
@@ -62,7 +62,7 @@
 			</tr>
 		</table>
 	</div>
-<div>
+<div  ng-controller="ModalDemoCtrl">
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">Buy stocks: {{buyItem.stockName}}</h3>

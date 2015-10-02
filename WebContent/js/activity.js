@@ -17,16 +17,16 @@ app.service("shared", function() {
 app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", "shared", 
                                   function($scope, $interval, $http, $rootScope, shared) {
 	$scope.stocksArray = [];
-	// $interval(function() {
-	$http({
-		method : "GET",
-		url : "market",
-	}).success(function(data) {
-		$scope.stocksArray = data;
-	}).error(function(data) {
-		console.log("AJAX ERROR!");
-	});
-	// }, 5000);
+	 $interval(function() {
+		$http({
+			method : "GET",
+			url : "market",
+		}).success(function(data) {
+			$scope.stocksArray = data;
+		}).error(function(data) {
+			console.log("AJAX ERROR!");
+		});
+	 }, 2000);
 	$scope.pass = function(stock) {
 		shared.setStock(stock);
 	};
@@ -37,6 +37,7 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', '$rootScope', 'shar
 	$scope.animationsEnabled = true;
 	
 	$scope.open = function () {
+		
 		$scope.item = shared.getStock();
 		var modalInstance = $modal.open({
 			animation: $scope.animationsEnabled,
@@ -56,9 +57,9 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', '$rootScope', 'shar
 		});
 	};
 
-  $scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-  };
+	$scope.toggleAnimation = function () {
+	    $scope.animationsEnabled = !$scope.animationsEnabled;
+	};
 
 }]);
 

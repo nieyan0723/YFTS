@@ -1,18 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-<script src="/YFTS/resources/js/checklist-model.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/checklist-model.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <script>
 var app = angular.module('mainModule', ['checklist-model']);
 app.controller("mainController", function($scope, $http) {
@@ -24,13 +19,14 @@ app.controller("mainController", function($scope, $http) {
 			}).success(function(data) {
 				$scope.transList = data;
 			}).error(function(data) {
-				alert("AJAX ERROR");
+				console.log("AJAX ERROR");
 			});
 			$scope.selected = {
 					 trans: []
 			};
 			$scope.checkAll = function($event) {
 				var checkbox = $event.target;
+				$scope.selected.trans = [];
 				if(checkbox.checked){
 					for ( var i = 0; i < $scope.transList.length; i++) {
 					    var entity = $scope.transList.indexOf($scope.transList[i]);
@@ -48,14 +44,18 @@ app.controller("mainController", function($scope, $http) {
 		color:red;
 		visibility:hidden;
 	}
+	th {
+		text-align:center;
+	}
 </style>
 </head>
 <body ng-app="mainModule">
-<h1><font color="red">All the pending transactions</font></h1>
+<h3>All the pending transactions</h3>
+<div ng-controller="mainController">
 <form id="pendingList" action="pending" method="get">
-	<table border="1" ng-controller="mainController">
+	<table border="1">
 		<tr>
-			<th>User ID<p><font color="red">{{trans.transList[1].amount}}</font></p></th>
+			<th>User ID</th>
 			<th>Stock ID</th>
 			<th>Amount</th>
 			<th>Price</th>
@@ -73,19 +73,19 @@ app.controller("mainController", function($scope, $http) {
 			<td><button class="commit" name="commit" value={{transList.indexOf(tran)}}>Commit</button></td>
 			<td><button class="drop" name="drop" value={{transList.indexOf(tran)}}>Drop</button></td>
 			<td>
-				<label>{{transList.indexOf(tran)}}
-					<input id="tagglebox" ng-checked="selectAll" type="checkbox" checklist-value="transList.indexOf(tran)" checklist-model="selected.trans" /> 
-				</label>
+				<input id="tagglebox" ng-checked="selectAll" type="checkbox" 
+				checklist-value="transList.indexOf(tran)" checklist-model="selected.trans" /> 
 			</td>
 		</tr>
 		<tr><td colspan="7">{{selected.trans}}</td></tr>
 	</table>
 	<br/>
 	<div>
-		<input type="button" class="commit" name="commitAll" value="Commit Selected"/>
-		<input type="button" class="drop" name="dropAll" value="Drop Selected"/>
+		<button class="commit" name="commitAll" value={{selected.trans}}>Commit Selected</button>
+		<button class="drop" name="dropAll" value={{selected.trans}}>Drop Selected</button>
 	</div>
 </form>
+</div>
 <br/>
 
 </body>

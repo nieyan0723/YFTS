@@ -1,11 +1,14 @@
 package com.mercury.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,7 +81,7 @@ public class TransController {
 	@RequestMapping(value="/pending", params="drop", method=RequestMethod.GET)
 	public String dropPending(@RequestParam("drop") int tid, HttpServletRequest request) throws Exception {
 		ServletContext context = request.getServletContext();
-		ts.dropPending(tid, context.getRealPath("CSV"));
+		ts.dropPending(tid, context.getRealPath("CSV"), true);
 		return "redirect:pending";
 	}
 	
@@ -87,7 +90,31 @@ public class TransController {
 	public String commitPending(@RequestParam("commit") int tid, HttpServletRequest request) throws Exception {
 		ServletContext context = request.getServletContext();
 		ts.commitPending(tid, context.getRealPath("CSV"));
-		ts.dropPending(tid, context.getRealPath("CSV"));
+		ts.dropPending(tid, context.getRealPath("CSV"), false);
+		return "redirect:pending";
+	}
+	
+	//Drop selected pending transactions
+	@RequestMapping(value="/pending", params="dropAll", method=RequestMethod.GET)
+	public String dropSelected(@RequestParam(value="dropAll") String selected, 
+			HttpServletRequest request) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		Integer[] tids = mapper.readValue(selected, Integer[].class);
+		List<Integer> indexes = Arrays.asList(tids);
+		ServletContext context = request.getServletContext();
+		ts.dropPendings(indexes, context.getRealPath("CSV"), true);
+		return "redirect:pending";
+	}
+	
+	//Commit selected pending transactions
+	@RequestMapping(value="/pending", params="commitAll", method=RequestMethod.GET)
+	public String commitSelected(@RequestParam(value="commitAll") String selected, 
+			HttpServletRequest request) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		Integer[] tids = mapper.readValue(selected, Integer[].class);
+		List<Integer> indexes = Arrays.asList(tids);
+		ServletContext context = request.getServletContext();
+		ts.commitPendings(indexes, context.getRealPath("CSV"));
 		return "redirect:pending";
 	}
 	
