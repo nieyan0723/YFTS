@@ -32,7 +32,6 @@ app.controller("mainController", function($scope, $http) {
 					    var entity = $scope.transList.indexOf($scope.transList[i]);
 					    $scope.selected.trans.push(entity);
 					}
-					//$scope.selected.trans=$scope.transList.length;
 				}else{
 					$scope.selected.trans = [];
 				}
@@ -50,8 +49,21 @@ app.controller("mainController", function($scope, $http) {
 </style>
 </head>
 <body ng-app="mainModule">
+<<<<<<< HEAD
 <h3>All the pending transactions</h3>
 <div ng-controller="mainController">
+=======
+<nav>
+		<ul>
+			<li><a href="home">HOME</a></li>
+			<li>ABOUT</li>
+			<li><a href="pending">Pending</a></li>
+			<li><a href="marketdata">Market data</a></li>
+		</ul>
+	</nav>
+<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
+<h1><font color="red">All the pending transactions</font></h1>
+>>>>>>> e188fff423c0f13d8575a3b1d8d16941c017fb2f
 <form id="pendingList" action="pending" method="get">
 	<table border="1">
 		<tr>

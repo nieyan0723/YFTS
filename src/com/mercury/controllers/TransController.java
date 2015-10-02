@@ -46,7 +46,7 @@ public class TransController {
 		if (principal != null && principal.getName() != null){
 			userName = principal.getName();			
 		}
-		return us.findByUserName(userName);
+		return us.findUserByUserName(userName);
 	}
 	
 	

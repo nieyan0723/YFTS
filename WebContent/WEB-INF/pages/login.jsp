@@ -6,6 +6,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS Main Page</title>
+<style>
+nav
+{
+}
+nav ul
+{
+list-style:none;
+padding:10px;
+}
+
+nav ul li
+{
+display:inline-block;
+width:15%;
+text-align:center;
+margin:5px 10px;
+padding:5px;
+}
+
+nav ul li:hover{
+background-color:yellow;
+}
+</style>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script
@@ -92,6 +115,14 @@
 </style>
 </head>
 <body>
+<nav>
+	<ul>
+		<li><a href="home">HOME</a></li>
+		<li>ABOUT</li>
+		<li><a href="marketdata">Market data</a></li>
+	</ul>
+</nav>
+<div style="clear:both"></div>
 	<h1>
 		<font color="blue">Login with Username and Password</font>
 	</h1>

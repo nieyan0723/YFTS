@@ -44,7 +44,7 @@ public class OwnInfoDaoImpl implements OwnInfoDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OwnershipInfo> findByUser(User user) {
+	public List<OwnershipInfo> findOwnByUser(User user) {
 		return sessionFactory.getCurrentSession().createCriteria(OwnershipInfo.class)
 				.add(Restrictions.eq("own.user", user)).list();
 	}
@@ -72,5 +72,4 @@ public class OwnInfoDaoImpl implements OwnInfoDao {
 		return sessionFactory.getCurrentSession().createCriteria(OwnershipInfo.class)
 				.addOrder(Order.asc("own")).list();
 	}
-
 }

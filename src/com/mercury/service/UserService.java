@@ -1,17 +1,24 @@
 package com.mercury.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mercury.beans.OwnershipInfo;
 import com.mercury.beans.User;
 import com.mercury.beans.UserInfo;
+import com.mercury.dao.OwnInfoDao;
 import com.mercury.dao.UserDao;
 
 @Service
 public class UserService {
 	@Autowired
 	private UserDao ud;
+	@Autowired
+	private OwnInfoDao od;
+	
 	public UserDao getUd() {
 		return ud;
 	}
@@ -36,19 +43,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public UserInfo process(User user) {
-		user.setAuthority("ROLE_USER");
-		user.setBalance(0);
-		user.setEnabled(0);
-		ud.save(user);
-		UserInfo userInfo = new UserInfo();
-		userInfo.setMessage("Hello " + user.getUserName() + ", welcome to YFTS!");
-		userInfo.setUsers(ud.queryAll());
-		return userInfo;
-	}
-	
-	@Transactional
-	public User findByUserName(String username){
+	public User findUserByUserName(String username){
 		return ud.findByUserName(username);
 	}
 	
@@ -60,4 +55,9 @@ public class UserService {
 		return userInfo;
 	}
 
+	@Transactional
+	public List<OwnershipInfo> findOwnByUserName(String username){
+		User user = findUserByUserName(username);
+		return od.findOwnByUser(user);
+	}
 }
