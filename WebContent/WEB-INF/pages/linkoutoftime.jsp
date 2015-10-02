@@ -26,6 +26,6 @@
 	<a href="http://localhost:8080/YFTS/login.html">This page will goto Yahoo Finance page after 3 seconds, if not click this link</a>
 <script type="text/javascript">
 	delayURL("http://localhost:8080/YFTS/login.html");
-</script>&nbsp;
+</script>
 </body>
 </html>

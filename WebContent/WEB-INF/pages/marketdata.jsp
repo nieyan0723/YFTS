@@ -65,7 +65,7 @@
 				<td>{{stock.price}}</td>
 				<td>
 					<b ng-if="stock.change>0" style="color:green">+{{stock.change}}</b>
-					<b ng-if="stock.change<0" style="color:red">-{{stock.change}}</b>
+					<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
 					<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
 				</td>
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">

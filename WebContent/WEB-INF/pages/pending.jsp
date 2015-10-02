@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -85,7 +86,6 @@ app.controller("mainController", function($scope, $http) {
 				checklist-value="transList.indexOf(tran)" checklist-model="selected.trans" /> 
 			</td>
 		</tr>
-		<tr><td colspan="7">{{selected.trans}}</td></tr>
 	</table>
 	<br/>
 	<div>
