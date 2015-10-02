@@ -51,7 +51,7 @@
 		<h3>Market Data</h3>
 		<table id="stockList" border="1" style="width: 800px"  ng-controller="mainController">
 			<tr>
-				<th>Stock ID</th>
+				<th>Stock Symbol</th>
 				<th>Stock Name</th>
 				<th>Price</th>
 				<th>Change</th>
@@ -60,7 +60,7 @@
 				</sec:authorize>
 			</tr>
 			<tr ng-repeat="stock in stocksArray">
-				<td>{{stock.symbol}}</td>
+				<td>{{stock.stock.symbol}}</td>
 				<td>{{stock.stockName}}</td>
 				<td>{{stock.price}}</td>
 				<td>
