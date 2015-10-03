@@ -66,10 +66,8 @@ public class UserService {
 	public void addBalance(String username, int addMoney) {
 		User user =ud.findByUserName(username);
 		int newBalance =user.getBalance() + addMoney;
-		if(newBalance<99999999) {
-			user.setBalance(newBalance);
-			ud.update(user);
-		}
+		user.setBalance(newBalance <= 2147483647 ? newBalance : 2147483647);
+		ud.update(user);
 	}
 	@Transactional
 	public int getBalance(String username) {

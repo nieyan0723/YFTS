@@ -16,7 +16,7 @@
 	h3 {
 		color: blue;
 	}
-	td {
+	th, td {
 		text-align:center;
 	}
 	input[type="range"] {
@@ -95,8 +95,7 @@
 			<input type="number" min="1" max={{upper}} value={{quan}} ng-model="quan"/>
 			<input type="range" min="1" max={{upper}} value={{quan}} ng-model="quan"/>
 			<br/>	
-        </div>		
-		
+        </div>				
         <div class="modal-footer">
 		<div>		
 			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{buyItem.stock.symbol}}? 
@@ -122,8 +121,7 @@
 			<input type="number" min="0" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
 			<input type="range" min="0" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
 			<br/>	
-        </div>		
-		
+        </div>				
         <div class="modal-footer">
 		<div>		
 			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{sellItem.stock.symbol}}? 

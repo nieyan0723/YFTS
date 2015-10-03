@@ -68,32 +68,15 @@ public class CustomerController {
 		return list;
 	}
 	
-//	@RequestMapping(value="/portfolio", method = RequestMethod.GET)
-//	public ModelAndView portFolio(Principal principal){
-//		String username = principal.getName();
-//		System.out.println(username);
-//		List<OwnershipInfo> userOwns = us.findOwnByUserName(username);
-//		Map<StockInfo,Integer> map = new HashMap<StockInfo,Integer>();
-//		for(OwnershipInfo oi: userOwns){
-//			StockInfo si = ss.getStockInfo(oi.getOwn().getStock());
-//			map.put(si, oi.getQuantity());
-//		}
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("portfolio");
-//		mav.addObject("userOwns", map);
-//		return mav;
-//	}
-	
-	@RequestMapping(value = "/addBal", method = RequestMethod.POST)
+	@RequestMapping(value = "/addBalance", method = RequestMethod.POST, produces="text/plain")
 	@ResponseBody
-	public int addBalance(@RequestBody Integer amount) {
-		String userName = SecurityContextHolder.getContext()
-				.getAuthentication().getName();
+	public String addBalance(@RequestBody Integer amount) {
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println(amount);
 		if(amount==null) amount=0;
 		
 		// if()
 		us.addBalance(userName, amount);
-		return us.getBalance(userName);
+		return "success";
 	}
 }
