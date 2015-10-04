@@ -13,12 +13,10 @@
 var app = angular.module('mainModule', ['checklist-model']);
 app.controller("mainController", function($scope, $http) {
 			$scope.transList = [];
-			$scope.ab = "jone";
-			$http({
-				method: "GET",
-				url: "getPending",
-			}).success(function(data) {
+			$http.get("getPending")
+			.success(function(data) {
 				$scope.transList = data;
+				console.log($scope.hasPending());
 			}).error(function(data) {
 				console.log("AJAX ERROR");
 			});
@@ -37,6 +35,10 @@ app.controller("mainController", function($scope, $http) {
 					$scope.selected.trans = [];
 				}
 	        };
+	        $scope.hasPending = function(){
+	        	if ($scope.transList.length > 0) return true;
+	        	else return false;
+	        };
 		});	
 </script>
 <style type="text/css">
@@ -44,15 +46,16 @@ app.controller("mainController", function($scope, $http) {
 		color:red;
 		visibility:hidden;
 	}
-	th {
+	th, td {
 		text-align:center;
+	}
+	h1, h3 {
+		color:red;
 	}
 </style>
 </head>
 <body ng-app="mainModule">
-<h3>All the pending transactions</h3>
-<div ng-controller="mainController">
-	<nav>
+<nav>
 		<ul>
 			<li><a href="home">HOME</a></li>
 			<li>ABOUT</li>
@@ -62,8 +65,15 @@ app.controller("mainController", function($scope, $http) {
 		</ul>
 	</nav>
 <a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
+
+<div ng-controller="mainController">
+	<div ng-if="!hasPending()">
+		<h1>No Pendings!</h1>
+	</div>
+<div ng-if="hasPending()">
+<h3>All the pending transactions</h3>
 <form id="pendingList" action="pending" method="get">
-	<table border="1">
+	<table border="1" >
 		<tr>
 			<th>User ID</th>
 			<th>Stock ID</th>
@@ -94,6 +104,7 @@ app.controller("mainController", function($scope, $http) {
 		<button class="drop" name="dropAll" value={{selected.trans}}>Drop Selected</button>
 	</div>
 </form>
+</div>
 </div>
 <br/>
 

@@ -85,13 +85,12 @@
 	</div>
 	<br/>
 	<div ng-controller="mainController">
-		<table ng-controller="ModalDemoCtrl">
-			<tr>
-				<th><button id="addBalance" class="btn btn-primary btn-sm"
-					ng-click="openAdd()">Add Balance</button></th>
-				<th>Current Balance: <span style="color: red">{{user.balance}}</span></th>
-			</tr>
-		</table>
+		<div ng-controller="ModalDemoCtrl">
+				<button id="addBalance" class="btn btn-primary btn-sm"
+					ng-click="openAdd()">Add Balance</button>
+				<span>Current Balance: <b style="color: red">{{user.balance}}</b></span>		
+			<div>{{message}}</div>
+		</div>
 	</div>
 
 <div>

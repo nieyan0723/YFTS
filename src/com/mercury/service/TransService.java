@@ -1,6 +1,7 @@
 package com.mercury.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,12 +93,13 @@ public class TransService {
 	@Transactional
 	public List<Transaction> findPendingByUser(User user, String path){
 		List<Transaction> list = getAllPendings(path);
+		List<Transaction> newList = new ArrayList<Transaction>();
 		for (Transaction t: list){
-			if (t.getUser() != user){
-				list.remove(t);
+			if (t.getUser().getUid() == user.getUid()){
+				newList.add(t);
 			}
 		}
-		return list;
+		return newList;
 	}
 	
 	//Add new pending transaction to csv file, deduct balance

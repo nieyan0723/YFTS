@@ -7,6 +7,7 @@ app.service("shared", function() {
 	var _stock = null;
 	var _user = null;
 	var _stockInfo = null;
+	var _message = null;
 	return {
 		getStock : function() {
 			return _stock;
@@ -25,11 +26,18 @@ app.service("shared", function() {
 		},
 		setStockInfo : function(stockInfo){
 			_stockInfo = stockInfo;
+		},
+		getMessage : function(){
+			return _message;
+		},
+		setMessage : function(message){
+			_message = message;
 		}
 	};
+	$scope.message = shared.getMessage();
 });
 app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", "shared", 
-                                  function($scope, $interval, $http, $rootScope, shared) {	
+                                  function($scope, $interval, $http, $rootScope, shared) {
 	$scope.user;
 	$http.get("validTran")
 	.success(function(data) {
@@ -65,6 +73,7 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 
 app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared', 
                                  function ($scope, $modal, $log, shared) {
+	$scope.message = shared.getMessage();
 	$scope.item;
 	$scope.animationsEnabled = true;
 	
@@ -122,6 +131,7 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 		});
 		modalInstance.result.then(function (quan) {
 			$scope.user.balance = $scope.user.balance + quan;
+			shared.setMessage("Successfully added balance...");
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});

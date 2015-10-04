@@ -35,14 +35,14 @@ public class TransDaoImpl implements TransDao {
 	@Override
 	public List<Transaction> queryByUser(User user) {
 		return sessionFactory.getCurrentSession().createCriteria(Transaction.class)
-				.add(Restrictions.eq("own.user", user)).list();
+				.add(Restrictions.eq("own.user", user)).addOrder(Order.asc("tid")).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Transaction> queryByStock(Stock stock) {
 		return sessionFactory.getCurrentSession().createCriteria(Transaction.class)
-				.add(Restrictions.eq("own.stock", stock)).list();
+				.add(Restrictions.eq("own.stock", stock)).addOrder(Order.asc("tid")).list();
 	}
 
 	@SuppressWarnings("unchecked")

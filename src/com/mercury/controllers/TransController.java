@@ -1,7 +1,6 @@
 package com.mercury.controllers;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import javax.servlet.http.*;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.mercury.beans.Transaction;
 import com.mercury.beans.User;
 import com.mercury.service.TransService;
@@ -56,11 +54,24 @@ public class TransController {
 		return "pending";
 	}
 	
-	@RequestMapping(value="/getPending")
+	@RequestMapping(value="/getPending", method=RequestMethod.GET)
 	@ResponseBody
 	public List<Transaction> getPending(HttpServletRequest request) throws Exception{
 		ServletContext context = request.getServletContext();
 		List<Transaction> pendingList = ts.getAllPendings(context.getRealPath("CSV"));
+		return pendingList;
+	}
+	
+	@RequestMapping(value="/myPending", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Transaction> myPending(HttpServletRequest request) throws Exception{
+		if (SecurityContextHolder.getContext().getAuthentication() == null){
+			return null;
+		}
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = us.findUserByUserName(userName);
+		ServletContext context = request.getServletContext();
+		List<Transaction> pendingList = ts.findPendingByUser(user, context.getRealPath("CSV"));
 		return pendingList;
 	}
 	
@@ -121,13 +132,38 @@ public class TransController {
 	
 	@RequestMapping(value="/getHistory", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Transaction> getHistory(){
-		return ts.queryAll();
+	public List<Transaction> getHistory(Principal principal){
+		if (principal.getName() == null){
+			return null;
+		}
+		String userName = principal.getName();
+		User user = us.findUserByUserName(userName);
+		return ts.queryByUser(user);
 	}
 	
 	@RequestMapping(value="/history", method=RequestMethod.GET)
 	public String listHistroy(){
 		return "history";
+	}	
+	
+	//User cancel a pending transaction
+	@RequestMapping(value="/history", params="cancel", method=RequestMethod.GET)
+	public String cancelPending(@RequestParam("cancel") int tid, HttpServletRequest request) throws Exception {
+		ServletContext context = request.getServletContext();
+		ts.dropPending(tid, context.getRealPath("CSV"), true);
+		return "redirect:history";
+	}
+	
+	//User cancel selected pending transactions
+	@RequestMapping(value="/history", params="cancelAll", method=RequestMethod.GET)
+	public String cancelSelected(@RequestParam(value="cancelAll") String selected, 
+			HttpServletRequest request) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		Integer[] tids = mapper.readValue(selected, Integer[].class);
+		List<Integer> indexes = Arrays.asList(tids);
+		ServletContext context = request.getServletContext();
+		ts.dropPendings(indexes, context.getRealPath("CSV"), true);
+		return "redirect:history";
 	}
 
 }
