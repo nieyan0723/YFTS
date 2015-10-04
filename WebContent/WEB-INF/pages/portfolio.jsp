@@ -101,21 +101,22 @@
         </div>
         <div class="modal-body">
             <label>Stock Symbol: </label>
-			<input type="text" ng-model="buyItem.stock.symbol"/><br/>
+			<b style="color:red">{{buyItem.stock.symbol}}</b><br/>
 			<label>Stock Name: </label>
-			<input type="text" ng-model="buyItem.stockName"/><br/>
+			<b style="color:red">{{buyItem.stockName}}</b><br/>
 			<label>Unit Price: </label>
-			<input type="text" ng-model="buyItem.price"/><br/>
+			<b style="color:red">{{buyItem.price}}</b><br/>
 			<label>Quantity: </label>
 			<input type="number" min="1" max={{upper}} value={{quan}} ng-model="quan"/>
 			<input type="range" min="1" max={{upper}} value={{quan}} ng-model="quan"/>
 			<br/>	
-        </div>		
-		
+        </div>				
         <div class="modal-footer">
 		<div>		
-			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{buyItem.stock.symbol}}? 
-				Balance after transaction: {{Math.round(user.balance - buyItem.price * quan)}}</label>
+			<label style="margin-right:50px">Ready to buy <span style="color:red">{{quan}}</span>
+			shares of <span style="color:red">{{buyItem.stock.symbol}}</span>? 
+			Balance after transaction: <span style="color:red">$
+			{{Math.round(user.balance - buyItem.price * quan)}}</span> </label>
 		</div><br/>
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
@@ -128,21 +129,22 @@
         </div>
         <div class="modal-body">
             <label>Stock Symbol: </label>
-			<input type="text" ng-model="sellItem.stock.symbol"/><br/>
+			<b style="color:red">{{sellItem.stock.symbol}}</b><br/>
 			<label>Stock Name: </label>
-			<input type="text" ng-model="sellItem.stockName"/><br/>
+			<b style="color:red">{{sellItem.stockName}}</b><br/>
 			<label>Unit Price: </label>
-			<input type="text" ng-model="sellItem.price"/><br/>
+			<b style="color:red">{{sellItem.price}}</b><br/>
 			<label>Quantity: </label>
-			<input type="number" min="0" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
-			<input type="range" min="0" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
+			<input type="number" min="1" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
+			<input type="range" min="1" max={{getAmount(sellItem)}} value={{quan}} ng-model="quan"/>
 			<br/>	
-        </div>		
-		
+        </div>				
         <div class="modal-footer">
 		<div>		
-			<label style="margin-right:50px">Ready to buy {{quan}} shares of {{sellItem.stock.symbol}}? 
-				Balance after transaction: {{Math.round(user.balance + sellItem.price * quan)}}</label>
+			<label style="margin-right:50px">Ready to sell <span style="color:red">{{quan}}</span>
+			shares of <span style="color:red">{{sellItem.stock.symbol}}</span>? 
+			Balance after transaction: <span style="color:red">$
+			{{Math.round(user.balance + sellItem.price * quan)}}</span></label>
 		</div><br/>
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
@@ -154,15 +156,15 @@
         </div>
         <div class="modal-body">
 			<label>Amount: </label>
-			<input type="number" min="0" max={{2147483647-balance}} value={{quan}} ng-model="quan"/>
-			<input type="range" min="0" max={{2147483647-balance}} value={{quan}} ng-model="quan"/>
+			<input type="number" min="1" max={{2147483647-balance}} value={{quan}} ng-model="quan"/>
+			<input type="range" min="1" max={{2147483647-balance}} value={{quan}} ng-model="quan"/>
 			<br/>
         </div>		
         <div class="modal-footer">
 		<div>		
 			<label style="margin-right:50px">Ready to add <span style="color:red">$ {{quan}}</span>
 				 to your account? <br/>
-				Balance after adding: <span style="color:red">{{balance + quan}}</span></label>
+				Balance after adding: <span style="color:red">$ {{balance + quan}}</span></label>
 		</div><br/>
             <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
