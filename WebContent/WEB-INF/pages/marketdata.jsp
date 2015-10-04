@@ -49,7 +49,9 @@
 			<li><a href="marketdata">Market data</a></li>
 		</ul>
 	</nav>
-<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">	
+		<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
+	</sec:authorize>
 	<h2>This demo is show real time market data using Angular JS</h2>
 	<div  ng-controller="ModalDemoCtrl">
 		<h3>Market Data</h3>

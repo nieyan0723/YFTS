@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <html lang="en">
 
 <head>
@@ -158,7 +159,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">YabooFinance</a>
+                <a class="navbar-brand page-scroll" href="#page-top">YabooFinanceTradingSystem</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -340,6 +341,7 @@
     <section id="contact">
         <div class="container">
     	<div class="row">
+    	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
 					<div class="panel-heading">
@@ -440,6 +442,7 @@
 					</div>
 				</div>
 			</div>
+			</sec:authorize>
 		</div>
 	</div>
     </section>
