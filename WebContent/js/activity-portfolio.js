@@ -76,6 +76,9 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 	$scope.message = shared.getMessage();
 	$scope.item;
 	$scope.animationsEnabled = true;
+	$scope.buySuccess=false;
+	$scope.sellSuccess=false;
+	$scope.addSuccess=false;
 	
 	$scope.openBuy = function () {		
 		$scope.item = shared.getStock();
@@ -91,6 +94,9 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 		});
 
 		modalInstance.result.then(function (selectedItem) {
+			$scope.buySuccess = true;
+			$scope.sellSuccess=false;
+			$scope.addSuccess=false;
 			$scope.selected = selectedItem;
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
@@ -111,6 +117,9 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 		});
 
 		modalInstance.result.then(function (selectedItem) {
+			$scope.sellSuccess=true;
+			$scope.buySuccess=false;
+			$scope.addSuccess=false;
 			$scope.selected = selectedItem;
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
@@ -130,8 +139,11 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 			}
 		});
 		modalInstance.result.then(function (quan) {
+			$scope.addSuccess=true;
+			$scope.buySuccess=false;
+			$scope.sellSuccess=false;
 			$scope.user.balance = $scope.user.balance + quan;
-			shared.setMessage("Successfully added balance...");
+			
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});

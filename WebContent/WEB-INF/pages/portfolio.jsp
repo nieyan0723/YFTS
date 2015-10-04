@@ -82,16 +82,22 @@
 				</tr>
 			</table>
 		</form>
-	</div>
+		<div id="buySuccess" ng-show="buySuccess&&!sellSuccess&&!addSuccess">Buying Transaction Success!</div>
+		<div id="sellSuccess" ng-show="sellSuccess&&!buySuccess&&!addSuccess">Selling Transaction Success!</div>
+	
 	<br/>
+	</div>
 	<div ng-controller="mainController">
 		<div ng-controller="ModalDemoCtrl">
 				<button id="addBalance" class="btn btn-primary btn-sm"
 					ng-click="openAdd()">Add Balance</button>
-				<span>Current Balance: <b style="color: red">{{user.balance}}</b></span>		
-			<div>{{message}}</div>
+				<span>Current Balance: <b style="color: red">{{user.balance}}</b></span>	
+				<div id="addSuccess" ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Adding money Success!</div>	
+			
 		</div>
+		
 	</div>
+
 
 <div>
     <script type="text/ng-template" id="buyContent.html">
