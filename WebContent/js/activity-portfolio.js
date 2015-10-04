@@ -139,7 +139,7 @@ app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, 
 	$scope.quan = 1;
 	$scope.newTran;
 	$scope.$watch("quan",function(val,old){
-		val = isNaN(val)?"0":val;
+		val = isNaN(val)?"1":val;
 	    $scope.quan = parseInt(val); 
 	});
 		
@@ -185,7 +185,7 @@ app.controller('ModalInstanceCtrlSell', function ($scope, $modalInstance, $http,
 	$scope.quan = 1;
 	$scope.newTran;
 	$scope.$watch("quan",function(val,old){
-		val = isNaN(val)?"0":val;
+		val = isNaN(val)?"1":val;
 		$scope.quan = parseInt(val); 
 	});
 	
@@ -238,7 +238,7 @@ app.controller("ModalInstanceCtrlAdd", function($scope, $modalInstance, $http, i
 	$scope.balance = items.balance;
 	$scope.quan = 1;
 	$scope.$watch("quan",function(val,old){
-	    val = isNaN(val)?"0":val;
+	    val = isNaN(val)?"1":val;
 		$scope.quan = parseInt(val);
 	});
 	
