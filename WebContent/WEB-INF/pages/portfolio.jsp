@@ -44,6 +44,7 @@
 			<li><a href="home">HOME</a></li>
 			<li>ABOUT</li>
 			<li><a href="portfolio">My portfolio</a></li>
+			<li><a href="history">Transaction History</a></li>
 			<li><a href="marketdata">Market data</a></li>
 		</ul>
 	</nav>

@@ -32,6 +32,15 @@
 </style>
 </head>
 <body ng-app="mainModule">
+	<nav>
+		<ul>
+			<li><a href="home">HOME</a></li>
+			<li>ABOUT</li>
+			<li><a href="portfolio">My portfolio</a></li>
+			<li><a href="history">Transaction History</a></li>
+			<li><a href="marketdata">Market data</a></li>
+		</ul>
+	</nav>
 	<h1>All the transaction history</h1>
 	<div ng-controller="mainController">
 		<table id="transHistory" border="1">

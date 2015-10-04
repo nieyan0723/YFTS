@@ -66,6 +66,15 @@
 </style>
 </head>
 <body>
+	<nav>
+		<ul>
+			<li><a href="home">HOME</a></li>
+			<li>ABOUT</li>
+			<li><a href="stock">Add/Delete Stock</a></li>
+			<li><a href="pending">Pending</a></li>
+			<li><a href="marketdata">Market data</a></li>
+		</ul>
+	</nav>
 	<h1>
 		<font color="red">All Stocks</font>
 	</h1>
