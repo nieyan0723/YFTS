@@ -4970,3 +4970,6 @@ span.customSelect.changed {
     z-index: 1002;
     bottom:0;
 }
+.modal-dialog{
+	left:0 !important;
+}

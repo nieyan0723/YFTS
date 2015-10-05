@@ -58,7 +58,6 @@
 			<li><a href="marketdata">Market data</a></li>
 		</ul>
 	</nav>
-	<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
 	<div  ng-controller="ModalDemoCtrl">
 		<form action="portfolio" id="listUserStocks" method="post">
 			<table border="1" ng-controller="mainController">

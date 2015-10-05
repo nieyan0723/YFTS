@@ -35,7 +35,7 @@ var app = angular.module('mainModule', []);
 		</div>
 	</div>
 	
-	<nav style="display:none">
+	<nav style="margin-top:100px">
 		<ul>
 			<li><a href="home">HOME</a></li>
 			<li>ABOUT</li>

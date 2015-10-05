@@ -118,7 +118,6 @@
 			<li><a href="marketdata">Market data</a></li>
 		</ul>
 	</nav>
-	<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>	
 	<div ng-controller="pendingController" >
 		<div ng-if="hasPending()">
 		<h1>Pending transactions</h1>

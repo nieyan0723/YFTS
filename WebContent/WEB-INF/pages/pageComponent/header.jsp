@@ -93,7 +93,7 @@
                           <span class="profile-ava">
                               <img alt="" src="img/download.jpg" width="30" height="30">
                           </span>
-                          <span class="username">{{user.userName}}</span>
+                          <span class="username">Hello, {{user.userName}}</span>
                           <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu extended logout">

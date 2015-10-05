@@ -71,7 +71,6 @@ app.controller("mainController", function($scope, $http) {
 			<li><a href="marketdata">Market data</a></li>
 		</ul>
 	</nav>
-<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
 
 <div ng-controller="mainController">
 	<div ng-if="!hasPending()">

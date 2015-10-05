@@ -47,14 +47,6 @@ public class UserService {
 	public User findUserByUserName(String username){
 		return ud.findByUserName(username);
 	}
-	
-	@Transactional
-	public UserInfo userLogin(String username) {
-		UserInfo userInfo = new UserInfo();
-		userInfo.setMessage("Hello "+ username);
-		userInfo.setUsers(ud.queryAll());
-		return userInfo;
-	}
 
 	@Transactional
 	public List<OwnershipInfo> findOwnByUserName(String username){

@@ -69,31 +69,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
-	public ModelAndView mainPage(Principal principal){
-		String username = principal.getName();
-		System.out.println(username);
-		User user = us.findUserByUserName(username);
-		UserInfo userInfo = us.userLogin(username);
+	public ModelAndView mainPage(){
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
-		mav.addObject("userInfo", userInfo);
-//		mav.addObject("userEmail",user.getEmail());
-//		mav.addObject("userFirstN",user.getFirstName());
-//		mav.addObject("userLastN",user.getLastName());
-		return mav;
-	}
-	
-	
-	public ModelAndView header1(){
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(username+"123123123");
-		User user = us.findUserByUserName(username);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("header");
-		mav.addObject("userName", "Hello "+username);
-		mav.addObject("userEmail",user.getEmail());
-		mav.addObject("userFirstN",user.getFirstName());
-		mav.addObject("userLastN",user.getLastName());
 		return mav;
 	}
 	
