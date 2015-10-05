@@ -109,15 +109,7 @@
 </head>
 <body ng-app="mainModule">
 <c:import url="pageComponent/header.jsp"/>
-	<nav>
-		<ul>
-			<li><a href="home">HOME</a></li>
-			<li>ABOUT</li>
-			<li><a href="portfolio">My portfolio</a></li>
-			<li><a href="history">Transaction History</a></li>
-			<li><a href="marketdata">Market data</a></li>
-		</ul>
-	</nav>
+<<session class="wrapper">
 	<div ng-controller="pendingController" >
 		<div ng-if="hasPending()">
 		<h1>Pending transactions</h1>
@@ -212,6 +204,7 @@
 		
 	</div>	
 	<br/>
+	</session>
 	<c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

@@ -11,14 +11,14 @@ Website: http://geekslabs.com/
 
 body {
     color: #797979;
-    background: #eeeeee;
-    font-family: 'Lato', sans-serif;
+    background: #eeeeee !important;
+    font-family: 'Lato', sans-serif !important;
     padding: 0px !important;
     margin: 0px !important;
     font-size:14px !important;    
 }
 h1,h2,h3,h4,h5{
-    font-weight: 300;
+    font-weight: 300 !important;
 }
 label{
     font-weight: 300;   
@@ -786,7 +786,8 @@ div[data-role="editor-toolbar"] {
     float: left;
     text-align: left;
     width: 100%;
-    background: #688a7e;    
+    background: #ffffff;
+    padding: 5px 40px;
 }
 
 .dropdown-menu.extended.logout > li:last-child > a, .dropdown-menu.extended.logout > li:last-child > a:hover {
@@ -806,7 +807,7 @@ div[data-role="editor-toolbar"] {
     border-bottom: 1px solid #EBEBEB !important;
     font-size: 14px;
     list-style: none;
-    padding: 15px 10px !important;
+    padding: 10px 10px !important;
     width: 100%;
     display: inline-block;
 }
@@ -872,8 +873,8 @@ div[data-role="editor-toolbar"] {
 }
 /*----*/
 .page-header {
-  margin: 12px 0 20px;
-  border-bottom: none;
+  margin: 12px 0 20px !important;
+  border-bottom: none !important;
   opacity: 0.7;
   text-transform: uppercase;
 }
@@ -4957,11 +4958,14 @@ span.customSelect.changed {
 }
 
 .prof-info-container{
-    float: left;
+	border-top: 2px solid #688a7e !important;
     text-align: left;
+    color: #797979;
+    border-bottom: 1px solid #EBEBEB !important;
+    font-size: 14px;
+    list-style: none;
+    padding: 15px 10px !important;
     width: 100%;
-    background: black;
-    padding:10px;
 }
 .footer {
     position: absolute;

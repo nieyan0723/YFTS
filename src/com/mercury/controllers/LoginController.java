@@ -69,9 +69,14 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
-	public ModelAndView mainPage(){
+	public ModelAndView mainPage(Principal principal){
+		String username = principal.getName();
+		System.out.println(username);
+		User user = us.findUserByUserName(username);
+		UserInfo userInfo = us.userLogin(username);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
+		mav.addObject("userInfo", userInfo);
 		return mav;
 	}
 	

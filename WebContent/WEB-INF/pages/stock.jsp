@@ -79,15 +79,7 @@ var app = angular.module('mainModule', []);
 </head>
 <body ng-app="mainModule">
 <c:import url="pageComponent/header.jsp"/>
-	<nav>
-		<ul>
-			<li><a href="home">HOME</a></li>
-			<li>ABOUT</li>
-			<li><a href="stock">Add/Delete Stock</a></li>
-			<li><a href="pending">Pending</a></li>
-			<li><a href="marketdata">Market data</a></li>
-		</ul>
-	</nav>
+<session class="wrapper">
 	<h1>
 		<font color="red">All Stocks</font>
 	</h1>
@@ -137,6 +129,7 @@ var app = angular.module('mainModule', []);
 			</tr>
 		</table>
 	</form>
+	</session>
 	<c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

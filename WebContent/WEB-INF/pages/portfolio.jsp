@@ -49,15 +49,7 @@
 </head>
 <body ng-app="ui.bootstrap.demo">
 <c:import url="pageComponent/header.jsp"/>
-	<nav>
-		<ul>
-			<li><a href="home">HOME</a></li>
-			<li>ABOUT</li>
-			<li><a href="portfolio">My portfolio</a></li>
-			<li><a href="history">Transaction History</a></li>
-			<li><a href="marketdata">Market data</a></li>
-		</ul>
-	</nav>
+<session class="wrapper">
 	<div  ng-controller="ModalDemoCtrl">
 		<form action="portfolio" id="listUserStocks" method="post">
 			<table border="1" ng-controller="mainController">
@@ -185,6 +177,7 @@
         </div>
     </script>
 </div>
+</session>
 <c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

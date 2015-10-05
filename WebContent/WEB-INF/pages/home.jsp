@@ -27,29 +27,13 @@ var app = angular.module('mainModule', []);
 	<!--overview start-->
 	<div class="row">
 		<div class="col-lg-12">
-			<h3 class="page-header"><i class="fa fa-laptop"></i> Home</h3>
+			<h3 class="page-header"><i class="fa fa-home"></i> Home</h3>
 			<ol class="breadcrumb">
 				<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>		
 				<li></li>			  	
 			</ol>
 		</div>
 	</div>
-	
-	<nav style="margin-top:100px">
-		<ul>
-			<li><a href="home">HOME</a></li>
-			<li>ABOUT</li>
-			<sec:authorize access="hasRole('ROLE_USER')">
-				<li><a href="portfolio">My portfolio</a></li>
-				<li><a href="history">Transaction History</a></li>
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="stock">Add/Delete Stock</a></li>
-				<li><a href="pending">Pending</a></li>
-			</sec:authorize>
-			<li><a href="marketdata">Market data</a></li>
-		</ul>
-	</nav>
 	<sec:authorize access="hasRole('ROLE_USER')">
 		<h1>Welcome back</h1>
 	</sec:authorize>
