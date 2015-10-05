@@ -78,6 +78,14 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 		}
 		return false;
 	};
+	
+	$scope.predicate = 'stock.stock.symbol';
+    $scope.reverse = true;
+    $scope.order = function(predicate) {
+      $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+      $scope.predicate = predicate;
+    };
+	
 }]);
 app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared', 
                                  function ($scope, $modal, $log, shared) {

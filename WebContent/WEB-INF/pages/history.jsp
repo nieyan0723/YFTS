@@ -3,7 +3,14 @@
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+    <link rel="shortcut icon" href="img/favicon.png">
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
 <script src="js/angular.min.js"></script>
@@ -18,6 +25,24 @@
 <script src="js/angular.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      <script src="js/lte-ie7.js"></script>
+    <![endif]-->
 <script>
 	var app = angular.module("mainModule", ['checklist-model']);
 	app.controller("pendingController", function($scope, $http) {
@@ -106,105 +131,164 @@
     	content: '\25bc';
 	}
 </style>
-</head>
-<body ng-app="mainModule">
-<c:import url="pageComponent/header.jsp"/>
-<<session class="wrapper">
-	<div ng-controller="pendingController" >
-		<div ng-if="hasPending()">
-		<h1>Pending transactions</h1>
-		<form id="pendingList" action="history" method="get">
-			<table border="1" >
-				<tr>
-					<th>User ID</th>
-					<th>Stock ID</th>
-					<th>Amount</th>
-					<th>Price</th>
-					<th>Transaction Time</th>
-					<th>Cancel</th>
-					<th><input type="checkbox" name="selectAll" ng-model="selectAll" 
-						ng-click="checkAll($event)"/></th>
-				</tr>
-				<tr ng-repeat="pending in pendingList">
-					<td>{{pending.own.user.uid}}</td>
-					<td>{{pending.own.stock.sid}}</td>
-					<td>{{pending.amount}}</td>
-					<td>{{pending.price}}</td>
-					<td>{{pending.ts}}</td>
-					<td>
-						<button class="cancel" name="cancel" 
-						value={{pendingList.indexOf(pending)}}>Cancel</button>
-					</td>
-					<td>
-						<input id="tagglebox" ng-checked="selectAll" type="checkbox" 
-						checklist-value="pendingList.indexOf(pending)" checklist-model="selected.pending" /> 
-					</td>
-				</tr>
-			</table>
-			<br/>
-			<div>
-				<button class="cancel" name="cancelAll" value={{selected.pending}}>Cancel Selected</button>
+    
+  </head>
+
+  <body ng-app="mainModule">
+  <!-- container section start -->
+  <c:import url="pageComponent/header.jsp"/>
+ 
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-table"></i>History</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+						<li><i class="fa fa-table"></i>History</li>
+						<li><i class="fa fa-th-list"></i>Pending/Tansaction</li>
+					</ol>
+				</div>
 			</div>
-		</form>
-		</div>
-	</div>
-	<br/>
-	<h1>Transaction history</h1>
-	<div ng-controller="historyController">
-		<div ng-if="!hasTran()">
-			<h1>No transaction history</h1>
-		</div>
-		<div ng-if="hasTran()">
-		<form id="search">
-			<label>Key word: </label>
-			<input type="text" placeholder="Filter by" ng-model="criteria"/>
-			<label>Between </label>
-			<input type="date" name="lower" ng-model="startDate"/>
-			<label>and</label>
-			<input type="date" name="upper" ng-model="endDate"/>
-		</form>
-		<hr/>
-		<table id="transHistory" border="1">
-		<tr>
-			<th>
-				<a href="" ng-click="order('tid')">TID</a>
-       			<span class="sortorder" ng-show="predicate === 'tid'" ng-class="{reverse:reverse}"></span>
-			</th>
-			<th>
-				<a href="" ng-click="order('own.user.userName')">Username</a>
-       			<span class="sortorder" ng-show="predicate === 'own.user.userName'" ng-class="{reverse:reverse}"></span>
-			</th>
-			<th>
-				<a href="" ng-click="order('own.stock.symbol')">Stock Symbol</a>
-       			<span class="sortorder" ng-show="predicate === 'own.stock.symbol'" ng-class="{reverse:reverse}"></span>
-			</th>
-			<th>
-				<a href="" ng-click="order('amount')">Amount</a>
-       			<span class="sortorder" ng-show="predicate === 'amount'" ng-class="{reverse:reverse}"></span>
-			</th>
-			<th>
-				<a href="" ng-click="order('price')">Price</a>
-       			<span class="sortorder" ng-show="predicate === 'price'" ng-class="{reverse:reverse}"></span>
-			</th>
-			<th>
-				<a href="" ng-click="order('ts')">Transaction Time</a>
-       			<span class="sortorder" ng-show="predicate === 'ts'" ng-class="{reverse:reverse}"></span>
-			</th>
-		</tr>
-		<tr ng-repeat="tran in transList |dateRange:startDate:endDate |filter:criteria| orderBy:predicate:reverse">
-			<td>{{tran.tid}}</td>
-			<td>{{tran.own.user.userName}}</td>
-			<td>{{tran.own.stock.symbol}}</td>
-			<td>{{tran.amount}}</td>
-			<td>{{tran.price}}</td>
-			<td>{{tran.ts}}</td>
-		</tr>
-		</table>
-		</div>
-		
-	</div>	
-	<br/>
-	</session>
-	<c:import url="pageComponent/footer.jsp"/>
-</body>
+              <!-- page start-->
+              <div class="row">
+                  <div class="col-lg-12" ng-controller="pendingController" >
+                    <div ng-if="hasPending()">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Pending Transactions 
+                          </header>
+                        <form id="pendingList" action="history" method="get">
+                          <table class="table table-striped table-advance table-hover">
+                           <tbody>
+                              <tr>
+                                 <th><i class="icon_profile"></i> User ID</th>
+                                 <th><i class="icon_calendar"></i> Stock ID</th>
+                                 <th><i class="icon_mail_alt"></i> Quantity</th>
+                                 <th><i class="icon_pin_alt"></i> Stock Price</th>
+                                 <th><i class="icon_mobile"></i> Transaction Time</th>
+                                 <th><i class="icon_mobile"></i> Cancel</th>
+                                 <th><i class="icon_cogs"></i> <input type="checkbox" name="selectAll" ng-model="selectAll" 
+						         ng-click="checkAll($event)"/></th>
+                              </tr>
+                              <tr ng-repeat="pending in pendingList">
+								 <td>{{pending.own.user.uid}}</td>
+								 <td>{{pending.own.stock.sid}}</td>
+								 <td>{{pending.amount}}</td>
+								 <td>{{pending.price}}</td>
+								 <td>{{pending.ts}}</td>
+                                 <td>
+                                  <div class="btn-group">
+                                      <button class="cancel" name="cancel" 
+									value={{pendingList.indexOf(pending)}}>Cancel</button>
+                                  </div>
+                                  </td>
+                                  <td>
+									<input id="tagglebox" ng-checked="selectAll" type="checkbox" 
+									checklist-value="pendingList.indexOf(pending)" checklist-model="selected.pending" /> 
+								  </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        
+                        <br/>
+						<div>
+							<button class="cancel" name="cancelAll" value={{selected.pending}}>Cancel Selected</button>
+						</div>
+                       </form>
+                      </section>
+                    </div>
+                  </div>
+              </div>
+        
+              <!-- page end-->
+              
+
+              <div class="row">
+                  <div class="col-lg-12" ng-controller="historyController" >
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Transaction History 
+                          </header>
+                          <div ng-if="!hasTran()">
+							<h1>No transaction history</h1>
+						  </div>
+						  
+				     <div ng-if="hasTran()">
+				     	<form id="search">
+							<label>Key word: </label>
+							<input type="text" placeholder="Filter by" ng-model="criteria"/>
+							<label>Between </label>
+							<input type="date" name="lower" ng-model="startDate"/>
+							<label>and</label>
+							<input type="date" name="upper" ng-model="endDate"/>
+						</form>
+                
+                          <table class="table table-striped table-advance table-hover" id="transHistory" >
+                           <tbody>
+                              <tr>
+								<th>
+									<a href="" ng-click="order('tid')">TID</a>
+       								<span class="sortorder" ng-show="predicate === 'tid'" ng-class="{reverse:reverse}"></span>
+								</th>
+								<th>
+									<a href="" ng-click="order('own.user.userName')">Username</a>
+       								<span class="sortorder" ng-show="predicate === 'own.user.userName'" ng-class="{reverse:reverse}"></span>
+								</th>
+								<th>
+									<a href="" ng-click="order('own.stock.symbol')">Stock Symbol</a>
+       								<span class="sortorder" ng-show="predicate === 'own.stock.symbol'" ng-class="{reverse:reverse}"></span>
+								</th>
+								<th>
+									<a href="" ng-click="order('amount')">Amount</a>
+       								<span class="sortorder" ng-show="predicate === 'amount'" ng-class="{reverse:reverse}"></span>
+								</th>
+								<th>
+									<a href="" ng-click="order('price')">Price</a>
+       								<span class="sortorder" ng-show="predicate === 'price'" ng-class="{reverse:reverse}"></span>
+								</th>
+								<th>
+									<a href="" ng-click="order('ts')">Transaction Time</a>
+       								<span class="sortorder" ng-show="predicate === 'ts'" ng-class="{reverse:reverse}"></span>
+								</th>
+                              </tr>
+                              <tr ng-repeat="tran in transList |dateRange:startDate:endDate |filter:criteria| orderBy:predicate:reverse">
+								<td>{{tran.tid}}</td>
+								<td>{{tran.own.user.userName}}</td>
+								<td>{{tran.own.stock.symbol}}</td>
+								<td>{{tran.amount}}</td>
+								<td>{{tran.price}}</td>
+								<td>{{tran.ts}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                      </div>
+                      </section>
+                  </div>
+              </div>
+              
+          </section>
+      </section>
+      <!--main content end-->
+  </section>
+  <!-- container section end -->
+    <!-- javascripts -->
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <!-- nice scroll -->
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <!-- chartjs -->
+    <script src="assets/chart-master/Chart.js"></script>
+    <!-- custom chart script for this page only-->
+	<script src="js/amcharts.js"></script>
+	<script src="js/pie.js"></script>
+	<script src="js/light.js"></script>
+	<script src="js/pie2.js"></script>
+    <!--custome script for all page-->
+    <script src="js/scripts.js"></script>
+
+
+  </body>
 </html>
