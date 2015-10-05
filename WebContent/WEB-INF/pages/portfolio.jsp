@@ -106,7 +106,7 @@
                                  <th><i class="icon_mail_alt"></i> Stock Name</th>
                                  <th><i class="icon_pin_alt"></i> Stock Price</th>
                                  <th><i class="icon_mobile"></i> Stock Change</th>
-                                 <th><i class="icon_mobile"></i> Quality</th>
+                                 <th><i class="icon_mobile"></i> Quantity</th>
                                  <th><i class="icon_cogs"></i> Action</th>
                               </tr>
                               <tr ng-repeat=" stock in stockInfo">

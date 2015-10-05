@@ -98,15 +98,28 @@
                           <table class="table table-striped table-advance table-hover" id="stockList" ng-controller="mainController">
                            <tbody>
                               <tr>
-                                 <th><i class="icon_profile"></i> Stock Symbol</th>
-                                 <th><i class="icon_calendar"></i> Stock Name</th>
-                                 <th><i class="icon_pin_alt"></i> Stock Price</th>
-                                 <th><i class="icon_mobile"></i> Stock Change</th>
+                                 <th>
+                                 	<a href="" ng-click="order('stock.symbol')">Stock Symbol</a>
+       								<span class="sortorder" ng-show="predicate === 'stock.symbol'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                
+                                 <th>
+                                 	<a href="" ng-click="order('stockName')">Stock Name</a>
+       								<span class="sortorder" ng-show="predicate === 'stockName'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                 <th>
+                                 	<a href="" ng-click="order('price')">Stock Price</a>
+       								<span class="sortorder" ng-show="predicate === 'price'" ng-class="{reverse:reverse}"></span>
+                                 </th>
+                                 <th>
+                                 	<a href="" ng-click="order('change')">Stock Change</a>
+       								<span class="sortorder" ng-show="predicate === 'change'" ng-class="{reverse:reverse}"></span>
+                                 </th>
 								 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-									<th>Transaction</th>
+									<th style="color:#007aff">Transaction</th>
 								 </sec:authorize>
                               </tr>
-                              <tr ng-repeat="stock in stocksArray">
+                              <tr ng-repeat="stock in stocksArray | orderBy:predicate:reverse">
 								<td>{{stock.stock.symbol}}</td>
 								<td>{{stock.stockName}}</td>
 								<td>{{stock.price}}</td>
