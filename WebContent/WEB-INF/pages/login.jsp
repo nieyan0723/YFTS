@@ -175,7 +175,7 @@
                         <a class="page-scroll" href="#search">Search</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">Sign in/up</a>
+                        <a class="page-scroll" href="#login_up">Sign in/up</a>
                     </li>
                 </ul>
             </div>
@@ -338,7 +338,7 @@
     </section> 
 
     <!-- Contact Section -->
-    <section id="contact">
+    <section id="login_up">
         <div class="container">
     	<div class="row">
     	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">

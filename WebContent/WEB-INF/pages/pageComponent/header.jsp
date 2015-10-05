@@ -74,6 +74,7 @@
                           <span>Market Data</span>
                       </a>
                   </li>
+                  <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                   <!-- user login dropdown start-->
                   <li class="dropdown" ng-controller="headerCtrl">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -99,6 +100,14 @@
                           </li>
                       </ul>
                   </li>
+                  </sec:authorize>
+                  <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">
+                  <li>
+                  	<a class="" href="login#login_up">
+                  	 	<span class="username">Log in</span>
+                  	</a>
+                  </li>
+                  </sec:authorize>
                   <!-- user login dropdown end -->                
               </ul>
               <!-- sidebar menu end-->
