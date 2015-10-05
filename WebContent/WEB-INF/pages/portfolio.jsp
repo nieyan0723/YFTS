@@ -93,14 +93,31 @@
 			</div>
 			<!-- page start-->
 			   <div class="row">
+			   	 <div class="col-lg-12" >
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Balance
+                          </header>
+                          <div ng-controller="mainController" class="panel-body">
+								<div ng-controller="ModalDemoCtrl">
+										<button id="addBalance" class="btn btn-primary btn-sm"
+											ng-click="openAdd()">Add Balance</button>
+										<span>Current Balance: <b style="color: red">$ {{user.balance}}</b></span>	
+										<div id="addSuccess" ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Adding money Success!</div>	
+									
+								</div>
+								
+							</div>
+                      </section>
+                 </div>
                   <div class="col-lg-12" ng-controller="ModalDemoCtrl">
                       <section class="panel">
                           <header class="panel-heading">
                               Stock
                           </header>
-                          
+                          <div class="panel-body" ng-controller="mainController">
                         <form action="portfolio" id="listUserStocks" method="post">
-                          <table class="table table-striped table-advance table-hover" ng-controller="mainController">
+                          <table class="table table-striped table-advance table-hover" >
                            <tbody>
                               <tr>
                                  <th><i class="icon_profile"></i> Stock Id</th>
@@ -108,7 +125,7 @@
                                  <th><i class="icon_mail_alt"></i> Stock Name</th>
                                  <th><i class="icon_pin_alt"></i> Stock Price</th>
                                  <th><i class="icon_mobile"></i> Stock Change</th>
-                                 <th><i class="icon_mobile"></i> Quality</th>
+                                 <th><i class="icon_mobile"></i> Quantity</th>
                                  <th><i class="icon_cogs"></i> Action</th>
                               </tr>
                               <tr ng-repeat=" stock in stockInfo">
@@ -134,16 +151,29 @@
 
                            </tbody>
                         </table>
+                        
                         </form>
+                        <!-- loading bar -->
+						<div class = "loadbox" ng-hide="loading">
+							<div class = "loadbar">
+								<div class="progress progress-striped active progress-sm" >
+							    	<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}">
+							        	<span class="sr-only">45% Complete</span>
+							        </div>
+					    		</div>
+					     		<p>Loading...</p>
+					    	</div>
+					   </div>
+                        
                         
                   <div id="buySuccess" ng-show="buySuccess&&!sellSuccess&&!addSuccess">Buying Transaction Success!</div>
 		          <div id="sellSuccess" ng-show="sellSuccess&&!buySuccess&&!addSuccess">Selling Transaction Success!</div>
-	              <br/>
+	              </div>
                       </section>
                   </div>
               </div>
               
-    <div ng-controller="mainController">
+    <!-- <div ng-controller="mainController">
 		<div ng-controller="ModalDemoCtrl">
 				<button id="addBalance" class="btn btn-primary btn-sm"
 					ng-click="openAdd()">Add Balance</button>
@@ -152,7 +182,7 @@
 			
 		</div>
 		
-	</div>
+	</div> -->
 	
 <div>
     <script type="text/ng-template" id="buyContent.html">
@@ -289,6 +319,7 @@
 			
 		</section>
 	</section>
+    </div>
 
 <!-- container section end -->
     <!-- javascripts -->

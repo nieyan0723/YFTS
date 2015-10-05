@@ -51,7 +51,8 @@
 	<h2>This demo is show real time market data using Angular JS</h2>
 	<div  ng-controller="ModalDemoCtrl">
 		<h3>Market Data</h3>
-		<table id="stockList" border="1" style="width: 800px"  ng-controller="mainController">
+		<div ng-controller="mainController">
+		<table id="stockList" border="1" style="width: 800px"  >
 			<tr>
 				<th>Stock Symbol</th>
 				<th>Stock Name</th>
@@ -80,6 +81,19 @@
 				</sec:authorize>
 			</tr>
 		</table>
+		<!-- loading bar -->
+		<div class = "loadbox" ng-hide="loading">
+			<div class = "loadbar">
+				<div class="progress progress-striped active progress-sm" >
+			    	<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}">
+			        	<span class="sr-only">45% Complete</span>
+			        </div>
+	    		</div>
+	     		<p>Loading...</p>
+	    	</div>
+	   </div>
+   </div>
+					   
 	</div>
 <div  ng-controller="ModalDemoCtrl">
     <script type="text/ng-template" id="buyContent.html">
