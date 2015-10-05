@@ -49,11 +49,12 @@
         };
 	});	
 	
-	app.controller("historyController", function($scope, $http) {
+	app.controller("historyController", ["$scope", "$http", "$filter", function($scope, $http, $filter) {
 		$scope.transList = [];
 		$http.get("getHistory")
 		.success(function(data) {
 			$scope.transList = data;
+			
 		}).error(function(data) {
 			alert("Please sign in!");
 		});
@@ -62,7 +63,30 @@
         	if ($scope.transList.length > 0) return true;
         	else return false;
         };
-	});	
+        
+        $scope.predicate = 'tid';
+        $scope.reverse = true;
+        $scope.order = function(predicate) {
+          $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+          $scope.predicate = predicate;
+        };
+	}]);
+	app.filter("dateRange", function(){
+		return function(items, d1, d2){
+			if (!d1 || !d2){
+				return items;
+			}
+			var filtered = [];
+			angular.forEach(items, function(item){
+				var timestamp = new Date(item.ts);
+				timestamp.setHours(0,0,0,0);
+				if (timestamp >= d1 && timestamp <= d2){
+					filtered.push(item);
+				}
+			});
+			return filtered;
+		};
+	});
 </script>
 <style type="text/css">
 	.error {
@@ -74,6 +98,12 @@
 	}
 	th, td{
 		text-align:center;
+	}
+	.sortorder:after {
+    	content: '\25b2';
+  	}
+	.sortorder.reverse:after {
+    	content: '\25bc';
 	}
 </style>
 </head>
@@ -130,25 +160,57 @@
 	<br/>
 	<h1>Transaction history</h1>
 	<div ng-controller="historyController">
-		<div ng-if="!hasTran()"></div>
+		<div ng-if="!hasTran()">
+			<h1>No transaction history</h1>
+		</div>
+		<div ng-if="hasTran()">
+		<form id="search">
+			<label>Key word: </label>
+			<input type="text" placeholder="Filter by" ng-model="criteria"/>
+			<label>Between </label>
+			<input type="date" name="lower" ng-model="startDate"/>
+			<label>and</label>
+			<input type="date" name="upper" ng-model="endDate"/>
+		</form>
+		<hr/>
 		<table id="transHistory" border="1">
-			<tr>
-				<th>Transaction ID</th>
-				<th>Username</th>
-				<th>Stock Symbol</th>
-				<th>Amount</th>
-				<th>Price</th>
-				<th>Transaction Time</th>
-			</tr>
-			<tr ng-repeat="tran in transList">
-				<td>{{tran.tid}}</td>
-				<td>{{tran.own.user.userName}}</td>
-				<td>{{tran.own.stock.symbol}}</td>
-				<td>{{tran.amount}}</td>
-				<td>{{tran.price}}</td>
-				<td>{{tran.ts}}</td>
-			</tr>
+		<tr>
+			<th>
+				<a href="" ng-click="order('tid')">TID</a>
+       			<span class="sortorder" ng-show="predicate === 'tid'" ng-class="{reverse:reverse}"></span>
+			</th>
+			<th>
+				<a href="" ng-click="order('own.user.userName')">Username</a>
+       			<span class="sortorder" ng-show="predicate === 'own.user.userName'" ng-class="{reverse:reverse}"></span>
+			</th>
+			<th>
+				<a href="" ng-click="order('own.stock.symbol')">Stock Symbol</a>
+       			<span class="sortorder" ng-show="predicate === 'own.stock.symbol'" ng-class="{reverse:reverse}"></span>
+			</th>
+			<th>
+				<a href="" ng-click="order('amount')">Amount</a>
+       			<span class="sortorder" ng-show="predicate === 'amount'" ng-class="{reverse:reverse}"></span>
+			</th>
+			<th>
+				<a href="" ng-click="order('price')">Price</a>
+       			<span class="sortorder" ng-show="predicate === 'price'" ng-class="{reverse:reverse}"></span>
+			</th>
+			<th>
+				<a href="" ng-click="order('ts')">Transaction Time</a>
+       			<span class="sortorder" ng-show="predicate === 'ts'" ng-class="{reverse:reverse}"></span>
+			</th>
+		</tr>
+		<tr ng-repeat="tran in transList |dateRange:startDate:endDate |filter:criteria| orderBy:predicate:reverse">
+			<td>{{tran.tid}}</td>
+			<td>{{tran.own.user.userName}}</td>
+			<td>{{tran.own.stock.symbol}}</td>
+			<td>{{tran.amount}}</td>
+			<td>{{tran.price}}</td>
+			<td>{{tran.ts}}</td>
+		</tr>
 		</table>
+		</div>
+		
 	</div>	
 	<br/>
 	<c:import url="pageComponent/footer.jsp"/>
