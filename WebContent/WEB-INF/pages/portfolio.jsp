@@ -229,7 +229,7 @@
         </div>
     </script>
 </div>	
-<br/>
+
             <div class="row">
               <!-- chart morris start -->
             	<div class="col-lg-12">
@@ -261,7 +261,7 @@
 			
 		</section>
 	</section>
-	
+
 <!-- container section end -->
     <!-- javascripts -->
     <script src="js/jquery.js"></script>

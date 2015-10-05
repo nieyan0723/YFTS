@@ -55,22 +55,21 @@ app.controller("mainController", function($scope, $http) {
 	th, td {
 		text-align:center;
 	}
-	h1, h3 {
-		color:red;
-	}
 </style>
 </head>
 <body ng-app="mainModule">
 <c:import url="pageComponent/header.jsp"/>
-<nav>
-		<ul>
-			<li><a href="home">HOME</a></li>
-			<li>ABOUT</li>
-			<li><a href="stock">Add/Delete Stock</a></li>
-			<li><a href="pending">Pending</a></li>
-			<li><a href="marketdata">Market data</a></li>
-		</ul>
-	</nav>
+<session class="wrapper">
+<!--overview start-->
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header"><i class="fa fa-home"></i> Home</h3>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>		
+				<li></li>			  	
+			</ol>
+		</div>
+	</div>
 
 <div ng-controller="mainController">
 	<div ng-if="!hasPending()">
@@ -113,6 +112,7 @@ app.controller("mainController", function($scope, $http) {
 </div>
 </div>
 <br/>
+</session>
 <c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

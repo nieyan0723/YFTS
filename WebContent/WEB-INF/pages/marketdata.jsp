@@ -44,21 +44,7 @@
 </head>
 <body ng-app="ui.bootstrap.demo">
 <c:import url="pageComponent/header.jsp"/>
-	<nav>
-		<ul>
-			<li><a href="home">HOME</a></li>
-			<li>ABOUT</li>
-			<sec:authorize access="hasRole('ROLE_USER')">
-				<li><a href="portfolio">My portfolio</a></li>
-				<li><a href="history">Transaction History</a></li>
-			</sec:authorize>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="stock">Add/Delete Stock</a></li>
-				<li><a href="pending">Pending</a></li>
-			</sec:authorize>
-			<li><a href="marketdata">Market data</a></li>
-		</ul>
-	</nav>
+<session class="wrapper">
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">	
 		<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
 	</sec:authorize>
@@ -152,6 +138,7 @@
         </div>
     </script>
 </div>
+</session>
 <c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>
