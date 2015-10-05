@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.beans.OwnershipInfo;
 import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
 import com.mercury.service.StockService;
@@ -34,12 +36,20 @@ public class StockController {
 	}
 	
 	@RequestMapping(value="/stock")
-	public ModelAndView listAllStock(){
-		ModelAndView mav = new ModelAndView();
-		List<Stock> stockList = ss.getAllStock();
-		mav.setViewName("stock");
-		mav.addObject("stockList", stockList);
-		return mav;
+	public String listAllStock(){
+		return "stock";
+	}
+	
+	@RequestMapping(value="/getStock", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Stock> getStock(){
+		return ss.getAllStock();
+	}
+	
+	@RequestMapping(value="/stockOwned", method=RequestMethod.GET)
+	@ResponseBody
+	public List<OwnershipInfo> getAllOwn(){
+		return ss.getAllOwn();
 	}
 	
 	//Delete a certain stock
@@ -50,16 +60,18 @@ public class StockController {
 		return "redirect:stock";
 	}
 	
-	@RequestMapping(value="/validateStock", method=RequestMethod.GET)
+	@RequestMapping(value="/validateStock", method=RequestMethod.POST, produces="text/plain")
 	@ResponseBody
-	public String validateStock(@ModelAttribute("stock") Stock stock, BindingResult result){
-		if (ss.hasStock(stock)){
-			System.out.println("Stock already exists!");
-			return "Stock already exists!";
-		}else if(!ss.realStock(stock)){
-			return "Not a valid stock!";
+	public String validateStock(@RequestBody Stock stock){
+		String status = "valid";
+		if (stock != null){
+			if(!ss.realStock(stock)){
+				status = "Not a valid stock!";
+			}else if (ss.hasStock(stock)){
+				status = "Stock already exists!";
+			}
 		}
-		return "valid";
+		return status;
 	}	
 	
 	@RequestMapping(value="/addStock", method=RequestMethod.POST)
