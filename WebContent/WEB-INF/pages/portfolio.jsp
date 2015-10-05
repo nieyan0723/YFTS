@@ -40,8 +40,10 @@
     <link href="css/elegant-icons-style.css" rel="stylesheet" />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles -->
-    <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    
+    <script src="js/Chart.js"></script>
+	<script src="js/Chart.Doughnut.js"></script>
 
 <style>
 
@@ -248,6 +250,32 @@
                                   			</header>
                                   			<div class="panel-body text-center">
                                                <div id="chartdiv"></div>
+                                  			</div>
+                              			</section>
+                          			</div>                      
+                      			</div>
+                      		</div>
+						</div>
+                    </section>
+              	</div>
+              	<div class="col-lg-12">
+                	<section class="panel">
+                    	<header class="panel-heading">
+                        	<h3>General Chart</Char>
+                      	</header>
+                      	<div class="panel-body">
+                        	<div class="tab-pane" id="chartjs">
+                      			<div class="row">
+                          		<!-- Line -->
+                          			<div class="col-lg-12">
+                              			<section class="panel">
+                                  			<header class="panel-heading">
+                                      			pie chart
+                                  			</header>
+                                  			<div class="panel-body text-center">
+                                              <div id="canvas-holder">
+			<canvas id="chart-area" width="300" height="300"/>
+		</div>
                                   			</div>
                               			</section>
                           			</div>                      
