@@ -31,6 +31,8 @@ app.service("shared", function() {
 app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", "shared", 
                                   function($scope, $interval, $http, $rootScope, shared) {
 	$scope.user;
+	$scope.loading=false;
+	$scope.percent = "20%";
 	$http.get("validTran")
 	.success(function(data) {
 		$scope.user = data;
@@ -44,6 +46,12 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 	.success(function(data){
 		$scope.stockInfo = data;
 		shared.setStockInfo($scope.stockInfo);
+		$scope.percent = "100%";
+		window.setTimeout(function() {
+		     $scope.$apply(function() {
+		        $scope.loading = true;
+		     });
+		 }, 1000);
 	})
 	.error(function(data){
 		console.log("AJAX ERROR");
