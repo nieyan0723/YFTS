@@ -4,6 +4,7 @@ package com.mercury.controllers;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.beans.StockInfo;
 import com.mercury.beans.User;
 import com.mercury.beans.UserInfo;
 import com.mercury.service.RegisterService;
@@ -70,11 +72,37 @@ public class LoginController {
 	public ModelAndView mainPage(Principal principal){
 		String username = principal.getName();
 		System.out.println(username);
+		User user = us.findUserByUserName(username);
 		UserInfo userInfo = us.userLogin(username);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("home");
 		mav.addObject("userInfo", userInfo);
+//		mav.addObject("userEmail",user.getEmail());
+//		mav.addObject("userFirstN",user.getFirstName());
+//		mav.addObject("userLastN",user.getLastName());
 		return mav;
+	}
+	
+	
+	public ModelAndView header1(){
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println(username+"123123123");
+		User user = us.findUserByUserName(username);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("header");
+		mav.addObject("userName", "Hello "+username);
+		mav.addObject("userEmail",user.getEmail());
+		mav.addObject("userFirstN",user.getFirstName());
+		mav.addObject("userLastN",user.getLastName());
+		return mav;
+	}
+	
+	@RequestMapping(value="/header")
+	@ResponseBody
+	public User header() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = us.findUserByUserName(username);
+		return user;
 	}
 
 	//for sign up

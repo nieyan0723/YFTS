@@ -8,10 +8,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
+<!-- for header and footer -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="css/extra/style.css" rel="stylesheet">
+<script src="js/angular.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+var app = angular.module('mainModule', []);
+</script>
 </head>
-<body>
-	<nav>
+<body style="height:100%" ng-app="mainModule">
+	<c:import url="pageComponent/header.jsp"/>
+	<session class="wrapper">
+	<!--overview start-->
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header"><i class="fa fa-laptop"></i> Home</h3>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>		
+				<li></li>			  	
+			</ol>
+		</div>
+	</div>
+	
+	<nav style="display:none">
 		<ul>
 			<li><a href="home">HOME</a></li>
 			<li>ABOUT</li>
@@ -26,9 +50,6 @@
 			<li><a href="marketdata">Market data</a></li>
 		</ul>
 	</nav>
-	<h1>
-		<font color="green">${userInfo.message}</font>
-	</h1>
 	<sec:authorize access="hasRole('ROLE_USER')">
 		<h1>Welcome back</h1>
 	</sec:authorize>
@@ -57,6 +78,7 @@
 			</c:forEach>
 		</table>
 	</sec:authorize>
-	<a href="<c:url value='/j_spring_security_logout'/>">Logout</a>
+	</session>
+	<c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

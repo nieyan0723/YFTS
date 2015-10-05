@@ -9,6 +9,15 @@
 <script src="js/angular.min.js"></script>
 <script src="js/checklist-model.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- for header and footer -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="css/extra/style.css" rel="stylesheet">
+<script src="js/angular.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script>
 	var app = angular.module("mainModule", ['checklist-model']);
 	app.controller("pendingController", function($scope, $http) {
@@ -69,6 +78,7 @@
 </style>
 </head>
 <body ng-app="mainModule">
+<c:import url="pageComponent/header.jsp"/>
 	<nav>
 		<ul>
 			<li><a href="home">HOME</a></li>
@@ -140,6 +150,7 @@
 			</tr>
 		</table>
 	</div>	
-	<br />
+	<br/>
+	<c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

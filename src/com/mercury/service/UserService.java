@@ -51,7 +51,7 @@ public class UserService {
 	@Transactional
 	public UserInfo userLogin(String username) {
 		UserInfo userInfo = new UserInfo();
-		userInfo.setMessage("Hello "+ username + ", welcome to YFTS home!");
+		userInfo.setMessage("Hello "+ username);
 		userInfo.setUsers(ud.queryAll());
 		return userInfo;
 	}

@@ -6,7 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
+<link href="css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="css/extra/style.css" rel="stylesheet">
 <script src="js/angular.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="js/checklist-model.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script>
@@ -55,6 +61,7 @@ app.controller("mainController", function($scope, $http) {
 </style>
 </head>
 <body ng-app="mainModule">
+<c:import url="pageComponent/header.jsp"/>
 <nav>
 		<ul>
 			<li><a href="home">HOME</a></li>
@@ -107,6 +114,6 @@ app.controller("mainController", function($scope, $http) {
 </div>
 </div>
 <br/>
-
+<c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>

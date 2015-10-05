@@ -12,6 +12,15 @@
     <script src="js/activity.js"></script>
     <script src="js/angular-resource.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- for header and footer -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="css/extra/style.css" rel="stylesheet">
+<script src="js/angular.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <style>
 	h3 {
 		color: blue;
@@ -34,6 +43,7 @@
 </style>
 </head>
 <body ng-app="ui.bootstrap.demo">
+<c:import url="pageComponent/header.jsp"/>
 	<nav>
 		<ul>
 			<li><a href="home">HOME</a></li>
@@ -142,5 +152,6 @@
         </div>
     </script>
 </div>
+<c:import url="pageComponent/footer.jsp"/>
 </body>
 </html>
