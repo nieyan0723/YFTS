@@ -39,7 +39,7 @@ public class StockService {
 	
 	public boolean realStock(Stock stock){
 		StockInfo stockInfo = getStockInfo(stock);
-		if(stockInfo != null && stockInfo.getStockName() != "N/A"){
+		if(stockInfo != null && stockInfo.getStockName() != ""){
 			return true;
 		}
 		return false;
@@ -88,7 +88,7 @@ public class StockService {
 	
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1&e=.c";
-		String stockName = "N/A";
+		String stockName = "";
 		double price = 0;
 		double change = 0;
 		try {

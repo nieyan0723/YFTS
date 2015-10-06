@@ -22,6 +22,11 @@ public class OwnershipInfo {
 	private Integer quantity;
 	
 	public OwnershipInfo() {}
+	public OwnershipInfo(User user, Stock stock, Integer quantity){
+		this.own.setUser(user);
+		this.own.setStock(stock);
+		this.quantity = quantity;
+	}
 		
 	@EmbeddedId
 	public Ownership getOwn() {

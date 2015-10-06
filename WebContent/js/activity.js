@@ -71,6 +71,7 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 	};
 		
 	$scope.hasStock = function(stock) {
+		console.log(stock);
 		for (var i=0; i<$scope.stockInfo.length; i++){
 			if (stock.stock.sid == $scope.stockInfo[i].stock.sid){
 				return true;
