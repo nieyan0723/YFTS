@@ -127,13 +127,13 @@
 				</div>
 			</div>
               <!-- page start-->
-              <div class="row">
-                  <div class="col-lg-12" ng-controller="mainController">
+              <div class="row" ng-controller="mainController">
+                  <div class="col-lg-8" >
                       <section class="panel">
                           <header class="panel-heading">
                               Stock
                           </header>
-                        
+                         <div class="panel-body">
                        <form action="stock" id="listForm" method="post">
                           <table class="table table-striped table-advance table-hover">
                            <tbody>
@@ -158,7 +158,19 @@
                        </form>
                        
                        
-    <h2>Add Stock</h2>
+    
+	</div>
+                      </section>
+                  </div>
+                  
+                  <div class="col-md-4" >
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Stock
+                          </header>
+                         <div class="panel-body">
+                         <h2>Add Stock</h2>
+                         <p> You can add stock here by using valid stock symbol</p>
 	<div class="errors" id="stock_error"" ng-show="!ifValid">{{errorMsg}}</div>
 	<form action="addStock" id="j_addForm" name="addForm" method="post">
 		<label style="width: 100px">Stock Symbol</label> 
@@ -175,10 +187,11 @@
 		<span class="errors" id="desc_error" ng-show="addForm.stockDesc.$dirty && addForm.stockDesc.$invalid">
 			Please enter the stock description!
 		</span><br/>
-		<input type="reset" value="Reset" id="j_reset"/>
-		<input type="submit" value="Submit" id="j_submit" 
+		<input class="btn btn-info popovers" style="background-color:blue" type="reset" value="Reset" id="j_reset"/>
+		<input class="btn btn-info popovers" type="submit" value="Submit" id="j_submit" 
 			ng-disabled="!ifValid || addForm.stockDesc.$invalid"/>
 	</form>
+                        </div>
                       </section>
                   </div>
               </div>

@@ -93,6 +93,7 @@
                           <header class="panel-heading">
                               Market Data
                           </header>
+                           <div class="panel-body">
                           <div ng-controller="mainController">
                           <table class="table table-striped table-advance table-hover" id="stockList">
                            <tbody>
@@ -149,6 +150,7 @@
 					    		</div>
 					     		<p>Loading...</p>
 					    	</div>
+					   </div>
 					   </div>
 					   </div>
                       </section>

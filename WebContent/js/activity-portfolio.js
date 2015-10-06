@@ -63,7 +63,7 @@ app.controller("mainController", ["$scope", "$interval" ,"$http", "$rootScope", 
 		     $scope.$apply(function() {
 		        $scope.loading = true;
 		     });
-		 }, 1000);
+		 }, 600);
 	}).error(function(data){
 		console.log("AJAX ERROR");
 	});
@@ -325,7 +325,7 @@ app.controller("BarCtrl", function ($scope,shared,$interval) {
 		if($scope.stockInfo!=null){
 			for(var i = 0;i<$scope.stockInfo.length;i++){
 				var val = $scope.stockInfo[i].quantity;
-				$scope.labels.push($scope.stockInfo[i].stockName);
+				$scope.labels.push($scope.stockInfo[i].stock.symbol);
 				$scope.data[0].push(val);
 			} 
 		}
