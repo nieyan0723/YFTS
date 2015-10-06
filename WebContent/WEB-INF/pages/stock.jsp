@@ -3,7 +3,14 @@
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+    <meta name="author" content="GeeksLabs">
+    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+    <link rel="shortcut icon" href="img/favicon.png">
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>YFTS</title>
 <script src="js/jquery.min.js"></script>
@@ -16,7 +23,26 @@
 <link href="css/extra/style.css" rel="stylesheet">
 <script src="js/angular.min.js"></script>
 <script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      <script src="js/lte-ie7.js"></script>
+    <![endif]-->
+
 <script>
 	var app = angular.module('mainModule', []);
 	app.config(['$httpProvider', function ($httpProvider) {    
@@ -80,34 +106,59 @@
 	color: red;
 }
 </style>
-</head>
-<body ng-app="mainModule">
-	<c:import url="pageComponent/header.jsp" />
-	<session class="wrapper" ng-controller="mainController">
-	<h1>
-		<font color="red">All Stocks</font>
-	</h1>
-	<form action="stock" id="listForm" method="post">
-		<table border="1">
-			<tr>
-				<th>Stock ID</th>
-				<th>Symbol</th>
-				<th>Description</th>
-				<th>Action</th>
-			</tr>
-			<tr ng-repeat="stock in stockList">
-				<td>{{stock.sid}}</td>
-				<td>{{stock.symbol}}</td>
-				<td>{{stock.stockDesc}}</td>
-				<td>
-					<button class="delete" name="delete" 
-						value="{{stock.sid}}" ng-disabled="hasOwn(stock)">Delete</button>
-				</td>
-			</tr>
-		</table>
-	</form>
-	<br />
-	<h2>Add Stock</h2>
+    
+  </head>
+
+  <body ng-app="mainModule">
+  
+  <c:import url="pageComponent/header.jsp" />
+     
+
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-table"></i> Stock</h3>
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+						<li><i class="fa fa-table"></i>Stock Process</li>
+					</ol>
+				</div>
+			</div>
+              <!-- page start-->
+              <div class="row">
+                  <div class="col-lg-12" ng-controller="mainController">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Stock
+                          </header>
+                        
+                       <form action="stock" id="listForm" method="post">
+                          <table class="table table-striped table-advance table-hover">
+                           <tbody>
+                              <tr>
+								<th>Stock ID</th>
+								<th>Symbol</th>
+								<th>Description</th>
+								<th>Action</th>
+                              </tr>
+                              <tr ng-repeat="stock in stockList">
+                                 <td>{{stock.sid}}</td>
+								 <td>{{stock.symbol}}</td>
+								 <td>{{stock.stockDesc}}</td>
+								 <td>
+									<button class="btn btn-info popovers" name="delete" 
+									value="{{stock.sid}}" ng-disabled="hasOwn(stock)">Delete</button>
+								 </td>
+                              </tr>
+
+                           </tbody>
+                        </table>
+                       </form>
+                       
+                       
+    <h2>Add Stock</h2>
 	<div class="errors" id="stock_error"" ng-show="!ifValid">{{errorMsg}}</div>
 	<form action="addStock" id="j_addForm" name="addForm" method="post">
 		<label style="width: 100px">Stock Symbol</label> 
@@ -128,7 +179,29 @@
 		<input type="submit" value="Submit" id="j_submit" 
 			ng-disabled="!ifValid || addForm.stockDesc.$invalid"/>
 	</form>
-	</session>
-	<c:import url="pageComponent/footer.jsp" />
-</body>
+                      </section>
+                  </div>
+              </div>
+              <!-- page end-->
+              
+
+              
+          </section>
+      </section>
+      <!--main content end-->
+  </section>
+  <!-- container section end -->
+    <!-- javascripts -->
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- nice scroll -->
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+	<script src="js/gritter.js" type="text/javascript"></script>
+    <!--custome script for all page-->
+    <script src="js/scripts.js"></script>
+
+
+  </body>
 </html>
