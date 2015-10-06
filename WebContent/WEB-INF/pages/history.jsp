@@ -138,7 +138,7 @@
 		
 		$interval(function(){
 			$scope.labels=[];
-			$scope.series = ['123'];
+			$scope.series = [];
 			$scope.data=[[],[]];
 			$scope.history = shared.getHistory();
 			//console.log($scope.history.stock);
@@ -167,7 +167,43 @@
 				$scope.series = ['Sell Stock', 'Buy Stock'];
 			}
 			console.log($scope.series);
-		}, 2000);
+		}, 1000);
+		});
+app.controller("LineCtrl", function ($scope,shared,$interval) {
+		
+		$interval(function(){
+			$scope.labels = [];
+			$scope.data=[[],[]];
+			$scope.history = shared.getHistory();
+			//console.log($scope.history.stock);
+			if($scope.history!=null){
+				for(var i = 0;i<$scope.history.length;i++){
+					console.log($scope.history[i].ts);
+					var stockTs = $scope.history[i].ts.split(" ")[0];
+					var volume = $scope.history[i].amount;
+					var ind = $scope.labels.indexOf(stockTs);
+					if(ind==-1){
+						$scope.labels.push(stockTs);
+						if(volume>0){
+							$scope.data[1].push(volume);
+							$scope.data[0].push(0);
+						}else if(volume<0){
+							$scope.data[0].push(-volume);
+							$scope.data[1].push(0);
+						}
+					} else {
+						if(volume>0){
+							$scope.data[1][ind] = volume+$scope.data[1][ind];
+						}else if(volume<0){
+							$scope.data[0][ind] = $scope.data[0][ind]-volume;
+						}
+					}
+				} 
+				$scope.series = ['Sell Stock', 'Buy Stock'];
+				
+			}
+			console.log($scope.series);
+		}, 1000);
 		});
 </script>
 <style type="text/css">
@@ -221,10 +257,10 @@
                           <table class="table table-striped table-advance table-hover">
                            <tbody>
                               <tr>
-                                 <th><i class="icon_profile"></i> User ID</th>
+                                 <th><i class="icon_star"></i> User ID</th>
                                  <th><i class="icon_calendar"></i> Stock ID</th>
-                                 <th><i class="icon_mail_alt"></i> Quantity</th>
-                                 <th><i class="icon_pin_alt"></i> Stock Price</th>
+                                 <th><i class="icon_calulator"></i> Quantity</th>
+                                 <th><i class="icon_currency_alt"></i> Stock Price</th>
                                  <th><i class="icon_mobile"></i> Transaction Time</th>
                                  <th><i class="icon_mobile"></i> Cancel</th>
                                  <th><i class="icon_cogs"></i> <input type="checkbox" name="selectAll" ng-model="selectAll" 
@@ -333,16 +369,16 @@
               	<div class="col-lg-12">
                 	<section class="panel">
                     	<header class="panel-heading">
-                        	<h3>General Chart</Char>
+                        	<h3>TRANSACTION SUMMARY CHARTs</Char>
                       	</header>
                       	<div class="panel-body">
                         	<div class="tab-pane" id="chartjs">
                       			<div class="row">
                           		<!-- Line -->
-                          			<div class="col-lg-12">
+                          			<div class="col-lg-6">
                               			<section class="panel">
                                   			<header class="panel-heading">
-                                      			bar chart
+                                      			Transaction by stock bar chart
                                   			</header>
                                   			<div class="panel-body text-center" ng-controller="BarCtrl">
 												<canvas id="bar" class="chart chart-bar"
@@ -350,12 +386,26 @@
 </canvas>
                                   			</div>
                               			</section>
-                          			</div>                      
+                          			</div>    
+                          			<div class="col-lg-6">
+                              			<section class="panel">
+                                  			<header class="panel-heading">
+                                      			Transaction by date line chart
+                                  			</header>
+                                  			<div class="panel-body text-center" ng-controller="LineCtrl">
+												<canvas id="line" class="chart chart-line" chart-data="data"
+  chart-labels="labels" chart-legend="true" chart-series="series"
+  chart-click="onClick" >
+</canvas> 
+                                  			</div>
+                              			</section>
+                          			</div>                          
                       			</div>
                       		</div>
 						</div>
                     </section>
               	</div>
+              	
               	 <!-- chart morris start -->
               </div>
               

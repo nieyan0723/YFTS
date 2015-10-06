@@ -41,7 +41,7 @@ app.controller("mainController", ["$scope", "$interval" ,"$http", "$rootScope", 
                                   function($scope, $interval, $http, $rootScope, shared) {
 	$scope.user;
 	$scope.loading=false;
-	$scope.percent = "10%";
+	$scope.percent = Math.random()*50+"%";
 	$http.get("validTran")
 	.success(function(data) {
 		$scope.user = data;
@@ -55,9 +55,10 @@ app.controller("mainController", ["$scope", "$interval" ,"$http", "$rootScope", 
 	$interval(function() {
 	$http.get("getOwnInfo")
 	.success(function(data){
+		
 		$scope.stockInfo = data;
 		shared.setStockInfo($scope.stockInfo);
-		console.log(shared.getStockInfo());
+		console.log(shared.getStockInfo()+" "+Math.random());
 		$scope.percent = "100%";
 		window.setTimeout(function() {
 		     $scope.$apply(function() {
