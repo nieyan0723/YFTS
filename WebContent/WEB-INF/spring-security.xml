@@ -17,9 +17,9 @@
     	<sec:form-login 
         	login-page="/login#login_up"
         	authentication-success-handler-ref="loginSuccessfulAuthHandler"
-        	authentication-failure-url="/login?login_error=1" 
+        	authentication-failure-url="/login?login_error=1#login_up" 
         />
-        <sec:logout logout-success-url="/login"  delete-cookies="JSESSIONID"/>
+        <sec:logout logout-success-url="/login#login_up"  delete-cookies="JSESSIONID"/>
 	</sec:http>
 	
 	<sec:authentication-manager alias="authenticationManager">

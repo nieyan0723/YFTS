@@ -36,6 +36,12 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles -->
     <link href="css/style-responsive.css" rel="stylesheet" />
+    
+    <script src="js/Chart.js"></script>
+	<!-- <script src="js/Chart.Doughnut.js"></script>
+ -->	
+	<script src="js/angular-chart.js"></script>
+	<link rel="stylesheet" href="css/angular-chart.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
     <!--[if lt IE 9]>
@@ -44,7 +50,21 @@
       <script src="js/lte-ie7.js"></script>
     <![endif]-->
 <script>
-	var app = angular.module("mainModule", ['checklist-model']);
+	var app = angular.module("mainModule", ['checklist-model',"chart.js"]);
+	app.config(['$httpProvider', function ($httpProvider) {    
+		$httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
+	}]);
+	app.service("shared", function() {
+		var _history = null;
+		return {
+			getHistory : function() {
+				return _history;
+			},
+			setHistory : function(history) {
+				_history = history;
+			}
+		};
+	});
 	app.controller("pendingController", function($scope, $http) {
 		$scope.pendingList = [];
 		$http.get("myPending").
@@ -74,11 +94,13 @@
         };
 	});	
 	
-	app.controller("historyController", ["$scope", "$http", "$filter", function($scope, $http, $filter) {
+	app.controller("historyController", ["$scope", "$interval" ,"$http", "$rootScope", "shared", "$filter",
+	                                     function($scope, $interval, $http, $rootScope ,shared, $filter ) {
 		$scope.transList = [];
 		$http.get("getHistory")
 		.success(function(data) {
 			$scope.transList = data;
+			shared.setHistory(data);
 			
 		}).error(function(data) {
 			alert("Please sign in!");
@@ -112,6 +134,41 @@
 			return filtered;
 		};
 	});
+	app.controller("BarCtrl", function ($scope,shared,$interval) {
+		
+		$interval(function(){
+			$scope.labels=[];
+			$scope.series = ['123'];
+			$scope.data=[[],[]];
+			$scope.history = shared.getHistory();
+			//console.log($scope.history.stock);
+			if($scope.history!=null){
+				for(var i = 0;i<$scope.history.length;i++){
+					var stockSym = $scope.history[i].own.stock.symbol;
+					var volume = $scope.history[i].amount;
+					var ind = $scope.labels.indexOf(stockSym);
+					if(ind==-1){
+						$scope.labels.push(stockSym);
+						if(volume>0){
+							$scope.data[1].push(volume);
+							$scope.data[0].push(0);
+						}else if(volume<0){
+							$scope.data[0].push(-volume);
+							$scope.data[1].push(0);
+						}
+					} else {
+						if(volume>0){
+							$scope.data[1][ind] = volume+$scope.data[1][ind];
+						}else if(volume<0){
+							$scope.data[0][ind] = $scope.data[0][ind]-volume;
+						}
+					}
+				} 
+				$scope.series = ['Sell Stock', 'Buy Stock'];
+			}
+			console.log($scope.series);
+		}, 2000);
+		});
 </script>
 <style type="text/css">
 	.error {
@@ -270,6 +327,36 @@
                       </div>
                       </section>
                   </div>
+              </div>
+              <div class="row">
+               <!-- chart morris start -->
+              	<div class="col-lg-12">
+                	<section class="panel">
+                    	<header class="panel-heading">
+                        	<h3>General Chart</Char>
+                      	</header>
+                      	<div class="panel-body">
+                        	<div class="tab-pane" id="chartjs">
+                      			<div class="row">
+                          		<!-- Line -->
+                          			<div class="col-lg-12">
+                              			<section class="panel">
+                                  			<header class="panel-heading">
+                                      			bar chart
+                                  			</header>
+                                  			<div class="panel-body text-center" ng-controller="BarCtrl">
+												<canvas id="bar" class="chart chart-bar"
+  chart-data="data" chart-labels="labels" chart-legend="true">
+</canvas>
+                                  			</div>
+                              			</section>
+                          			</div>                      
+                      			</div>
+                      		</div>
+						</div>
+                    </section>
+              	</div>
+              	 <!-- chart morris start -->
               </div>
               
           </section>
