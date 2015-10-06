@@ -127,17 +127,26 @@ public class TransService {
 		User user = tx.getUser();
 		Stock stock = tx.getStock();
 		List<OwnershipInfo> ownList = od.findByOwn(user, stock);
-		OwnershipInfo ois = new OwnershipInfo();
-		ois.setUser(user);
-		ois.setStock(stock);
+		
 		//Calculate the quantity after transaction
 		int amount = tx.getAmount();
-		if (ownList == null || ownList.size() == 0){
-			ois.setQuantity(amount < 0 ? 0 : amount);
-			user.addOwns(ois);
+		if (ownList == null || ownList.size() == 0){			
+			if (amount > 0){
+				OwnershipInfo ois = new OwnershipInfo(user, stock, amount < 0 ? 0 : amount);
+				user.addOwns(ois);
+			}
 		}else {
-			amount += ownList.get(0).getQuantity();
-			ownList.get(0).setQuantity(amount < 0 ? 0 : amount);
+			amount = ownList.get(0).getQuantity() + amount;
+			if (amount > 0){
+				for (OwnershipInfo ois: user.getOwns()){
+					if (ois.getOwn().getStock().getSid() == stock.getSid()){
+						ois.setQuantity(amount);
+					}
+				}
+			}else{
+				user.removeOwns(ownList.get(0));
+				od.delete(ownList.get(0));
+			}
 		}
 		//Calculate and update balance after transaction
 		int balance = user.getBalance();

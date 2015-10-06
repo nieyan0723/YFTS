@@ -11,14 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mercury.beans.OwnershipInfo;
 import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
+import com.mercury.dao.OwnInfoDao;
 import com.mercury.dao.StockDao;
 
 @Service
 public class StockService {
 	@Autowired
 	private StockDao sd;
+	@Autowired
+	private OwnInfoDao od;
 
 	public StockDao getSd() {
 		return sd;
@@ -26,11 +30,21 @@ public class StockService {
 	public void setSd(StockDao sd){
 		this.sd = sd;
 	}	
+	public OwnInfoDao getOd() {
+		return od;
+	}
+	public void setOd(OwnInfoDao od) {
+		this.od = od;
+	}
 	
 	public boolean realStock(Stock stock){
 		StockInfo stockInfo = getStockInfo(stock);
+<<<<<<< HEAD
 		if(stockInfo != null && stockInfo.getStockName() != "N/A"){
 			System.out.println(stockInfo.getStockName()+"123412341234");
+=======
+		if(stockInfo != null && stockInfo.getStockName() != ""){
+>>>>>>> 878f38650a482719ed5b8993038d15cf3dcb4060
 			return true;
 		}
 		return false;
@@ -60,6 +74,11 @@ public class StockService {
 	@Transactional
 	public List<Stock> getAllStock(){
 		return sd.queryAll();
+	}
+	
+	@Transactional
+	public List<OwnershipInfo> getAllOwn(){
+		return od.queryAll();
 	}
 	
 	@Transactional

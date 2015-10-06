@@ -114,7 +114,7 @@
                                  	<a href="" ng-click="order('change')">Stock Change</a>
        								<span class="sortorder" ng-show="predicate === 'change'" ng-class="{reverse:reverse}"></span>
                                  </th>
-								 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+								 <sec:authorize access="hasRole('ROLE_USER')">
 									<th style="color:#007aff">Transaction</th>
 								 </sec:authorize>
                               </tr>
@@ -127,11 +127,11 @@
 									<b ng-if="stock.change<0" style="color:red">{{stock.change}}</b>
 									<b ng-if="stock.change==0" style="color:black">{{stock.change}}</b>
 								</td>
-								<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+								<sec:authorize access="hasRole('ROLE_USER')">
                                  <td>
                                   <div class="btn-group">
                                       <a class="btn btn-primary" href="#" ng-click="pass(stock); openBuy()">Buy</a>
-                                      <a class="btn btn-success" href="#" ng-click="pass(stock); openSell()" >Sell</a>
+                                      <a ng-if="hasStock(stock)" class="btn btn-success" href="#" ng-click="pass(stock); openSell()" >Sell</a>
                                   </div>
                                   </td>
                                  </sec:authorize>
