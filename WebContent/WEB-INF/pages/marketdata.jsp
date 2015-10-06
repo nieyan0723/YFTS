@@ -78,10 +78,10 @@
           <section class="wrapper">
 		  <div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-global"></i>Real-Time Market Data</h3>
+					<h3 class="page-header"><i class="fa fa-globe"></i>Real-Time Market Data</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-						<li><i class="fa fa-table"></i>MarketData</li>
+						<li><i class="fa fa-globe"></i>MarketData</li>
 					</ol>
 				</div>
 			</div>

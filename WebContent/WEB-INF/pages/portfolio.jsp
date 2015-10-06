@@ -83,11 +83,10 @@
           <section class="wrapper">
 		  <div class="row">
 				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-table"></i>My Portfolio</h3>
+					<h3 class="page-header"><i class="fa fa-laptop"></i>My Portfolio</h3>
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-						<li><i class="fa fa-table"></i>Portfolio</li>
-						<li><i class="fa fa-th-list"></i>Stock</li>
+						<li><i class="fa fa-laptop"></i>Portfolio</li>
 					</ol>
 				</div>
 			</div>
@@ -120,12 +119,12 @@
                           <table class="table table-striped table-advance table-hover" >
                            <tbody>
                               <tr>
-                                 <th><i class="icon_profile"></i> Stock Id</th>
+                                 <th><i class="icon_star"></i> Stock Id</th>
                                  <th><i class="icon_calendar"></i> Symbol</th>
-                                 <th><i class="icon_mail_alt"></i> Stock Name</th>
-                                 <th><i class="icon_pin_alt"></i> Stock Price</th>
-                                 <th><i class="icon_mobile"></i> Stock Change</th>
-                                 <th><i class="icon_mobile"></i> Quantity</th>
+                                 <th><i class="icon_datareport_alt"></i> Stock Name</th>
+                                 <th><i class="icon_currency_alt"></i> Stock Price</th>
+                                 <th><i class="icon_currency"></i> Stock Change</th>
+                                 <th><i class="icon_calendar"></i> Quantity</th>
                                  <th><i class="icon_cogs"></i> Action</th>
                               </tr>
                               <tr ng-repeat=" stock in stockInfo">
@@ -267,7 +266,7 @@
               	<div class="col-lg-12">
                 	<section class="panel">
                     	<header class="panel-heading">
-                        	<h3>SUMMARY CHARTS</Char>
+                        	<h3>OWNERSHIP SUMMARY CHARTS</Char>
                       	</header>
                       	<div class="panel-body">
                         	<div class="tab-pane" id="chartjs">
@@ -276,7 +275,7 @@
                           			<div class="col-lg-6">
                               			<section class="panel">
                                   			<header class="panel-heading">
-                                      			pie chart
+                                      			Total value pie chart
                                   			</header>
                                   			<div class="panel-body text-center" ng-controller="PieCtrl">
 												<canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-legend="true">
@@ -287,7 +286,7 @@
                           			<div class="col-lg-6">
                               			<section class="panel">
                                   			<header class="panel-heading">
-                                      			bar chart
+                                      			Total quantity bar chart
                                   			</header>
                                   			<div class="panel-body text-center" ng-controller="BarCtrl">
 												<canvas id="bar" class="chart chart-bar"

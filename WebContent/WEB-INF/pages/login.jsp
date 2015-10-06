@@ -31,7 +31,6 @@
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,11 +43,18 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	
 	
+	
 <script>
 	$(document).ready(function() {
 		if ("<c:out value='${param.login_error}'/>" != "") {
 		  	$('#wrongCredentials').show();
 		}
+		$("#j_userName").on("click", function(){
+			$("#usernameExist").hide();
+		});
+		$("#j_email").on("click", function(){
+			$("#emailExist").hide();
+		});
 		$("#signin").on("click", loginValidation);	
 		$("#clear2").on("click", function(){
 			$("#usernameExist").hide();
@@ -142,6 +148,10 @@
 	margin: 10;
 	position: relative;
 }
+.error{
+	color:#FF6600 ;
+	font-weight:400;
+}
 </style>
 </head>
 
@@ -158,7 +168,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">YabooFinanceTradingSystem</a>
+                <a class="navbar-brand page-scroll" href="#page-top">YabooFinance TradingSystem</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -170,9 +180,18 @@
                     <li>
                         <a class="page-scroll" href="#services">Services</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#login_up">Sign in/up</a>
+                     <li>
+                    	<a class="page-scroll" href="marketdata">Marketdata</a>
                     </li>
+                    <li>
+                    	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')?false:true">
+                       		 <a class="page-scroll" href="#login_up">Sign in/up</a>
+                        </sec:authorize>
+                        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                       		 <a href="<c:url value='/j_spring_security_logout'/>"><i class="icon_key_alt"></i>Logout</a>
+                        </sec:authorize>
+                    </li>
+                   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -184,8 +203,8 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">Welcome To Our Website!</div>
-                <div class="intro-heading">It's Nice To Meet You</div>
+                
+                <div class="intro-heading">See for yourself why 169 million people love YFTS</div>
                 <a href="#services" class="page-scroll btn btn-xl">Show Me More</a>
             </div>
         </div>
@@ -271,7 +290,7 @@
 									<p>The username or password supplied is incorrect</p>
 								</div>
 								<!-- Login Form -->
-								<form id="login-form" name="login-form" 
+								<form id="login-form" name="login-form" class="form-validate"
 								action="<c:url value='j_spring_security_check'/>" method="POST" style="display: block;">
 									<div class="form-group">
 										<input type="text" name="j_username" id="j_username" tabindex="1" class="form-control" placeholder="Username">
@@ -325,7 +344,7 @@
 										<input type="password" name="passWord" id="j_passWord" tabindex="2" class="form-control" placeholder="Password">
 									</div>
 									<div class="form-group1">
-										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+										<input type="password" name="confirm_password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
 									</div>
 									<div class="form-group1">
 										<div class="row">
@@ -391,6 +410,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/agency.js"></script>
+    
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script src="js/form-validation-script.js"></script>
 
 </body>
 

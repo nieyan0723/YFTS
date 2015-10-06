@@ -6,34 +6,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Confirmation page</title>
+<!-- for header and footer -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="css/extra/bootstrap-theme.css" rel="stylesheet">
+<link href="css/extra/elegant-icons-style.css" rel="stylesheet" />
+<link href="css/extra/font-awesome.min.css" rel="stylesheet" />    
+<link href="css/extra/style.css" rel="stylesheet">
+<script src="js/angular.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
+<section id="main-content">
+          <section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-8" style="float:none;margin:auto;text-align:center">
+				 <section class="panel">
+				 <div class="panel-body">
 	<h1>Check your email!</h1>
 	<h1>
 		<font color="green">${userInfo.message}</font>
 	</h1>
-	<table width="200" border="1">
-		<tr>
-			<th>User Name</th>
-			<th>Email</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Balance</th>
-			<th>Authority</th>
-			<th>Enabled</th>
-		</tr>
-		<c:forEach var="user" items="${userInfo.users}">
-			<tr>
-				<td>${user.userName}</td>
-				<td>${user.email}</td>
-				<td>${user.firstName}</td>
-				<td>${user.lastName}</td>
-				<td>${user.balance}</td>
-				<td>${user.authority}</td>
-				<td>${user.enabled}</td>
-			</tr>
-		</c:forEach>
-	</table>
+	</div>
+	</section>
+	</div>
+	</div>
+	</section>
+	</section>
 </body>
 </html>
