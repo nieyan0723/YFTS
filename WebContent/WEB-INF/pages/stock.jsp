@@ -187,8 +187,8 @@
 		<span class="errors" id="desc_error" ng-show="addForm.stockDesc.$dirty && addForm.stockDesc.$invalid">
 			Please enter the stock description!
 		</span><br/>
-		<input type="reset" value="Reset" id="j_reset"/>
-		<input type="submit" value="Submit" id="j_submit" 
+		<input class="btn btn-info popovers" style="background-color:blue" type="reset" value="Reset" id="j_reset"/>
+		<input class="btn btn-info popovers" type="submit" value="Submit" id="j_submit" 
 			ng-disabled="!ifValid || addForm.stockDesc.$invalid"/>
 	</form>
                         </div>
