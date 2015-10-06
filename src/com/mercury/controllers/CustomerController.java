@@ -56,6 +56,9 @@ public class CustomerController {
 	@RequestMapping(value="/getOwnInfo", method=RequestMethod.GET)
 	@ResponseBody
 	public List<StockInfo> getPortfolio(Principal principal) {
+		if (principal == null || principal.getName() == null){
+			return null;
+		}
 		String userName = principal.getName();
 //		System.out.println(userName);
 		List<OwnershipInfo> ownInfo = us.findOwnByUserName(userName);
