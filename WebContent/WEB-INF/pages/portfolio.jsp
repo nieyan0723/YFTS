@@ -80,7 +80,7 @@
 <c:import url="pageComponent/header.jsp"/>
 
       <section id="main-content">
-          <section class="wrapper">
+          <section class="wrapper" ng-controller="mainController">
 		  <div class="row">
 				<div class="col-lg-12">
 					<h3 class="page-header"><i class="fa fa-laptop"></i>My Portfolio</h3>
@@ -97,7 +97,7 @@
                           <header class="panel-heading">
                               Balance
                           </header>
-                          <div ng-controller="mainController" class="panel-body">
+                          <div class="panel-body">
 								<div ng-controller="ModalDemoCtrl" style="text-align:center">
 										<button id="addBalance" class="btn btn-primary btn-sm"
 											ng-click="openAdd()">Add Balance</button>
@@ -114,7 +114,7 @@
                           <header class="panel-heading">
                               Stock
                           </header>
-                          <div class="panel-body" ng-controller="mainController">
+                          <div class="panel-body">
                         <form action="portfolio" id="listUserStocks" method="post">
                           <table class="table table-striped table-advance table-hover" >
                            <tbody>
