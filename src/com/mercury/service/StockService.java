@@ -29,7 +29,8 @@ public class StockService {
 	
 	public boolean realStock(Stock stock){
 		StockInfo stockInfo = getStockInfo(stock);
-		if(stockInfo != null && stockInfo.getStockName() != null){
+		if(stockInfo != null && stockInfo.getStockName() != "N/A"){
+			System.out.println(stockInfo.getStockName()+"123412341234");
 			return true;
 		}
 		return false;
@@ -73,7 +74,7 @@ public class StockService {
 	
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1&e=.c";
-		String stockName = "";
+		String stockName = "N/A";
 		double price = 0;
 		double change = 0;
 		try {
@@ -88,7 +89,7 @@ public class StockService {
 			if (tokens.length <3) return null;
 			if(!tokens[tokens.length-3].trim().equals("N/A")){
 				for (int i= length-3; i>0; i--){
-					stockName = tokens[i].trim() + stockName;
+					stockName = tokens[i].trim();
 				}
 				price = Double.parseDouble(tokens[length-1].trim());
 				change = Double.parseDouble(tokens[length-2].trim());

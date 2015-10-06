@@ -43,7 +43,10 @@
     <link href="css/style-responsive.css" rel="stylesheet" />
     
     <script src="js/Chart.js"></script>
-	<script src="js/Chart.Doughnut.js"></script>
+	<!-- <script src="js/Chart.Doughnut.js"></script>
+ -->	
+	<script src="js/angular-chart.js"></script>
+	<link rel="stylesheet" href="css/angular-chart.css">
 
 <style>
 
@@ -264,7 +267,7 @@
 
             <div class="row">
               <!-- chart morris start -->
-            	<div class="col-lg-12">
+              	<div class="col-lg-12">
                 	<section class="panel">
                     	<header class="panel-heading">
                         	<h3>General Chart</Char>
@@ -278,8 +281,9 @@
                                   			<header class="panel-heading">
                                       			pie chart
                                   			</header>
-                                  			<div class="panel-body text-center">
-                                               <div id="chartdiv"></div>
+                                  			<div class="panel-body text-center" ng-controller="PieCtrl">
+												<canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-legend="true">
+												</canvas> 
                                   			</div>
                               			</section>
                           			</div>                      
@@ -300,12 +304,12 @@
                           			<div class="col-lg-12">
                               			<section class="panel">
                                   			<header class="panel-heading">
-                                      			pie chart
+                                      			bar chart
                                   			</header>
-                                  			<div class="panel-body text-center">
-                                              <div id="canvas-holder">
-			<canvas id="chart-area" width="300" height="300"/>
-		</div>
+                                  			<div class="panel-body text-center" ng-controller="BarCtrl">
+												<canvas id="bar" class="chart chart-bar"
+  chart-data="data" chart-labels="labels" chart-legend="true">
+</canvas>
                                   			</div>
                               			</section>
                           			</div>                      

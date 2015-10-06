@@ -42,6 +42,7 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 	});	
 	
 	$scope.stockInfo = [];
+	$interval(function() {
 	$http.get("getOwnInfo")
 	.success(function(data){
 		$scope.stockInfo = data;
@@ -52,10 +53,10 @@ app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", 
 		        $scope.loading = true;
 		     });
 		 }, 1000);
-	})
-	.error(function(data){
+	}).error(function(data){
 		console.log("AJAX ERROR");
 	});
+	}, 2000);
 	
 	$scope.stocksArray = [];
 //	$interval(function() {

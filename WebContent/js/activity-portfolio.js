@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.demo', [ 'ngAnimate', 'ui.bootstrap', 'ngResource']);
+angular.module('ui.bootstrap.demo', [ 'ngAnimate', 'ui.bootstrap', 'ngResource','chart.js']);
 var app = angular.module('ui.bootstrap.demo');
 app.config(['$httpProvider', function ($httpProvider) {    
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=UTF-8';
@@ -36,34 +36,38 @@ app.service("shared", function() {
 	};
 	$scope.message = shared.getMessage();
 });
-app.controller("mainController", ["$scope", "$interval", "$http", "$rootScope", "shared", 
+
+app.controller("mainController", ["$scope", "$interval" ,"$http", "$rootScope", "shared", 
                                   function($scope, $interval, $http, $rootScope, shared) {
 	$scope.user;
 	$scope.loading=false;
-	$scope.percent = "20%";
+	$scope.percent = "10%";
 	$http.get("validTran")
 	.success(function(data) {
 		$scope.user = data;
 		shared.setUser($scope.user);
+		
 	}).error(function(data) {
 		console.log("AJAX ERROR");
 	});		
 	
 	$scope.stockInfo = [];
+	$interval(function() {
 	$http.get("getOwnInfo")
-	.success(function(data,$timeout){
+	.success(function(data){
 		$scope.stockInfo = data;
 		shared.setStockInfo($scope.stockInfo);
+		console.log(shared.getStockInfo());
 		$scope.percent = "100%";
 		window.setTimeout(function() {
 		     $scope.$apply(function() {
 		        $scope.loading = true;
 		     });
 		 }, 1000);
-	})
-	.error(function(data){
+	}).error(function(data){
 		console.log("AJAX ERROR");
 	});
+	}, 2000);
 	
 	$scope.pass = function(stock) {
 		shared.setStock(stock);
@@ -294,3 +298,42 @@ app.controller("ModalInstanceCtrlAdd", function($scope, $modalInstance, $http, i
 	};
 
 });
+app.controller("PieCtrl", function ($scope,shared,$interval) {
+	$interval(function() {
+		$scope.labels=[];
+		$scope.data=[];
+		$scope.stockInfo = shared.getStockInfo();
+		if($scope.stockInfo!=null){
+			var vals = 0;
+			for(var i = 0;i<$scope.stockInfo.length;i++){
+				vals = $scope.stockInfo[i].quantity*$scope.stockInfo[i].price + vals;
+			} 
+			for(var i = 0;i<$scope.stockInfo.length;i++){
+				var val = $scope.stockInfo[i].quantity*$scope.stockInfo[i].price;
+				$scope.labels.push($scope.stockInfo[i].stockName+"("+Math.round(val/vals*100*10)/10+"%)");
+				$scope.data.push(val);
+			} 
+		}
+	}, 2000);
+});
+app.controller("BarCtrl", function ($scope,shared,$interval) {
+//	$scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+//	  $scope.series = ['Series A'];
+//
+//	  $scope.data = [
+//	    [65, 59, 80, 81, 56, 55, 40],
+//	  ];
+	$scope.series = ['Volume',''];
+	$interval(function(){
+		$scope.labels=[];
+		$scope.data=[[]];
+		$scope.stockInfo = shared.getStockInfo();
+		if($scope.stockInfo!=null){
+			for(var i = 0;i<$scope.stockInfo.length;i++){
+				var val = $scope.stockInfo[i].quantity;
+				$scope.labels.push($scope.stockInfo[i].stockName);
+				$scope.data[0].push(val);
+			} 
+		}
+	}, 2000);
+	});

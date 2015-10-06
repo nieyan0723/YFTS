@@ -159,6 +159,7 @@
                           <header class="panel-heading">
                               Pending Transactions 
                           </header>
+                          <div class="panel-body">
                         <form id="pendingList" action="history" method="get">
                           <table class="table table-striped table-advance table-hover">
                            <tbody>
@@ -197,6 +198,7 @@
 							<button class="cancel" name="cancelAll" value={{selected.pending}}>Cancel Selected</button>
 						</div>
                        </form>
+                       </div>
                       </section>
                     </div>
                   </div>
@@ -211,6 +213,7 @@
                           <header class="panel-heading">
                               Transaction History 
                           </header>
+                          <div class="panel-body">
                           <div ng-if="!hasTran()">
 							<h1>No transaction history</h1>
 						  </div>
@@ -263,6 +266,7 @@
                               </tr>
                            </tbody>
                         </table>
+                      </div>
                       </div>
                       </section>
                   </div>
