@@ -93,46 +93,48 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 	$scope.addSuccess=false;
 	
 	$scope.openBuy = function () {		
-		$scope.item = shared.getStock();
+		$scope.user = shared.getUser();
+		$scope.buyItem = shared.getStock();
 		var modalInstance = $modal.open({
 			animation: $scope.animationsEnabled,
 			templateUrl: 'buyContent.html',
 			controller: 'ModalInstanceCtrlBuy',
 			resolve: {
 				items: function () {
-					return $scope.item;
+					return $scope.user;
 				}
 			}
 		});
 
-		modalInstance.result.then(function (selectedItem) {
+		modalInstance.result.then(function (quan) {
 			$scope.buySuccess = true;
 			$scope.sellSuccess=false;
 			$scope.addSuccess=false;
-			$scope.selected = selectedItem;
+			$scope.user.balance = Math.round($scope.user.balance - $scope.buyItem.price * quan);
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
 	};
 	
 	$scope.openSell = function () {		
-		$scope.item = shared.getStock();
+		$scope.user = shared.getUser();
+		$scope.buyItem = shared.getStock();
 		var modalInstance = $modal.open({
 			animation: $scope.animationsEnabled,
 			templateUrl: 'sellContent.html',
 			controller: 'ModalInstanceCtrlSell',
 			resolve: {
 				items: function () {
-					return $scope.item;
+					return $scope.user;
 				}
 			}
 		});
 
-		modalInstance.result.then(function (selectedItem) {
+		modalInstance.result.then(function (quan) {
 			$scope.sellSuccess=true;
 			$scope.buySuccess=false;
 			$scope.addSuccess=false;
-			$scope.selected = selectedItem;
+			$scope.user.balance = Math.round($scope.user.balance + $scope.buyItem.price * quan);
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
@@ -168,7 +170,7 @@ app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 'shared',
 app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, items, shared) {
 	$scope.user = shared.getUser();	
 	$scope.Math = window.Math;
-	$scope.buyItem = items;
+	$scope.buyItem = shared.getStock();
 	$scope.upper = Math.floor($scope.user.balance / $scope.buyItem.price);
 	$scope.quan = 1;
 	$scope.newTran;
@@ -204,7 +206,7 @@ app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, 
 	
 	$scope.ok = function () {
 		$scope.send();
-		$modalInstance.close($scope.buyItem);
+		$modalInstance.close($scope.quan);
 	};
 
 	$scope.cancel = function () {
@@ -215,7 +217,7 @@ app.controller('ModalInstanceCtrlBuy', function ($scope, $modalInstance, $http, 
 app.controller('ModalInstanceCtrlSell', function ($scope, $modalInstance, $http, items, shared) {
 	$scope.user = shared.getUser();	
 	$scope.Math = window.Math;
-	$scope.sellItem = items;
+	$scope.sellItem = shared.getStock();
 	$scope.quan = 1;
 	$scope.newTran;
 	$scope.$watch("quan",function(val,old){
@@ -260,7 +262,7 @@ app.controller('ModalInstanceCtrlSell', function ($scope, $modalInstance, $http,
 	
 	$scope.ok = function () {
 		$scope.send();
-		$modalInstance.close($scope.sellItem);
+		$modalInstance.close($scope.quan);
 	};
 
 	$scope.cancel = function () {
