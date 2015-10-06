@@ -44,10 +44,10 @@
 				<div class="col-lg-8" style="float:none;margin:auto;text-align:center">
 				 <section class="panel">
 				 <div class="panel-body">
-<h1><span id="time">3</span></h1>
+<h1><span id="time">10</span></h1>
 	<h1 style="color:#0099CC">Activation succcess! ${userName}</h1>
 	
-	<h2 id="go_home">This page will goto Yahoo Finance page after 3 seconds, if not click this link</h2>
+	<h2 id="go_home">This page will goto Yahoo Finance page after 10 seconds, if not click this link</h2>
 
 	<form name="login-form" action="login_auto" method="POST" id="login-form" style="display:none">
 		<input type="text" name="j_username" id="j_username" value="${userName}"/>
