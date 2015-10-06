@@ -11,14 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mercury.beans.OwnershipInfo;
 import com.mercury.beans.Stock;
 import com.mercury.beans.StockInfo;
+import com.mercury.dao.OwnInfoDao;
 import com.mercury.dao.StockDao;
 
 @Service
 public class StockService {
 	@Autowired
 	private StockDao sd;
+	@Autowired
+	private OwnInfoDao od;
 
 	public StockDao getSd() {
 		return sd;
@@ -26,10 +30,16 @@ public class StockService {
 	public void setSd(StockDao sd){
 		this.sd = sd;
 	}	
+	public OwnInfoDao getOd() {
+		return od;
+	}
+	public void setOd(OwnInfoDao od) {
+		this.od = od;
+	}
 	
 	public boolean realStock(Stock stock){
 		StockInfo stockInfo = getStockInfo(stock);
-		if(stockInfo != null && stockInfo.getStockName() != null){
+		if(stockInfo != null && stockInfo.getStockName() != "N/A"){
 			return true;
 		}
 		return false;
@@ -62,6 +72,11 @@ public class StockService {
 	}
 	
 	@Transactional
+	public List<OwnershipInfo> getAllOwn(){
+		return od.queryAll();
+	}
+	
+	@Transactional
 	public boolean hasStock(Stock stock){
 		List<Stock> s = getByName(stock.getSymbol().toUpperCase());
 		if (s == null || s.size() == 0){
@@ -73,7 +88,7 @@ public class StockService {
 	
 	public StockInfo getStockInfo(Stock stock) {
 		String yahoo_quote = "http://finance.yahoo.com/d/quotes.csv?s=" + stock.getSymbol() + "&f=snc1l1&e=.c";
-		String stockName = "";
+		String stockName = "N/A";
 		double price = 0;
 		double change = 0;
 		try {

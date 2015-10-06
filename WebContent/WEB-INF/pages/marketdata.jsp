@@ -93,8 +93,8 @@
                           <header class="panel-heading">
                               Market Data
                           </header>
-                          
-                          <table class="table table-striped table-advance table-hover" id="stockList" ng-controller="mainController">
+                          <div ng-controller="mainController">
+                          <table class="table table-striped table-advance table-hover" id="stockList">
                            <tbody>
                               <tr>
                                  <th>
@@ -139,6 +139,18 @@
 
                            </tbody>
                         </table>
+                        <!-- loading bar -->
+						<div class = "loadbox" ng-hide="loading">
+							<div class = "loadbar">
+								<div class="progress progress-striped active progress-sm" >
+							    	<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}">
+							        	<span class="sr-only">45% Complete</span>
+							        </div>
+					    		</div>
+					     		<p>Loading...</p>
+					    	</div>
+					   </div>
+					   </div>
                       </section>
                   </div>
               </div>
