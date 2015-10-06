@@ -79,7 +79,7 @@
                   <li class="dropdown" ng-controller="headerCtrl">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <span class="profile-ava">
-                              <img alt="" src="img/download.jpg" width="30" height="30">
+                              <img alt="" src="img/images.jpg" width="30" height="30">
                           </span>
                           <span class="username">Hello, {{user.userName}}</span>
                           <b class="caret"></b>
@@ -87,7 +87,7 @@
                       <ul class="dropdown-menu extended logout">
                           <div class="log-arrow-up"></div>
                           <li class="prof-info-container">
-                          	<div class="profile-ava prof-big"><img alt="" src="img/download.jpg" width="50" height="50"></div>
+                          	<div class="profile-ava prof-big"><img alt="" src="img/images.jpg" width="50" height="50"></div>
                           	<div class="prof-info">
                           		<ul>
                           			<li>{{user.firstName}} {{user.lastName}}</li>
