@@ -276,7 +276,7 @@
 						  </div>
 						  
 				     <div ng-if="hasTran()">
-				     	<form id="search">
+				     	<form id="search" style="margin-bottom: 15px;text-align: center;">
 							<label>Key word: </label>
 							<input type="text" placeholder="Filter by" ng-model="criteria"/>
 							<label>Between </label>

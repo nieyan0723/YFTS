@@ -103,6 +103,7 @@ app.controller("mainController", function($scope, $http) {
                           <header class="panel-heading">
                               Pending Status
                           </header>
+                           <div class="panel-body">
                           <div ng-if="!hasPending()">
 							 <h1>No Pendings!</h1>
 						  </div>
@@ -142,6 +143,7 @@ app.controller("mainController", function($scope, $http) {
 							<button class="drop" name="dropAll" value={{selected.trans}}>Drop Selected</button>
 						</div>
                        </form>
+                      </div>
                       </div>
                       </section>
                   </div>
