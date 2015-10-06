@@ -58,7 +58,6 @@ app.controller("mainController", ["$scope", "$interval" ,"$http", "$rootScope", 
 		
 		$scope.stockInfo = data;
 		shared.setStockInfo($scope.stockInfo);
-		console.log(shared.getStockInfo()+" "+Math.random());
 		$scope.percent = "100%";
 		window.setTimeout(function() {
 		     $scope.$apply(function() {
