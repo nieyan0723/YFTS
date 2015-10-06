@@ -59,9 +59,6 @@
 	.alert {
 		display: none;
 	}
-	h3 {
-		color: blue;
-	}
 	th, td {
 		text-align:center;
 	}
@@ -102,10 +99,10 @@
                               Balance
                           </header>
                           <div ng-controller="mainController" class="panel-body">
-								<div ng-controller="ModalDemoCtrl">
+								<div ng-controller="ModalDemoCtrl" style="text-align:center">
 										<button id="addBalance" class="btn btn-primary btn-sm"
 											ng-click="openAdd()">Add Balance</button>
-										<span>Current Balance: <b style="color: red">$ {{user.balance}}</b></span>	
+										<span>Current Balance: <b style="color: #0099CC;vertical-align: sub;font-size: 35px;margin-left: 5px;">$ {{user.balance}}</b></span>	
 										<div id="addSuccess" ng-show="addSuccess&&!sellSuccess&&!sellSuccess">Adding money Success!</div>	
 									
 								</div>
@@ -270,13 +267,13 @@
               	<div class="col-lg-12">
                 	<section class="panel">
                     	<header class="panel-heading">
-                        	<h3>General Chart</Char>
+                        	<h3>SUMMARY CHARTS</Char>
                       	</header>
                       	<div class="panel-body">
                         	<div class="tab-pane" id="chartjs">
                       			<div class="row">
                           		<!-- Line -->
-                          			<div class="col-lg-12">
+                          			<div class="col-lg-6">
                               			<section class="panel">
                                   			<header class="panel-heading">
                                       			pie chart
@@ -286,22 +283,8 @@
 												</canvas> 
                                   			</div>
                               			</section>
-                          			</div>                      
-                      			</div>
-                      		</div>
-						</div>
-                    </section>
-              	</div>
-              	<div class="col-lg-12">
-                	<section class="panel">
-                    	<header class="panel-heading">
-                        	<h3>General Chart</Char>
-                      	</header>
-                      	<div class="panel-body">
-                        	<div class="tab-pane" id="chartjs">
-                      			<div class="row">
-                          		<!-- Line -->
-                          			<div class="col-lg-12">
+                          			</div>   
+                          			<div class="col-lg-6">
                               			<section class="panel">
                                   			<header class="panel-heading">
                                       			bar chart
@@ -312,7 +295,7 @@
 </canvas>
                                   			</div>
                               			</section>
-                          			</div>                      
+                          			</div>                            
                       			</div>
                       		</div>
 						</div>
