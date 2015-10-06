@@ -49,23 +49,23 @@ var app = angular.module('mainModule', []);
       <img src="img/stock-blue.png" alt="Sell" >
       <div class="carousel-caption">
         <h1><strong>Sell</strong></h1>
-        <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+        
       </div>
     </div>
 
     <div class="item" style="height:600px !important; width:1450px !important">
       <img src="img/stock-red.jpg" alt="Buy">
       <div class="carousel-caption">
-        <h3>Chania</h3>
-        <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+        <h1><strong>Buy</strong></h1>
+       
       </div>
     </div>
 
     <div class="item" style="height:600px !important; width:1450px !important">
       <img src="img/check.jpg" alt="Check">
       <div class="carousel-caption">
-        <h3>Flowers</h3>
-        <p>Beatiful flowers in Kolymbari, Crete.</p>
+        <h1><strong>Market Data</strong></h1>
+        
       </div>
     </div>
 
