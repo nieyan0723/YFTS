@@ -2034,8 +2034,8 @@ fieldset[disabled] .btn-success.active {
 }
 .btn-info {
   color: #ffffff;
-  background-color: #34aadc;
-  border-color: #34aadc;
+  background-color: #ff0000;
+  border-color: #ff0000;
 }
 .btn-info:hover,
 .btn-info:focus,
@@ -2066,8 +2066,8 @@ fieldset[disabled] .btn-info:active,
 .btn-info.disabled.active,
 .btn-info[disabled].active,
 fieldset[disabled] .btn-info.active {
-  background-color: #34aadc;
-  border-color: #34aadc;
+  background-color: #808080;
+  border-color: #808080;
 }
 .btn-link {
   color: #007aff;
@@ -5188,7 +5188,7 @@ body.modal-open,
   bottom: -10px;
 }
 .carousel {
-  position: relative;
+  margin-top: -18px;
 }
 .carousel-inner {
   position: relative;
